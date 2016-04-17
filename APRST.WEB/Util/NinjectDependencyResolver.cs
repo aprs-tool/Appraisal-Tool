@@ -28,6 +28,7 @@ namespace APRST.WEB.Util
         private void AddBindings()
         {
             kernel.Bind<ITestService>().To<TestService>();
+            kernel.Bind<ITestCategoryService>().To<TestCategoryService>();
         }
     }
 }

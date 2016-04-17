@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using APRST.BLL.DTO;
 using APRST.DAL.Interfaces;
 using APRST.DAL.Entities;
+using AutoMapper;
 
 namespace APRST.BLL.Services
 {
@@ -20,8 +21,11 @@ namespace APRST.BLL.Services
         }
         public void AddTest(TestDTO testDto)
         {
-            _uow.TestRepository.Add(new Test { NameOfTest = testDto.NameOfTest, Desc = testDto.Desc });
+            Mapper.CreateMap<TestDTO, Test>();
+            _uow.TestRepository.Add(Mapper.Map<TestDTO, Test>(testDto));
             _uow.Save();
+            //_uow.TestRepository.Add(new Test { NameOfTest = testDto.NameOfTest, Desc = testDto.Desc, TestCategoryId = testDto.TestCategoryId });
+            //_uow.Save();
         }
 
         public void RemoveTest(TestDTO testDto)
@@ -40,13 +44,9 @@ namespace APRST.BLL.Services
 
         public IEnumerable<TestDTO> GetAll()
         {
-            throw new NotImplementedException();
-        }
-
-        public TestDTO GetByID(int id)
-        {
-            Test test =_uow.TestRepository.GetEntityById(id);
-            return new TestDTO {Id = test.Id, NameOfTest = test.NameOfTest, Desc = test.Desc};
+            Mapper.CreateMap<Test, TestDTO>()
+                .ForMember("Category", opt => opt.MapFrom(src => src.TestCategory.NameOfCategory));
+            return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.TestWithCategory());
         }
     }
 }

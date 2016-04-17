@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace APRST.DAL.Entities
 {
-    public class Test
+    public class TestCategory
     {
         public int Id { get; set; }
-        public string NameOfTest { get; set; }
+        public string NameOfCategory { get; set; }
         public string Desc { get; set; }
-        public int? TestCategoryId { get; set; }
-        public TestCategory TestCategory { get; set; }
+        public ICollection<Test> Tests { get; set; }
+        public TestCategory()
+        {
+            Tests = new List<Test>();
+        }
     }
 }

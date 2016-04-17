@@ -9,6 +9,7 @@ namespace APRST.DAL.Interfaces
     public interface IUnitOfWork:IDisposable
     {
         ITestRepository TestRepository { get; }
+        ITestCategoryRepository TestCategoryRepository { get; }
         void Save();
     }
 }

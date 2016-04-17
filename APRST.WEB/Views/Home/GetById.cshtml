@@ -1,0 +1,50 @@
+﻿@model APRST.BLL.DTO.TestDTO
+
+@{
+    ViewBag.Title = "GetById";
+}
+
+<h2>GetById</h2>
+
+<div>
+    <h4>TestDTO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameOfTest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameOfTest)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Desc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Desc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestCategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestCategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

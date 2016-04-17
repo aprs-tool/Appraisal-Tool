@@ -13,7 +13,6 @@ namespace APRST.BLL.Interfaces
         void RemoveTest(TestDTO testDto);
         void UpdateTest(TestDTO testDto);
         IEnumerable<TestDTO> GetAll();
-        TestDTO GetByID(int id);
         void Dispose();
     }
 }

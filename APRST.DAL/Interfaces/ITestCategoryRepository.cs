@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace APRST.DAL.Interfaces
 {
-    public interface ITestRepository:IRepository<Test>
+    public interface ITestCategoryRepository:IRepository<TestCategory>
     {
-        IEnumerable<Test> TestWithCategory();
-        IEnumerable<Test> GetByIdWithCategory(int id);
+        IEnumerable<TestCategory> CategoryWithTests();
     }
 }

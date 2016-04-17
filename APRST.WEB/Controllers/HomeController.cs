@@ -11,9 +11,11 @@ namespace APRST.WEB.Controllers
     public class HomeController : Controller
     {
         ITestService _testService;
-        public HomeController(ITestService testService)
+        ITestCategoryService _categoryService;
+        public HomeController(ITestService testService, ITestCategoryService categoryService)
         {
             _testService = testService;
+            _categoryService = categoryService;
         }
         public ActionResult Index()
         {
@@ -22,14 +24,12 @@ namespace APRST.WEB.Controllers
 
         public ActionResult About()
         {
-            return View(_testService.GetByID(1));
+            return View(_categoryService.GetAll());
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact Page.";
-
-            return View();
+            return View(_testService.GetAll());
         }
     }
 }

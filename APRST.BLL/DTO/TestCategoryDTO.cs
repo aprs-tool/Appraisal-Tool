@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APRST.DAL.Entities
+namespace APRST.BLL.DTO
 {
-    public class Test
+    public class TestCategoryDTO
     {
         public int Id { get; set; }
-        public string NameOfTest { get; set; }
+        public string NameOfCategory { get; set; }
         public string Desc { get; set; }
-        public int? TestCategoryId { get; set; }
-        public TestCategory TestCategory { get; set; }
     }
 }
