@@ -10,6 +10,11 @@ namespace APRST.DAL.EF
 {
     public class AprstContext:DbContext
     {
+
+        public AprstContext():base(@"Data Source=.\SQLEXPRESS;Initial Catalog=APRST;Integrated Security=True")
+        {
+        }
+
         public AprstContext(string conntectionString):base(conntectionString)
         {
         }
