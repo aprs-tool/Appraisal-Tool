@@ -25,6 +25,8 @@ namespace APRST.DAL.Repositories
 
         public virtual void Delete(T entity)
         {
+            var entry = _context.Entry(entity);
+            entry.State = EntityState.Modified;
             DbSet.Remove(entity);
         }
 
@@ -42,6 +44,12 @@ namespace APRST.DAL.Repositories
         public T GetEntityById(int id)
         {
             return DbSet.Find(id);
+        }
+
+        public void DeleteById(int id)
+        {
+            var a = DbSet.Find(id);
+            DbSet.Remove(a);
         }
     }
 }

@@ -12,6 +12,5 @@ namespace APRST.BLL.DTO
             public string NameOfTest { get; set; }
             public string Desc { get; set; }
             public int TestCategoryId { get; set; }
-            public string Category { get; set; }
     }
 }

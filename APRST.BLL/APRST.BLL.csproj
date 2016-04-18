@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="DTO\TestCategoryDTO.cs" />
     <Compile Include="DTO\TestDTO.cs" />
+    <Compile Include="DTO\TestInfoDTO.cs" />
     <Compile Include="Infastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ITestCategoryService.cs" />
     <Compile Include="Interfaces\ITestService.cs" />

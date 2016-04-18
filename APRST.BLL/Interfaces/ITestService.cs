@@ -10,9 +10,10 @@ namespace APRST.BLL.Interfaces
     public interface ITestService
     {
         void AddTest(TestDTO testDto);
-        void RemoveTest(TestDTO testDto);
+        void RemoveTestById(int id);
         void UpdateTest(TestDTO testDto);
-        IEnumerable<TestDTO> GetAll();
+        IEnumerable<TestInfoDTO> GetAll();
+        TestDTO GetById(int id);
         void Dispose();
     }
 }

@@ -12,6 +12,7 @@ namespace APRST.DAL.Interfaces
         void Delete(T entity);
         void Update(T entity);
         T GetEntityById(int id);
+        void DeleteById(int id);
         IQueryable<T> GetEntities();
     }
 }

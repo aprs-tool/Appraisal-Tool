@@ -24,29 +24,36 @@ namespace APRST.BLL.Services
             Mapper.CreateMap<TestDTO, Test>();
             _uow.TestRepository.Add(Mapper.Map<TestDTO, Test>(testDto));
             _uow.Save();
-            //_uow.TestRepository.Add(new Test { NameOfTest = testDto.NameOfTest, Desc = testDto.Desc, TestCategoryId = testDto.TestCategoryId });
-            //_uow.Save();
         }
 
-        public void RemoveTest(TestDTO testDto)
+        public void RemoveTestById(int id)
         {
-            throw new NotImplementedException();
+            _uow.TestRepository.DeleteById(id);
+            _uow.Save();
         }
 
         public void UpdateTest(TestDTO testDto)
         {
-            throw new NotImplementedException();
+            Mapper.CreateMap<TestDTO, Test>();
+            _uow.TestRepository.Update(Mapper.Map<TestDTO, Test>(testDto));
+            _uow.Save();
         }
         public void Dispose()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TestDTO> GetAll()
+        public IEnumerable<TestInfoDTO> GetAll()
         {
-            Mapper.CreateMap<Test, TestDTO>()
+            Mapper.CreateMap<Test, TestInfoDTO>()
                 .ForMember("Category", opt => opt.MapFrom(src => src.TestCategory.NameOfCategory));
-            return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.TestWithCategory());
+            return Mapper.Map<IEnumerable<Test>, List<TestInfoDTO>>(_uow.TestRepository.TestWithCategory());
+        }
+
+        public TestDTO GetById(int id)
+        {
+            Mapper.CreateMap<Test, TestDTO>();
+                return Mapper.Map<Test, TestDTO>(_uow.TestRepository.GetEntityById(id));   
         }
     }
 }
