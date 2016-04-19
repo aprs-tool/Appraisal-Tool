@@ -9,6 +9,5 @@ namespace APRST.DAL.Interfaces
 {
     public interface ITestCategoryRepository:IRepository<TestCategory>
     {
-        IEnumerable<TestCategory> CategoryWithTests();
     }
 }

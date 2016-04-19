@@ -200,6 +200,7 @@
     <Content Include="Views\TestCategory\Index.cshtml" />
     <Content Include="Views\TestCategory\Edit.cshtml" />
     <Content Include="Views\TestCategory\Delete.cshtml" />
+    <Content Include="Views\TestCategory\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

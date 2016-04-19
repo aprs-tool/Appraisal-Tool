@@ -16,5 +16,6 @@ namespace APRST.BLL.Interfaces
         void AddCategory(TestCategoryDTO categoryDto);
         void RemoveCategoryById(int id);
         void UpdateCategory(TestCategoryDTO categoryDto);
+
     }
 }

@@ -24,5 +24,10 @@ namespace APRST.DAL.Repositories
         {
             return GetEntities().Include(s => s.TestCategory);
         }
+
+        public IEnumerable<Test> GetTestByCategoryId(int id)
+        {
+            return GetEntities().Where(s => s.TestCategoryId == id);
+        }
     }
 }

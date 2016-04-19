@@ -14,9 +14,5 @@ namespace APRST.DAL.Repositories
         public TestCategoryRepository(DbContext context):base(context)
         {
         }
-        IEnumerable<TestCategory> ITestCategoryRepository.CategoryWithTests()
-        {
-            return GetEntities().Include(s => s.Tests);
-        }
     }
 }

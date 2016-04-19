@@ -14,6 +14,7 @@ namespace APRST.BLL.Interfaces
         void UpdateTest(TestDTO testDto);
         IEnumerable<TestInfoDTO> GetAll();
         TestDTO GetById(int id);
+        IEnumerable<TestDTO> GetTestByCategoryId(int id);
         void Dispose();
     }
 }

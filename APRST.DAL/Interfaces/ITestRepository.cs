@@ -11,5 +11,6 @@ namespace APRST.DAL.Interfaces
     {
         IEnumerable<Test> TestWithCategory();
         IEnumerable<Test> GetByIdWithCategory(int id);
+        IEnumerable<Test> GetTestByCategoryId(int id);
     }
 }

@@ -11,9 +11,11 @@ namespace APRST.WEB.Controllers
     public class TestCategoryController : Controller
     {
         ITestCategoryService _testCategoryService;
-        public TestCategoryController(ITestCategoryService service)
+        ITestService _testService;
+        public TestCategoryController(ITestCategoryService service, ITestService testService)
         {
             _testCategoryService = service;
+            _testService = testService;
         }
         // GET: TestCategory
         public ActionResult Index()
@@ -63,6 +65,10 @@ namespace APRST.WEB.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Details(int id)
+        {
+            return View(_testService.GetTestByCategoryId(id));
+        }
 
     }
 }
