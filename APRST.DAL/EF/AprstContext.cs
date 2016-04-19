@@ -20,5 +20,15 @@ namespace APRST.DAL.EF
         }
 
         public DbSet<Test> Tests { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TestCategory>()
+                  .HasMany<Test>(c => c.Tests)
+                  .WithOptional(x => x.TestCategory)
+                  .WillCascadeOnDelete(true);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -19,10 +19,36 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
+        public void AddCategory(TestCategoryDTO categoryDto)
+        {
+            Mapper.CreateMap<TestCategoryDTO, TestCategory>();
+            _uow.TestCategoryRepository.Add(Mapper.Map<TestCategoryDTO, TestCategory>(categoryDto));
+            _uow.Save();
+        }
+
         public IEnumerable<TestCategoryDTO> GetAll()
         {
             Mapper.CreateMap<TestCategory, TestCategoryDTO>();
             return Mapper.Map<IEnumerable<TestCategory>,List<TestCategoryDTO>>(_uow.TestCategoryRepository.GetEntities());
+        }
+
+        public TestCategoryDTO GetById(int id)
+        {
+            Mapper.CreateMap<TestCategory, TestCategoryDTO>();
+            return Mapper.Map<TestCategory, TestCategoryDTO>(_uow.TestCategoryRepository.GetEntityById(id));
+        }
+
+        public void RemoveCategoryById(int id)
+        {
+            _uow.TestCategoryRepository.DeleteById(id);
+            _uow.Save();
+        }
+
+        public void UpdateCategory(TestCategoryDTO categoryDto)
+        {
+            Mapper.CreateMap<TestCategoryDTO, TestCategory>();
+            _uow.TestCategoryRepository.Update(Mapper.Map<TestCategoryDTO, TestCategory>(categoryDto));
+            _uow.Save();
         }
     }
 }

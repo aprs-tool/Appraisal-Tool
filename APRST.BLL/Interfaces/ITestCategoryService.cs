@@ -12,5 +12,9 @@ namespace APRST.BLL.Interfaces
     {
         //IEnumerable<TestCategoryDTO> TestCategoryWithTests();
         IEnumerable<TestCategoryDTO> GetAll();
+        TestCategoryDTO GetById(int id);
+        void AddCategory(TestCategoryDTO categoryDto);
+        void RemoveCategoryById(int id);
+        void UpdateCategory(TestCategoryDTO categoryDto);
     }
 }
