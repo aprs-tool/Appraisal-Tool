@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestCategoryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\NinjectDependencyResolver.cs" />
   </ItemGroup>
@@ -196,15 +197,14 @@
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
-    <Content Include="Views\TestCategory\Create.cshtml" />
-    <Content Include="Views\TestCategory\Index.cshtml" />
-    <Content Include="Views\TestCategory\Edit.cshtml" />
-    <Content Include="Views\TestCategory\Delete.cshtml" />
     <Content Include="Views\TestCategory\Details.cshtml" />
+    <Content Include="Views\TestCategory\Create.cshtml" />
+    <Content Include="Views\TestCategory\Edit.cshtml" />
+    <Content Include="Views\TestCategory\Index.cshtml" />
+    <Content Include="Views\TestCategory\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

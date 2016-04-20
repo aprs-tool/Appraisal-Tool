@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using APRST.WEB.Models;
+using AutoMapper;
 
 namespace APRST.WEB.Controllers
 {
@@ -20,7 +22,8 @@ namespace APRST.WEB.Controllers
         // GET: TestCategory
         public ActionResult Index()
         {
-            return View(_testCategoryService.GetAll());
+            Mapper.CreateMap<TestCategoryDTO, TestCategoryViewModel>();
+            return View(Mapper.Map<IEnumerable<TestCategoryDTO>, IEnumerable<TestCategoryViewModel>>(_testCategoryService.GetAll()));
         }
 
         public ActionResult Create()
@@ -29,22 +32,25 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Id,NameOfCategory,Desc")] TestCategoryDTO category)
+        public ActionResult Create(TestCategoryViewModel category)
         {
-            _testCategoryService.AddCategory(category);
+            Mapper.CreateMap<TestCategoryViewModel, TestCategoryDTO>();
+            _testCategoryService.AddCategory(Mapper.Map<TestCategoryViewModel, TestCategoryDTO>(category));
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
         {
-            var test = _testCategoryService.GetById(id);
-            return View(test);
+            Mapper.CreateMap<TestCategoryDTO, TestCategoryViewModel>();
+            var category = Mapper.Map<TestCategoryDTO, TestCategoryViewModel>(_testCategoryService.GetById(id));
+            return View(category);
         }
 
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "Id,NameOfCategory,Desc")] TestCategoryDTO category)
+        public ActionResult Edit(TestCategoryViewModel category)
         {
-            _testCategoryService.UpdateCategory(category);
+            Mapper.CreateMap<TestCategoryViewModel, TestCategoryDTO>();
+            _testCategoryService.UpdateCategory(Mapper.Map<TestCategoryViewModel, TestCategoryDTO>(category));
             return RedirectToAction("Index");
         }
 
@@ -55,7 +61,9 @@ namespace APRST.WEB.Controllers
                 return HttpNotFound();
             }
             int _id = (int)id;
-            return View(_testCategoryService.GetById(_id));
+
+            Mapper.CreateMap<TestCategoryDTO, TestCategoryViewModel>();
+            return View(Mapper.Map<TestCategoryDTO, TestCategoryViewModel>(_testCategoryService.GetById(_id)));
         }
 
         [HttpPost]

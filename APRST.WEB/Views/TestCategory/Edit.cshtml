@@ -1,4 +1,4 @@
-﻿@model APRST.BLL.DTO.TestCategoryDTO
+﻿@model APRST.WEB.Models.TestCategoryViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TestCategoryDTO</h4>
+        <h4>TestCategoryViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
