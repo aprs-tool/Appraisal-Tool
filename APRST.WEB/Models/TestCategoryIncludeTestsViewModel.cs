@@ -10,6 +10,6 @@ namespace APRST.WEB.Models
         public int Id { get; set; }
         public string NameOfCategory { get; set; }
         public string Desc { get; set; }
-        public List<TestViewModel> Tests { get; set; }
+        public List<TestForCategoryViewModel> Tests { get; set; }
     }
 }

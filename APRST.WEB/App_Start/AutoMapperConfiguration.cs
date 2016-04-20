@@ -23,9 +23,16 @@ namespace APRST.WEB.App_Start
     {
         protected override void Configure()
         {
+            //TestController
+            Mapper.CreateMap<TestInfoDTO, TestInfoViewModel>();
+            Mapper.CreateMap<TestViewModel, TestDTO>();
+            Mapper.CreateMap<TestDTO, TestViewModel>();
+            Mapper.CreateMap<TestDTO, TestInfoViewModel>();
+
+            //TestCategoryController
             Mapper.CreateMap<TestCategoryViewModel, TestCategoryDTO>();
             Mapper.CreateMap<TestCategoryDTO, TestCategoryViewModel>();
-            Mapper.CreateMap<TestDTO, TestViewModel>();
+            Mapper.CreateMap<TestDTO, TestForCategoryViewModel>();
             Mapper.CreateMap<TestCategoryIncludeTestsDTO, TestCategoryIncludeTestsViewModel>()
                 .ForMember(dto => dto.Tests, opt => opt.MapFrom(src => src.TestDtos));
         }

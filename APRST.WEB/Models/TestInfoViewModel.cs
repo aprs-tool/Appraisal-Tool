@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace APRST.BLL.DTO
+namespace APRST.WEB.Models
 {
-    public class TestInfoDTO
+    public class TestInfoViewModel
     {
         public int Id { get; set; }
         public string NameOfTest { get; set; }

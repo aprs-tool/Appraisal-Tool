@@ -56,7 +56,7 @@ namespace APRST.BLL.Services
                 return Mapper.Map<Test, TestDTO>(_uow.TestRepository.GetEntityById(id));   
         }
 
-        public IEnumerable<TestDTO> GetTestByCategoryId(int id)
+        public IEnumerable<TestDTO> GetTestsByCategoryId(int id)
         {
             Mapper.CreateMap<Test, TestDTO>();
             return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.GetTestByCategoryId(id));
