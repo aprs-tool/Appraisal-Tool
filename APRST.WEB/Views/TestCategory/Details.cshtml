@@ -1,4 +1,5 @@
-﻿@model IEnumerable<APRST.BLL.DTO.TestDTO>
+﻿@using APRST.WEB.Models
+@model APRST.WEB.Models.TestCategoryIncludeTestsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -6,34 +7,48 @@
 
 <h2>Details</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NameOfTest)
-        </th>
-        <th>
+<div>
+    <h4>TestCategoryIncludeTestsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameOfCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameOfCategory)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Desc)
-        </th>
-        <th></th>
-    </tr>
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameOfTest)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Desc)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+        <dd>
+            @Html.DisplayFor(model => model.Desc)
+        </dd>
 
-</table>
+    </dl>
+
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>NameOfTest</th>
+            <th>Desc</th>
+            <th></th>
+        </tr>
+        
+            @foreach (TestViewModel test in @Model.Tests)
+            {
+                <tr>
+                    <td>@test.Id</td>
+                    <td>@test.NameOfTest</td>
+                    <td>@test.Desc</td>
+                </tr>
+            }
+                
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

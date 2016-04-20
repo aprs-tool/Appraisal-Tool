@@ -14,5 +14,10 @@ namespace APRST.DAL.Repositories
         public TestCategoryRepository(DbContext context):base(context)
         {
         }
+
+        public TestCategory TestCategoryWithTests(int id)
+        {
+           return GetEntities().Where(s => s.Id == id).Include(src => src.Tests).FirstOrDefault();
+        }
     }
 }

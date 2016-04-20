@@ -10,7 +10,7 @@ namespace APRST.BLL.Interfaces
 {
     public interface ITestCategoryService
     {
-        //IEnumerable<TestCategoryDTO> TestCategoryWithTests();
+        TestCategoryIncludeTestsDTO TestCategoryWithTests(int id);
         IEnumerable<TestCategoryDTO> GetAll();
         TestCategoryDTO GetById(int id);
         void AddCategory(TestCategoryDTO categoryDto);

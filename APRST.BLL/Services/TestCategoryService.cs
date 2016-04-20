@@ -44,6 +44,14 @@ namespace APRST.BLL.Services
             _uow.Save();
         }
 
+        public TestCategoryIncludeTestsDTO TestCategoryWithTests(int id)
+        {
+            Mapper.CreateMap<Test, TestDTO>();
+            Mapper.CreateMap<TestCategory, TestCategoryIncludeTestsDTO>()
+                .ForMember(dto => dto.TestDtos, opt => opt.MapFrom(src => src.Tests));
+            return Mapper.Map<TestCategory, TestCategoryIncludeTestsDTO>(_uow.TestCategoryRepository.TestCategoryWithTests(id));
+        }
+
         public void UpdateCategory(TestCategoryDTO categoryDto)
         {
             Mapper.CreateMap<TestCategoryDTO, TestCategory>();
