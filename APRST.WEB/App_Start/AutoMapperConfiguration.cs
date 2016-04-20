@@ -39,6 +39,9 @@ namespace APRST.WEB.App_Start
             //TestQuestionController
             //Mapper.CreateMap<TestQuestionDTO, TestQuestionViewModel>();
             Mapper.CreateMap<TestQuestionViewModel, TestQuestionDTO>();
+            Mapper.CreateMap<TestQuestionDTO, TestQuestionViewModel>();
+            Mapper.CreateMap<TestIncludeQuestionsDTO, TestWithQuestionViewModel>()
+                .ForMember(dto => dto.Questions, opt => opt.MapFrom(src => src.QuestionsDTO));
         }
     }
 }

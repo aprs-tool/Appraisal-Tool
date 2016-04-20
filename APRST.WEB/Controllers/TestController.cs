@@ -48,7 +48,7 @@ namespace APRST.WEB.Controllers
         [HttpPost]
         public ActionResult Edit(TestViewModel test)
         {
-            _testService.UpdateTest((Mapper.Map<TestViewModel, TestDTO>(test)));
+            _testService.UpdateTest(Mapper.Map<TestViewModel, TestDTO>(test));
             return RedirectToAction("Index");
         }
 
@@ -68,6 +68,11 @@ namespace APRST.WEB.Controllers
         {
             _testService.RemoveTestById(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int id)
+        {
+             return View(Mapper.Map<TestIncludeQuestionsDTO, TestWithQuestionViewModel>(_testService.GetQuestionsForTest(id)));
         }
 
     }

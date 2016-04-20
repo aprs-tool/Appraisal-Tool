@@ -24,8 +24,9 @@ namespace APRST.WEB.Controllers
             return View(_testQuestionService.GetAll());
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+            ViewBag.TestId = id;
             return View();
         }
 
@@ -34,6 +35,43 @@ namespace APRST.WEB.Controllers
         {
             _testQuestionService.Add(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(_question));
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var question = Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(id));
+            return View(question);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(TestQuestionViewModel qst)
+        {
+            _testQuestionService.UpdateTest(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(qst));
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            int _id = (int)id;
+
+            return View(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(_id)));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            _testQuestionService.RemoveTestById(id);
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Details(int id)
+        {
+            return View(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(id)));
         }
     }
 }

@@ -29,5 +29,10 @@ namespace APRST.DAL.Repositories
         {
             return GetEntities().Where(s => s.TestCategoryId == id);
         }
+
+        public Test GetQuestionsForTest(int id)
+        {
+            return GetEntities().Where(s => s.Id == id).Include(pr => pr.Questions).FirstOrDefault();
+        }
     }
 }

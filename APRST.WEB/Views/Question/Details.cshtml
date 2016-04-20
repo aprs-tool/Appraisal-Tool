@@ -1,0 +1,14 @@
+﻿@model APRST.WEB.Models.TestQuestionViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<hr />
+
+@Html.RouteLink("Edit question", new { action = "Edit", controller = "Question", id = Model.Id })
+
+<hr />
+

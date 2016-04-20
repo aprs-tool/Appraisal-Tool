@@ -62,5 +62,13 @@ namespace APRST.BLL.Services
             return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.GetTestByCategoryId(id));
             
         }
+
+        public TestIncludeQuestionsDTO GetQuestionsForTest(int id)
+        {
+            Mapper.CreateMap<TestQuestion, TestQuestionDTO>();
+            Mapper.CreateMap<Test, TestIncludeQuestionsDTO>()
+                .ForMember(dto => dto.QuestionsDTO, opt => opt.MapFrom(src => src.Questions));
+            return Mapper.Map<Test, TestIncludeQuestionsDTO>(_uow.TestRepository.GetQuestionsForTest(id));
+        }
     }
 }

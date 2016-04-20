@@ -31,5 +31,24 @@ namespace APRST.BLL.Services
             Mapper.CreateMap<TestQuestion, TestQuestionInfoDTO>();
             return Mapper.Map<IEnumerable<TestQuestion>, List<TestQuestionInfoDTO>>(_uow.TestQuestionRepository.GetEntities());
         }
+
+        public TestQuestionDTO GetById(int id)
+        {
+            Mapper.CreateMap<TestQuestion, TestQuestionDTO>();
+            return Mapper.Map<TestQuestion, TestQuestionDTO>(_uow.TestQuestionRepository.GetEntityById(id));
+        }
+
+        public void UpdateTest(TestQuestionDTO qst)
+        {
+            Mapper.CreateMap<TestQuestionDTO, TestQuestion>();
+            _uow.TestQuestionRepository.Update(Mapper.Map<TestQuestionDTO, TestQuestion>(qst));
+            _uow.Save();
+        }
+
+        public void RemoveTestById(int id)
+        {
+            _uow.TestQuestionRepository.DeleteById(id);
+            _uow.Save();
+        }
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="DTO\TestCategoryDTO.cs" />
     <Compile Include="DTO\TestCategoryIncludeTestsDTO.cs" />
     <Compile Include="DTO\TestDTO.cs" />
+    <Compile Include="DTO\TestIncludeQuestionsDTO.cs" />
     <Compile Include="DTO\TestInfoDTO.cs" />
     <Compile Include="DTO\TestQuestionDTO.cs" />
     <Compile Include="DTO\TestQuestionInfoDTO.cs" />
