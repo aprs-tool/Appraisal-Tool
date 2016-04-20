@@ -13,5 +13,11 @@ namespace APRST.DAL.Entities
         public string Desc { get; set; }
         public int? TestCategoryId { get; set; }
         public TestCategory TestCategory { get; set; }
+
+        public ICollection<TestQuestion> Questions { get; set; }
+        public Test()
+        {
+            Questions = new List<TestQuestion>();
+        }
     }
 }
