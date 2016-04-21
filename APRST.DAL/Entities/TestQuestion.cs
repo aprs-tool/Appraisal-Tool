@@ -13,5 +13,11 @@ namespace APRST.DAL.Entities
         public string Question { get; set; }
 
         public Test Test { get; set; }
+
+        public ICollection<TestAnswer> Answers { get; set; }
+        public TestQuestion()
+        {
+            Answers = new List<TestAnswer>();
+        }
     }
 }

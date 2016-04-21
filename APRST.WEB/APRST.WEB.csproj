@@ -150,6 +150,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TestCategoryController.cs" />
@@ -157,10 +158,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestAnswerViewModel.cs" />
     <Compile Include="Models\TestCategoryIncludeTestsViewModel.cs" />
     <Compile Include="Models\TestCategoryViewModel.cs" />
     <Compile Include="Models\TestInfoViewModel.cs" />
     <Compile Include="Models\TestForCategoryViewModel.cs" />
+    <Compile Include="Models\TestQuestionIncludeAnswersViewModel.cs" />
     <Compile Include="Models\TestQuestionViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Models\TestWithQuestionViewModel.cs" />
@@ -211,9 +214,12 @@
     <Content Include="Views\Test\Delete.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Delete.cshtml" />
+    <Content Include="Views\Answer\Create.cshtml" />
+    <Content Include="Views\Question\Details.cshtml" />
+    <Content Include="Views\Answer\Edit.cshtml" />
+    <Content Include="Views\Answer\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

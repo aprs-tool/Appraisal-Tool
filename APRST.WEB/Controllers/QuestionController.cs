@@ -71,7 +71,7 @@ namespace APRST.WEB.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(id)));
+            return View(Mapper.Map<TestQuestionIncludeAnswersDTO, TestQuestionIncludeAnswersViewModel>(_testQuestionService.GetAnswersForQuestion(id)));
         }
     }
 }

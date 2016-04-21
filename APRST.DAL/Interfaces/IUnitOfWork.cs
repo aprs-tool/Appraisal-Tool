@@ -11,6 +11,7 @@ namespace APRST.DAL.Interfaces
         ITestRepository TestRepository { get; }
         ITestCategoryRepository TestCategoryRepository { get; }
         ITestQuestionRepository TestQuestionRepository { get; }
+        ITestAnswerRepository TestAnswerRepository { get; }
         void Save();
     }
 }

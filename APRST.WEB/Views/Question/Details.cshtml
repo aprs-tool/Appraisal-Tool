@@ -1,14 +1,46 @@
-﻿@model APRST.WEB.Models.TestQuestionViewModel
+﻿@using APRST.WEB.Models
+@model APRST.WEB.Models.TestQuestionIncludeAnswersViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Question</h2>
 
-<hr />
+<div>
+    <h4>@Html.DisplayFor(model => model.Question)</h4>
+    <hr />
 
-@Html.RouteLink("Edit question", new { action = "Edit", controller = "Question", id = Model.Id })
+    @Html.RouteLink("Add answer", new { action = "Create", controller = "Answer", id = Model.Id })
 
-<hr />
+    <dl class="dl-horizontal">
+        
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Answer</th>
+                    <th>Point</th>
+                    <th></th>
+                </tr>
 
+                @foreach (TestAnswerViewModel item in @Model.Answers)
+            {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Answer</td>
+                        <td>@item.Point</td>
+                        <td>
+                            @Html.RouteLink("Edit", new { action = "Edit", controller = "Answer", id = item.Id }) |
+                            @Html.RouteLink("Delete", new { action = "Delete", controller = "Answer", id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -50,5 +50,13 @@ namespace APRST.BLL.Services
             _uow.TestQuestionRepository.DeleteById(id);
             _uow.Save();
         }
+
+        public TestQuestionIncludeAnswersDTO GetAnswersForQuestion(int id)
+        {
+            Mapper.CreateMap<TestAnswer, TestAnswerDTO>();
+            Mapper.CreateMap<TestQuestion, TestQuestionIncludeAnswersDTO>()
+                .ForMember(dto => dto.AnswersDTO, opt => opt.MapFrom(src => src.Answers));
+            return Mapper.Map<TestQuestion, TestQuestionIncludeAnswersDTO>(_uow.TestQuestionRepository.GetAnswersForQuestion(id));
+        }
     }
 }

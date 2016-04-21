@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace APRST.DAL.Interfaces
 {
-    public interface ITestQuestionRepository : IRepository<TestQuestion>
+    public interface ITestAnswerRepository: IRepository<TestAnswer>
     {
-        TestQuestion GetAnswersForQuestion(int id);
     }
 }

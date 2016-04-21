@@ -51,9 +51,11 @@
   <ItemGroup>
     <Compile Include="EF\AprstContext.cs" />
     <Compile Include="Entities\Test.cs" />
+    <Compile Include="Entities\TestAnswer.cs" />
     <Compile Include="Entities\TestCategory.cs" />
     <Compile Include="Entities\TestQuestion.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ITestAnswerRepository.cs" />
     <Compile Include="Interfaces\ITestCategoryRepository.cs" />
     <Compile Include="Interfaces\ITestQuestionRepository.cs" />
     <Compile Include="Interfaces\ITestRepository.cs" />
@@ -74,10 +76,15 @@
     <Compile Include="Migrations\201604201749458_questionadd.Designer.cs">
       <DependentUpon>201604201749458_questionadd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604211639116_answersadd.cs" />
+    <Compile Include="Migrations\201604211639116_answersadd.Designer.cs">
+      <DependentUpon>201604211639116_answersadd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />
+    <Compile Include="Repositories\TestAnswerRepository.cs" />
     <Compile Include="Repositories\TestCategoryRepository.cs" />
     <Compile Include="Repositories\TestQuestionRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
@@ -98,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604201749458_questionadd.resx">
       <DependentUpon>201604201749458_questionadd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604211639116_answersadd.resx">
+      <DependentUpon>201604211639116_answersadd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

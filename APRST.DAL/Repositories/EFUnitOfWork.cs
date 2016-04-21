@@ -14,6 +14,7 @@ namespace APRST.DAL.Repositories
         private ITestRepository testRepository;
         private ITestCategoryRepository testCategoryRepository;
         private ITestQuestionRepository testQuestionRepository;
+        private ITestAnswerRepository testAnswerRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -45,6 +46,16 @@ namespace APRST.DAL.Repositories
                 if (testQuestionRepository == null)
                     testQuestionRepository = new TestQuestionRepository(db);
                 return testQuestionRepository;
+            }
+        }
+
+        public ITestAnswerRepository TestAnswerRepository
+        {
+            get
+            {
+                if (testAnswerRepository == null)
+                    testAnswerRepository = new TestAnswerRepository(db);
+                return testAnswerRepository;
             }
         }
 

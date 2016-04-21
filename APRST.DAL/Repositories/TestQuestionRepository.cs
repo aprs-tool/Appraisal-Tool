@@ -14,5 +14,10 @@ namespace APRST.DAL.Repositories
         public TestQuestionRepository(DbContext context) : base(context)
         {
         }
+
+        public TestQuestion GetAnswersForQuestion(int id)
+        {
+            return GetEntities().Where(s => s.Id == id).Include(pr => pr.Answers).FirstOrDefault();
+        }
     }
 }

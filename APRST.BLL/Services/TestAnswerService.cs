@@ -1,0 +1,49 @@
+﻿using AutoMapper;
+using APRST.BLL.Interfaces;
+using APRST.DAL.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using APRST.BLL.DTO;
+using APRST.DAL.Entities;
+
+namespace APRST.BLL.Services
+{
+    public class TestAnswerService : ITestAnswerService
+    {
+        IUnitOfWork _uow;
+
+        public TestAnswerService(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
+
+        public void Add(TestAnswerDTO answerDTO)
+        {
+            Mapper.CreateMap<TestAnswerDTO, TestAnswer>();
+            _uow.TestAnswerRepository.Add(Mapper.Map<TestAnswerDTO, TestAnswer>(answerDTO));
+            _uow.Save();
+        }
+
+        public void UpdateAnswer(TestAnswerDTO answerDTO)
+        {
+            Mapper.CreateMap<TestAnswerDTO, TestAnswer>();
+            _uow.TestAnswerRepository.Update(Mapper.Map<TestAnswerDTO, TestAnswer>(answerDTO));
+            _uow.Save();
+        }
+
+        public void RemoveAnswerById(int id)
+        {
+            _uow.TestAnswerRepository.DeleteById(id);
+            _uow.Save();
+        }
+
+        public TestAnswerDTO GetById(int id)
+        {
+            Mapper.CreateMap<TestAnswer, TestAnswerDTO>();
+            return Mapper.Map<TestAnswer, TestAnswerDTO>(_uow.TestAnswerRepository.GetEntityById(id));
+        }
+    }
+}
