@@ -21,26 +21,22 @@ namespace APRST.BLL.Services
 
         public void Add(TestQuestionDTO questionDTO)
         {
-            Mapper.CreateMap<TestQuestionDTO, TestQuestion>();
             _uow.TestQuestionRepository.Add(Mapper.Map<TestQuestionDTO, TestQuestion>(questionDTO));
             _uow.Save();
         }
 
         public IEnumerable<TestQuestionInfoDTO> GetAll()
         {
-            Mapper.CreateMap<TestQuestion, TestQuestionInfoDTO>();
             return Mapper.Map<IEnumerable<TestQuestion>, List<TestQuestionInfoDTO>>(_uow.TestQuestionRepository.GetEntities());
         }
 
         public TestQuestionDTO GetById(int id)
         {
-            Mapper.CreateMap<TestQuestion, TestQuestionDTO>();
             return Mapper.Map<TestQuestion, TestQuestionDTO>(_uow.TestQuestionRepository.GetEntityById(id));
         }
 
         public void UpdateTest(TestQuestionDTO qst)
         {
-            Mapper.CreateMap<TestQuestionDTO, TestQuestion>();
             _uow.TestQuestionRepository.Update(Mapper.Map<TestQuestionDTO, TestQuestion>(qst));
             _uow.Save();
         }
@@ -52,10 +48,7 @@ namespace APRST.BLL.Services
         }
 
         public TestQuestionIncludeAnswersDTO GetAnswersForQuestion(int id)
-        {
-            Mapper.CreateMap<TestAnswer, TestAnswerDTO>();
-            Mapper.CreateMap<TestQuestion, TestQuestionIncludeAnswersDTO>()
-                .ForMember(dto => dto.AnswersDTO, opt => opt.MapFrom(src => src.Answers));
+        { 
             return Mapper.Map<TestQuestion, TestQuestionIncludeAnswersDTO>(_uow.TestQuestionRepository.GetAnswersForQuestion(id));
         }
     }

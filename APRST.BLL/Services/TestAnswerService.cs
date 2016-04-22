@@ -22,14 +22,12 @@ namespace APRST.BLL.Services
 
         public void Add(TestAnswerDTO answerDTO)
         {
-            Mapper.CreateMap<TestAnswerDTO, TestAnswer>();
             _uow.TestAnswerRepository.Add(Mapper.Map<TestAnswerDTO, TestAnswer>(answerDTO));
             _uow.Save();
         }
 
         public void UpdateAnswer(TestAnswerDTO answerDTO)
         {
-            Mapper.CreateMap<TestAnswerDTO, TestAnswer>();
             _uow.TestAnswerRepository.Update(Mapper.Map<TestAnswerDTO, TestAnswer>(answerDTO));
             _uow.Save();
         }
@@ -41,8 +39,7 @@ namespace APRST.BLL.Services
         }
 
         public TestAnswerDTO GetById(int id)
-        {
-            Mapper.CreateMap<TestAnswer, TestAnswerDTO>();
+        { 
             return Mapper.Map<TestAnswer, TestAnswerDTO>(_uow.TestAnswerRepository.GetEntityById(id));
         }
     }

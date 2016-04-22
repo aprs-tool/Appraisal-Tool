@@ -21,7 +21,6 @@ namespace APRST.BLL.Services
         }
         public void AddTest(TestDTO testDto)
         {
-            Mapper.CreateMap<TestDTO, Test>();
             _uow.TestRepository.Add(Mapper.Map<TestDTO, Test>(testDto));
             _uow.Save();
         }
@@ -34,7 +33,6 @@ namespace APRST.BLL.Services
 
         public void UpdateTest(TestDTO testDto)
         {
-            Mapper.CreateMap<TestDTO, Test>();
             _uow.TestRepository.Update(Mapper.Map<TestDTO, Test>(testDto));
             _uow.Save();
         }
@@ -45,29 +43,21 @@ namespace APRST.BLL.Services
 
         public IEnumerable<TestInfoDTO> GetAll()
         {
-            Mapper.CreateMap<Test, TestInfoDTO>()
-                .ForMember("Category", opt => opt.MapFrom(src => src.TestCategory.NameOfCategory));
             return Mapper.Map<IEnumerable<Test>, List<TestInfoDTO>>(_uow.TestRepository.TestWithCategory());
         }
 
         public TestDTO GetById(int id)
         {
-            Mapper.CreateMap<Test, TestDTO>();
-                return Mapper.Map<Test, TestDTO>(_uow.TestRepository.GetEntityById(id));   
+            return Mapper.Map<Test, TestDTO>(_uow.TestRepository.GetEntityById(id));   
         }
 
         public IEnumerable<TestDTO> GetTestsByCategoryId(int id)
         {
-            Mapper.CreateMap<Test, TestDTO>();
-            return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.GetTestByCategoryId(id));
-            
+            return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.GetTestByCategoryId(id));  
         }
 
         public TestIncludeQuestionsDTO GetQuestionsForTest(int id)
         {
-            Mapper.CreateMap<TestQuestion, TestQuestionDTO>();
-            Mapper.CreateMap<Test, TestIncludeQuestionsDTO>()
-                .ForMember(dto => dto.QuestionsDTO, opt => opt.MapFrom(src => src.Questions));
             return Mapper.Map<Test, TestIncludeQuestionsDTO>(_uow.TestRepository.GetQuestionsForTest(id));
         }
     }
