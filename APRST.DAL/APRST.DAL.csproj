@@ -54,6 +54,7 @@
     <Compile Include="Entities\TestAnswer.cs" />
     <Compile Include="Entities\TestCategory.cs" />
     <Compile Include="Entities\TestQuestion.cs" />
+    <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITestAnswerRepository.cs" />
     <Compile Include="Interfaces\ITestCategoryRepository.cs" />
@@ -79,6 +80,10 @@
     <Compile Include="Migrations\201604211639116_answersadd.cs" />
     <Compile Include="Migrations\201604211639116_answersadd.Designer.cs">
       <DependentUpon>201604211639116_answersadd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604251442001_AddUserProfileAndLinkWithTest.cs" />
+    <Compile Include="Migrations\201604251442001_AddUserProfileAndLinkWithTest.Designer.cs">
+      <DependentUpon>201604251442001_AddUserProfileAndLinkWithTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604211639116_answersadd.resx">
       <DependentUpon>201604211639116_answersadd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604251442001_AddUserProfileAndLinkWithTest.resx">
+      <DependentUpon>201604251442001_AddUserProfileAndLinkWithTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
