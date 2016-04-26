@@ -17,8 +17,9 @@ namespace APRST.WEB.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var a = 
-            _userService.GetProfileWithTests("lapa");
+            //var a = 
+            //_userService.GetProfileWithTests("lapa");
+            _userService.AddTestToProfile(24,"lapa");
             return View();
         }
     }
