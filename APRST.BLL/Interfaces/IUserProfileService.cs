@@ -12,5 +12,6 @@ namespace APRST.BLL.Interfaces
     {
         void AddTestToProfile(int TestId, string userPrincipalName);
         UserProfileIncludeTestsDTO GetProfileWithTests(string userPrincipalName);
+        void CreateProfile(UserProfileDTO user);
     }
 }

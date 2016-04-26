@@ -46,6 +46,11 @@ namespace APRST.WEB.App_Start
             CreateMap<TestAnswerViewModel, TestAnswerDTO>().ReverseMap();
             CreateMap<TestQuestionIncludeAnswersDTO, TestQuestionIncludeAnswersViewModel>()
                 .ForMember(dto => dto.Answers, opt => opt.MapFrom(src => src.AnswersDTO));
+
+            //UserController
+            CreateMap<UserProfileDTO, UserProfileViewModel>().ReverseMap();
+
+            CreateMap<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>().ReverseMap();
         }
     }
 }

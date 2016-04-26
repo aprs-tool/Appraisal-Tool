@@ -27,6 +27,13 @@ namespace APRST.BLL.Services
             profile.Tests.Add(test);
             _uow.Save();
         }
+
+        public void CreateProfile(UserProfileDTO user)
+        {
+            _uow.UserProfileRepository.Add(Mapper.Map<UserProfileDTO, UserProfile>(user));
+            _uow.Save();
+        }
+
         public UserProfileIncludeTestsDTO GetProfileWithTests(string userPrincipalName)
         {
            return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(

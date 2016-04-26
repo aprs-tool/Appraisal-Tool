@@ -1,7 +1,59 @@
-﻿
+﻿@model APRST.WEB.Models.UserProfileIncludeTestsViewModel
+@using APRST.WEB.Models
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Профиль";
 }
+<div>
+    <h3>Профиль</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
 
-<h2>Index</h2>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+    </dl>
+</div>
+
+<h3>Доступные тесты</h3>
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>Название теста</td>
+            <td>Описание</td>
+            <td></td>
+        </tr>
+    @foreach (TestInfoViewModel test in Model.Tests)
+    {
+        <tr>
+            <td>@test.Id</td>
+            <td>@test.NameOfTest</td>
+            <td>@test.Desc</td>
+            <td>Пройти</td>
+        </tr>
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

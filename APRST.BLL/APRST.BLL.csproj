@@ -67,6 +67,7 @@
     <Compile Include="DTO\TestQuestionDTO.cs" />
     <Compile Include="DTO\TestQuestionIncludeAnswersDTO.cs" />
     <Compile Include="DTO\TestQuestionInfoDTO.cs" />
+    <Compile Include="DTO\UserProfileDTO.cs" />
     <Compile Include="DTO\UserProfileIncludeTestsDTO.cs" />
     <Compile Include="Infastructure\BuisnessLayerMapperProfile.cs" />
     <Compile Include="Infastructure\ServiceModule.cs" />
