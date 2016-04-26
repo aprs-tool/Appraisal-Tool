@@ -35,6 +35,9 @@ namespace APRST.BLL.Infastructure
 
             //TestAnswerService
             CreateMap<TestAnswerDTO, TestAnswer>().ReverseMap();
+
+            //UserProfileService
+            CreateMap<UserProfile, UserProfileIncludeTestsDTO>();
         }
     }
 }

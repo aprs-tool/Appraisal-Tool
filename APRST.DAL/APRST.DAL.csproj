@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\ITestQuestionRepository.cs" />
     <Compile Include="Interfaces\ITestRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\IUserProfileRepository.cs" />
     <Compile Include="Migrations\201604171514002_init.cs" />
     <Compile Include="Migrations\201604171514002_init.Designer.cs">
       <DependentUpon>201604171514002_init.cs</DependentUpon>
@@ -93,6 +94,7 @@
     <Compile Include="Repositories\TestCategoryRepository.cs" />
     <Compile Include="Repositories\TestQuestionRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
+    <Compile Include="Repositories\UserProfileRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

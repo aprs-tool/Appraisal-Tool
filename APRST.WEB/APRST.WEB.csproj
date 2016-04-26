@@ -155,6 +155,7 @@
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TestCategoryController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,6 +221,7 @@
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Answer\Edit.cshtml" />
     <Content Include="Views\Answer\Delete.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
