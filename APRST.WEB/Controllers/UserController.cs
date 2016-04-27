@@ -61,7 +61,7 @@ namespace APRST.WEB.Controllers
         [HttpPost]
         public ActionResult GiveTest(UserTestViewModel userTest)
         {
-            //TODO: REFACTOR
+            //TODO: REFACTOR THIS (TEST COMMIT)
             _userService.AddTestToProfile(Int32.Parse(userTest.testid), userTest.userid);
             return RedirectToAction("Index");
         }
