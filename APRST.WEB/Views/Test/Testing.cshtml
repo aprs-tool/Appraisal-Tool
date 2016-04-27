@@ -1,0 +1,49 @@
+﻿@using APRST.WEB.Models
+@model IEnumerable<APRST.WEB.Models.TestQuestionIncludeAnswersViewModel>
+
+@{
+    ViewBag.Title = "Testing";
+    int option = 1;
+}
+
+<style>
+    .block {
+        background: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+
+        padding: 0 10px 0 10px;
+        margin: 5px 0 5px 0;
+    }
+
+</style>
+
+<h2>@ViewBag.TestName</h2>
+
+<hr />
+
+@foreach (TestQuestionIncludeAnswersViewModel item in Model)
+{
+    @Html.DisplayFor(model => item.Question)
+
+    <br />
+
+    <div class="block">
+
+        @foreach (TestAnswerViewModel answ in item.Answers)
+        {
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios{@option}" id="optionsRadios{@option}" value="option{@option}">
+                @Html.DisplayFor(model => answ.Answer)
+            </label>
+        </div>
+        }
+
+    </div>
+
+    option++;
+    <br />
+}
+
+<button type="button" class="btn btn-success btn-lg">Завершить тест</button>

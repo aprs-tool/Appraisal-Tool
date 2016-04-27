@@ -12,6 +12,7 @@ namespace APRST.BLL.Interfaces
         void Add(TestQuestionDTO questionDTO);
         void UpdateTest(TestQuestionDTO questionDTO);
         void RemoveTestById(int id);
+        IEnumerable<TestQuestionIncludeAnswersDTO> GetQA(int testId);
         IEnumerable<TestQuestionInfoDTO> GetAll();
         TestQuestionDTO GetById(int id);
         TestQuestionIncludeAnswersDTO GetAnswersForQuestion(int id);

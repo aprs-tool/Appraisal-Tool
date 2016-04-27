@@ -14,10 +14,13 @@ namespace APRST.WEB.Controllers
     {
         private readonly ITestService _testService;
         private readonly ITestCategoryService _categoryService;
-        public TestController(ITestService testService, ITestCategoryService categoryService)
+        private readonly ITestQuestionService _questionService;
+
+        public TestController(ITestService testService, ITestCategoryService categoryService, ITestQuestionService questionService)
         {
             _testService = testService;
             _categoryService = categoryService;
+            _questionService = questionService;
         }
         // GET: Test
         public ActionResult Index()
@@ -73,6 +76,12 @@ namespace APRST.WEB.Controllers
         public ActionResult Details(int id)
         {
              return View(Mapper.Map<TestIncludeQuestionsDTO, TestWithQuestionViewModel>(_testService.GetQuestionsForTest(id)));
+        }
+
+        public ActionResult Testing(int id)
+        {
+            ViewBag.TestName = _testService.GetById(id).NameOfTest;
+            return View(Mapper.Map<IEnumerable<TestQuestionIncludeAnswersDTO>, IEnumerable<TestQuestionIncludeAnswersViewModel>>(_questionService.GetQA(id)));
         }
 
     }

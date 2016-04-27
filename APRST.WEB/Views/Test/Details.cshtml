@@ -3,44 +3,40 @@
 
 @{
     ViewBag.Title = "Details";
+    int counter = 1;
 }
 
-<h2>Details</h2>
+<h2>Подробнее о тесте</h2>
 
 <div>
-    <h4>TestViewModel</h4>
+    <h4>@Html.DisplayFor(model => model.NameOfTest)</h4>
 
     <hr />
 
-    @Html.RouteLink("Create New", new { action = "Create", controller = "Question", id = Model.Id })
+    @Html.RouteLink("Добавить вопрос к тесту", new { action = "Create", controller = "Question", id = Model.Id }, new { @class = "btn btn-primary btn-xs" })
 
-    <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NameOfTest)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NameOfTest)
-        </dd>
 
         <table class="table">
             <tr>
-                <th>Id</th>
-                <th>Question</th>
+                <th width="15%">Номер вопроса</th>
+                <th>Вопрос</th>
                 <th></th>
             </tr>
 
             @foreach (TestQuestionViewModel item in @Model.Questions)
             {
                 <tr>
-                    <td>@item.Id</td>
+                    <td>@counter</td>
                     <td>@Html.RouteLink(item.Question, new { action = "Details", controller = "Question", id = item.Id })</td>
-                    <td>
-                        @Html.RouteLink("Edit", new { action = "Edit", controller = "Question", id = item.Id }) |
-                        @Html.RouteLink("Delete", new { action = "Delete", controller = "Question", id = item.Id })
+                    <td style="text-align: right;">
+                        @Html.RouteLink("Редактировать", new { action = "Edit", controller = "Question", id = item.Id }, new { @class = "btn btn-success btn-xs" })
+                        @Html.RouteLink("Подробнее", new { action = "Details", controller = "Question", id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                        @Html.RouteLink("Удалить", new { action = "Delete", controller = "Question", id = item.Id }, new { @class = "btn btn-danger btn-xs" })
                     </td>
                 </tr>
+
+                counter++;
             }
 
         </table>
@@ -48,6 +44,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать тест", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Назад, к списку тестов", "Index")
 </p>

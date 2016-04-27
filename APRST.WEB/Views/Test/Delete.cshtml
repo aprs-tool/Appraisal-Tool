@@ -1,18 +1,18 @@
 ﻿@model APRST.WEB.Models.TestInfoViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Удаление теста";
 }
 
-<h2>Delete</h2>
+<h2>Удаление</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вы уверены, что хотите удалить этот тест?</h3>
 <div>
-    <h4>TestInfoViewModel</h4>
+    <h4>@Html.DisplayFor(model => model.NameOfTest)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NameOfTest)
+            Название теста
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Desc)
+            Описание
         </dt>
 
         <dd>
@@ -32,8 +32,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад, к списку тестов", "Index")
         </div>
     }
 </div>

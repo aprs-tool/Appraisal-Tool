@@ -2,45 +2,48 @@
 @model APRST.WEB.Models.TestQuestionIncludeAnswersViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Подробнее о вопросе";
+    int counter = 1;
 }
 
-<h2>Question</h2>
+<h2>Подробнее о вопросе</h2>
 
 <div>
     <h4>@Html.DisplayFor(model => model.Question)</h4>
     <hr />
 
-    @Html.RouteLink("Add answer", new { action = "Create", controller = "Answer", id = Model.Id })
+    @Html.RouteLink("Добавить ответ", new { action = "Create", controller = "Answer", id = Model.Id }, new { @class = "btn btn-primary btn-xs" })
 
     <dl class="dl-horizontal">
-        
-            <table class="table">
+
+        <table class="table">
+            <tr>
+                <th width="15%">Номер ответа</th>
+                <th>Ответ</th>
+                <th>Балл</th>
+                <th></th>
+            </tr>
+
+            @foreach (TestAnswerViewModel item in @Model.Answers)
+            {
                 <tr>
-                    <th>Id</th>
-                    <th>Answer</th>
-                    <th>Point</th>
-                    <th></th>
+                    <td>@counter</td>
+                    <td>@item.Answer</td>
+                    <td>@item.Point</td>
+                    <td style="text-align: right;">
+                        @Html.RouteLink("Редактировать", new { action = "Edit", controller = "Answer", id = item.Id }, new { @class = "btn btn-success btn-xs" })
+                        @Html.RouteLink("Удалить", new { action = "Delete", controller = "Answer", id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+                    </td>
                 </tr>
 
-                @foreach (TestAnswerViewModel item in @Model.Answers)
-            {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.Answer</td>
-                        <td>@item.Point</td>
-                        <td>
-                            @Html.RouteLink("Edit", new { action = "Edit", controller = "Answer", id = item.Id }) |
-                            @Html.RouteLink("Delete", new { action = "Delete", controller = "Answer", id = item.Id })
-                        </td>
-                    </tr>
-                }
+                counter++;
+            }
 
-            </table>
+        </table>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать вопрос", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Назад, к списку вопросов", "Index")
 </p>

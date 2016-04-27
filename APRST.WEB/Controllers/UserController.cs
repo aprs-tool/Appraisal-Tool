@@ -22,7 +22,8 @@ namespace APRST.WEB.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var profile = _userService.GetProfileWithTests(UserPrincipal.Current.UserPrincipalName);
+            //return principal
+            var profile = _userService.GetProfileWithTests(UserPrincipal.Current.SamAccountName);
             if (profile == null)
             {
                 return RedirectToAction("Registration");

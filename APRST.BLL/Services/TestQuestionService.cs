@@ -51,5 +51,10 @@ namespace APRST.BLL.Services
         { 
             return Mapper.Map<TestQuestion, TestQuestionIncludeAnswersDTO>(_uow.TestQuestionRepository.GetAnswersForQuestion(id));
         }
+
+        public IEnumerable<TestQuestionIncludeAnswersDTO> GetQA(int testId)
+        {
+            return Mapper.Map<IEnumerable<TestQuestion>, IEnumerable<TestQuestionIncludeAnswersDTO>>(_uow.TestQuestionRepository.GetQA(testId));
+        }
     }
 }

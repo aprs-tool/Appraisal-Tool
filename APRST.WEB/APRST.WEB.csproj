@@ -226,6 +226,7 @@
     <Content Include="Views\Answer\Delete.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\Test\Testing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

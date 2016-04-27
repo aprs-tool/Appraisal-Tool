@@ -36,11 +36,11 @@
 
 <h3>Доступные тесты</h3>
     <table class="table">
-        <tr>
+        <tr class="success">
             <td>Id</td>
             <td>Название теста</td>
             <td>Описание</td>
-            <td></td>
+            <td style="text-align: right;">@Html.RouteLink("Выдать тест", new { action = "GiveTest", controller = "User", id = Model.UserPrincipalName }, new { @class = "btn btn-success btn-xs" })</td>
         </tr>
     @foreach (TestInfoViewModel test in Model.Tests)
     {
@@ -48,12 +48,7 @@
             <td>@test.Id</td>
             <td>@test.NameOfTest</td>
             <td>@test.Desc</td>
-            <td>Пройти</td>
+            <td style="text-align: right;">@Html.RouteLink("Пройти", new { action = "Testing", controller = "Test", id = test.Id }, new { @class = "btn btn-primary btn-xs" })</td>
         </tr>
     }
 </table>
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
