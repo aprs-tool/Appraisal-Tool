@@ -53,7 +53,7 @@
             <td>Id</td>
             <td>Название теста</td>
             <td>Описание</td>
-            <td style="text-align: right;">@Html.RouteLink("Выдать тест", new { action = "GiveTest", controller = "User", id = Model.UserPrincipalName }, new { @class = "btn btn-success btn-xs" })</td>
+            <td style="text-align: right;">@Html.RouteLink("Выдать тест", new { action = "GiveTest", controller = "User", id = Model.SamAccoutName }, new { @class = "btn btn-success btn-xs" })</td>
         </tr>
     @foreach (TestInfoViewModel test in Model.Tests)
     {

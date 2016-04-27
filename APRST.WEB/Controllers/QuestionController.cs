@@ -18,11 +18,6 @@ namespace APRST.WEB.Controllers
         {
             _testQuestionService = service;
         }
-        // GET: Question
-        public ActionResult Index()
-        {
-            return View(_testQuestionService.GetAll());
-        }
 
         public ActionResult Create(int id)
         {
@@ -34,7 +29,12 @@ namespace APRST.WEB.Controllers
         public ActionResult Create(TestQuestionViewModel _question)
         {
             _testQuestionService.Add(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(_question));
-            return RedirectToAction("Index");
+            return RedirectToRoute(new
+            {
+                controller = "Test",
+                action = "Details",
+                id = _question.TestId
+            });
         }
 
         public ActionResult Edit(int id)
@@ -47,7 +47,12 @@ namespace APRST.WEB.Controllers
         public ActionResult Edit(TestQuestionViewModel qst)
         {
             _testQuestionService.UpdateTest(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(qst));
-            return RedirectToAction("Index");
+            return RedirectToRoute(new
+            {
+                controller = "Test",
+                action = "Details",
+                id = qst.TestId
+            });
         }
 
         public ActionResult Delete(int? id)
@@ -57,7 +62,6 @@ namespace APRST.WEB.Controllers
                 return HttpNotFound();
             }
             int _id = (int)id;
-
             return View(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(_id)));
         }
 
