@@ -14,10 +14,13 @@ namespace APRST.WEB.Controllers
 {
     public class UserController : Controller
     {
+        private ITestService _testService;
         private IUserProfileService _userService;
-        public UserController(IUserProfileService service)
+
+        public UserController(IUserProfileService service, ITestService testService)
         {
             _userService = service;
+            _testService = testService;
         }
         // GET: User
         public ActionResult Index()
@@ -50,5 +53,18 @@ namespace APRST.WEB.Controllers
             _userService.CreateProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileForCreate));
             return RedirectToAction("Index");
         }
+        public ActionResult GiveTest(string id)
+        {
+            ViewBag.ABC = id;
+            return View(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
+        }
+        [HttpPost]
+        public ActionResult GiveTest(UserTestViewModel userTest)
+        {
+            //TODO: REFACTOR
+            _userService.AddTestToProfile(Int32.Parse(userTest.testid), userTest.userid);
+            return RedirectToAction("Index");
+        }
+
     }
 }

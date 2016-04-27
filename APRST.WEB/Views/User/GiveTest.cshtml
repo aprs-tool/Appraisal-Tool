@@ -1,0 +1,48 @@
+﻿@model IEnumerable<APRST.WEB.Models.TestInfoViewModel>
+
+@{
+    ViewBag.Title = "GiveTest";
+}
+
+<h2>Выберите тест для пользователя:</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameOfTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NameOfTest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                <form method="post" action="">
+                    <input value="@ViewBag.ABC" name="userid" hidden />
+                    <input type="hidden" name="testid" value="@item.Id" />
+                    <input type="submit" value="Выдать тест" />
+                </form>
+            </td>
+
+        </tr>
+
+
+    }
+
+</table>

@@ -171,6 +171,7 @@
     <Compile Include="Models\TestWithQuestionViewModel.cs" />
     <Compile Include="Models\UserProfileIncludeTestsViewModel.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
+    <Compile Include="Models\UserTestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\NinjectDependencyResolver.cs" />
   </ItemGroup>
@@ -227,6 +228,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\Test\Testing.cshtml" />
+    <Content Include="Views\User\GiveTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
