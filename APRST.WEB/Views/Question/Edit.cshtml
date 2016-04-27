@@ -35,5 +35,5 @@
 }
 
 <div>
-    @Html.ActionLink("Назад, к списку вопросов", "Index")
+    @Html.RouteLink("Назад, к списку вопросов", new { action = "Details", controller = "Test", id = Model.TestId })
 </div>

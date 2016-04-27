@@ -1,10 +1,10 @@
 ﻿@model APRST.WEB.Models.TestCategoryViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактирование категории";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование категории</h2>
 
 
 @using (Html.BeginForm())
@@ -12,13 +12,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TestCategoryViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NameOfCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NameOfCategory, "Название", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.NameOfCategory, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NameOfCategory, "", new { @class = "text-danger" })
@@ -26,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Desc, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Desc, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger" })
@@ -35,14 +34,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить изменения" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Назад, к списку категорий", "Index")
 </div>
 
 @section Scripts {

@@ -17,7 +17,7 @@
     <dl class="dl-horizontal">
 
         <table class="table">
-            <tr>
+            <tr class="success">
                 <th width="15%">Номер ответа</th>
                 <th>Ответ</th>
                 <th>Балл</th>
@@ -45,5 +45,5 @@
 </div>
 <p>
     @Html.ActionLink("Редактировать вопрос", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Назад, к списку вопросов", "Index")
+    <a href="@Request.UrlReferrer.ToString()">Назад, к списку вопросов</a>
 </p>
