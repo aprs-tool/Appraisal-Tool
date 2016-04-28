@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -32,6 +33,11 @@ namespace APRST.BLL.Services
         {
             _uow.UserProfileRepository.Add(Mapper.Map<UserProfileDTO, UserProfile>(user));
             _uow.Save();
+        }
+
+        public IEnumerable<UserProfileDTO> GetAll()
+        {
+           return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(_uow.UserProfileRepository.GetEntities());
         }
 
         public UserProfileIncludeTestsDTO GetProfileWithTests(string userPrincipalName)

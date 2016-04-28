@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
@@ -63,7 +64,18 @@ namespace APRST.WEB.Controllers
         {
             //TODO: REFACTOR THIS (TEST COMMIT)
             _userService.AddTestToProfile(Int32.Parse(userTest.testid), userTest.userid);
-            return RedirectToAction("Index");
+            return RedirectToAction("Profile", new {id=userTest.userid});
+        }
+
+        public ActionResult All()
+        {
+            return View(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()));
+        }
+        public ActionResult Profile(string id)
+        {
+           var profile= _userService.GetProfileWithTests(id);
+            
+            return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }
 
     }

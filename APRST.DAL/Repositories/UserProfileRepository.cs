@@ -18,7 +18,7 @@ namespace APRST.DAL.Repositories
         public UserProfile GetProfileWithTests(string userPrincipalName)
         {
             return GetEntities()
-                .Where(s => s.UserPrincipalName == userPrincipalName)
+                .Where(s => s.SamAccoutName == userPrincipalName)
                 .Include(r => r.Tests)
                 .FirstOrDefault();
         }

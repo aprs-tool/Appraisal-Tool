@@ -229,6 +229,7 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\Test\Testing.cshtml" />
     <Content Include="Views\User\GiveTest.cshtml" />
+    <Content Include="Views\User\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
