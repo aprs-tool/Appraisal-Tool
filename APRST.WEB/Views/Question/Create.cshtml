@@ -34,7 +34,7 @@
 }
 
 <div>
-    @Html.ActionLink("Назад, к списку вопросов", "Index")
+    <a href="@Request.UrlReferrer.ToString()">Назад, к списку вопросов</a>
 </div>
 
 @section Scripts {
