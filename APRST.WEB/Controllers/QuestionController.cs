@@ -66,10 +66,10 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public void Delete(int id)
         {
             _testQuestionService.RemoveTestById(id);
-            return RedirectToAction("Index");
+            Response.Redirect(Request.UrlReferrer.ToString());
         }
 
 

@@ -27,7 +27,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад, к списку вопросов", "Index")
+            <a href="@Request.UrlReferrer.ToString()">Назад, к списку вопросов</a>
         </div>
     }
 </div>
