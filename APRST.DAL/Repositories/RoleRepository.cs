@@ -19,7 +19,7 @@ namespace APRST.DAL.Repositories
 
         public void AddUsersToRole(string[] username, int roleId)
         {
-           
+            throw new NotImplementedException();
         }
 
 

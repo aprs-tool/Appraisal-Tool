@@ -26,12 +26,11 @@ namespace APRST.BLL.Services
             var role = _uow.RoleRepository.GetEntities().FirstOrDefault(f => f.Id == roleId);
             if (role != null)
             {
-                role.UserProfiles.AddRange(username.Select(item => users.FirstOrDefault(s => s.SamAccoutName == item)));
+                role.UserProfiles.AddRange(username.Select(item => users.FirstOrDefault(s => s.UserIdentityName == item)));
                 _uow.Save();
             }
         }
 
-        //LAKHMITSKI\lakhm
         public string GetRoleForUser(string userIdentityName)
         {
             var user = _uow.UserProfileRepository.GetProfileWithRole(userIdentityName);
@@ -61,7 +60,7 @@ namespace APRST.BLL.Services
             {
                 foreach (var user in username)
                 {
-                    role.UserProfiles.Remove(users.FirstOrDefault(s => s.SamAccoutName == user));
+                    role.UserProfiles.Remove(users.FirstOrDefault(s => s.UserIdentityName == user));
                 }
                 _uow.Save();
             }

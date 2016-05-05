@@ -29,13 +29,12 @@ namespace APRST.WEB.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var userinrole = _roleService.IsUserInRole(User.Identity.Name, "Пользователь");
-            //return principal
             var profile = _userService.GetProfileWithTests(UserPrincipal.Current.SamAccountName);
             if (profile == null)
             {
                 return RedirectToAction("Registration");
             }
+
             return View(Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }
 
@@ -81,16 +80,6 @@ namespace APRST.WEB.Controllers
            var profile= _userService.GetProfileWithTests(id);
             
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
-        }
-        public ActionResult RoleTest()
-        {
-            var users = new string[]
-            {
-                "lakhmitski",
-                "lapa"
-            };
-            _roleService.RemoveUsersFromRole(users,2);
-            return View();
         }
     }
 }
