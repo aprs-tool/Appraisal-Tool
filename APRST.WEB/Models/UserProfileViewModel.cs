@@ -16,6 +16,7 @@ namespace APRST.WEB.Models
         public string UserPrincipalName { get; set; }
         [Display(Name = "Логин в AD")]
         public string SamAccoutName { get; set; }
+        public string UserIdentityName { get; set; }
         public string Email { get; set; }
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
