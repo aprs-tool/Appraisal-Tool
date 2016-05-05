@@ -15,6 +15,11 @@ namespace APRST.DAL.Repositories
         {
         }
 
+        public UserProfile GetProfileWithRole(string samAccoutName)
+        {
+            return GetEntities().Include(d=>d.UserRole).FirstOrDefault(s => s.SamAccoutName == samAccoutName);
+        }
+
         public UserProfile GetProfileWithTests(string userPrincipalName)
         {
             return GetEntities()

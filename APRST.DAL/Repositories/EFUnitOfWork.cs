@@ -16,6 +16,7 @@ namespace APRST.DAL.Repositories
         private ITestQuestionRepository testQuestionRepository;
         private ITestAnswerRepository testAnswerRepository;
         private IUserProfileRepository userProfileRepository;
+        private IRoleRepository roleRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -67,6 +68,16 @@ namespace APRST.DAL.Repositories
                 if (userProfileRepository == null)
                     userProfileRepository = new UserProfileRepository(db);
                 return userProfileRepository;
+            }
+        }
+
+        public IRoleRepository RoleRepository
+        {
+            get
+            {
+                if (roleRepository == null)
+                    roleRepository = new RoleRepository(db);
+                return roleRepository;
             }
         }
 

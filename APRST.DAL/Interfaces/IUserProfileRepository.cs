@@ -10,5 +10,6 @@ namespace APRST.DAL.Interfaces
     public interface IUserProfileRepository:IRepository<UserProfile>
     {
         UserProfile GetProfileWithTests(string userPrincipalName);
+        UserProfile GetProfileWithRole(string samAccoutName);
     }
 }

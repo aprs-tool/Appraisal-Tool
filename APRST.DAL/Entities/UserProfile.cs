@@ -19,6 +19,8 @@ namespace APRST.DAL.Entities
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public List<Test> Tests { get; set; }
+        public int? UserRoleId { get; set; }
+        public UserRole UserRole { get; set; }
 
     }
 }

@@ -10,6 +10,7 @@ using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
 using AutoMapper;
 using APRST.BLL.DTO;
+using APRST.WEB.Models.Security;
 
 namespace APRST.WEB.Controllers
 {
@@ -17,11 +18,13 @@ namespace APRST.WEB.Controllers
     {
         private ITestService _testService;
         private IUserProfileService _userService;
+        private IRoleService _roleService;
 
-        public UserController(IUserProfileService service, ITestService testService)
+        public UserController(IUserProfileService service, ITestService testService, IRoleService roleService)
         {
             _userService = service;
             _testService = testService;
+            _roleService = roleService;
         }
         // GET: User
         public ActionResult Index()
@@ -71,12 +74,21 @@ namespace APRST.WEB.Controllers
         {
             return View(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()));
         }
-        public ActionResult Profile(string id)
+        public new ActionResult Profile(string id)
         {
            var profile= _userService.GetProfileWithTests(id);
             
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }
-
+        public ActionResult RoleTest()
+        {
+            var users = new string[]
+            {
+                "lakhmitski",
+                "lapa"
+            };
+            _roleService.RemoveUsersFromRole(users,2);
+            return View();
+        }
     }
 }

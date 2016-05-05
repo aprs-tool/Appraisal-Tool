@@ -13,6 +13,7 @@ namespace APRST.DAL.Interfaces
         ITestQuestionRepository TestQuestionRepository { get; }
         ITestAnswerRepository TestAnswerRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
+        IRoleRepository RoleRepository { get; }
         void Save();
     }
 }
