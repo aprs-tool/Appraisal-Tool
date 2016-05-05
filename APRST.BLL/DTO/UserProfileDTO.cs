@@ -12,9 +12,7 @@ namespace APRST.BLL.DTO
         public string Name { get; set; }
         public string UserPrincipalName { get; set; }
         public string SamAccoutName { get; set; }
-        public string UserIdentityName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public int RoleId { get; set; }
     }
 }

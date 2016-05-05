@@ -29,24 +29,22 @@ namespace APRST.WEB.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var userinrole = _roleService.IsUserInRole(User.Identity.Name, "Пользователь");
             //return principal
             var profile = _userService.GetProfileWithTests(UserPrincipal.Current.SamAccountName);
             if (profile == null)
             {
                 return RedirectToAction("Registration");
-            }
+            } 
             return View(Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }
 
         public ActionResult Registration()
         {
-           UserProfileViewModel profile = new UserProfileViewModel
+            UserProfileViewModel profile = new UserProfileViewModel
             {
                 SamAccoutName = UserPrincipal.Current.SamAccountName,
                 Email = UserPrincipal.Current.EmailAddress,
                 Name = UserPrincipal.Current.DisplayName,
-                UserIdentityName = User.Identity.Name,
                 PhoneNumber = UserPrincipal.Current.VoiceTelephoneNumber,
                 UserPrincipalName = UserPrincipal.Current.UserPrincipalName
             };

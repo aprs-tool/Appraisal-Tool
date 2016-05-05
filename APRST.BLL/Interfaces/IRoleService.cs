@@ -14,6 +14,6 @@ namespace APRST.BLL.Interfaces
         void RemoveUsersFromRole(string[] username, int roleId);
         bool IsUserInRole(string username, string roleName);
         string[] GetUsersInRole(string roleName);
-        string GetRoleForUser(string userIdentityName);
+        string GetRoleForUser(string username);
     }
 }

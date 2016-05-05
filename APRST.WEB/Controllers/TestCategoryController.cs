@@ -10,7 +10,6 @@ using AutoMapper;
 
 namespace APRST.WEB.Controllers
 {
-    [Authorize(Roles = "Администратор")]
     public class TestCategoryController : Controller
     {
         private readonly ITestCategoryService _testCategoryService;

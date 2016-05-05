@@ -31,11 +31,7 @@ namespace APRST.BLL.Services
 
         public void CreateProfile(UserProfileDTO user)
         {
-            //TODO:REFACTOR
-            var profile = Mapper.Map<UserProfileDTO, UserProfile>(user);
-            var role = _uow.RoleRepository.GetEntities().FirstOrDefault(s => s.RoleName == "Пользователь");
-            profile.UserRoleId = role.Id;
-            _uow.UserProfileRepository.Add(profile);
+            _uow.UserProfileRepository.Add(Mapper.Map<UserProfileDTO, UserProfile>(user));
             _uow.Save();
         }
 

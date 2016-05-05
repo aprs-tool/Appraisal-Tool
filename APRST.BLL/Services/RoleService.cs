@@ -10,7 +10,6 @@ using APRST.DAL.Repositories;
 
 namespace APRST.BLL.Services
 {
-   
     public class RoleService : IRoleService
     {
         IUnitOfWork _uow;
@@ -31,10 +30,9 @@ namespace APRST.BLL.Services
             }
         }
 
-        //LAKHMITSKI\lakhm
-        public string GetRoleForUser(string userIdentityName)
+        public string GetRoleForUser(string username)
         {
-            var user = _uow.UserProfileRepository.GetProfileWithRole(userIdentityName);
+            var user = _uow.UserProfileRepository.GetProfileWithRole(username);
             return user.UserRole.RoleName;
         }
 
