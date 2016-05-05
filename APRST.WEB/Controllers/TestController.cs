@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace APRST.WEB.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    [Authorize(Roles = "Пользователь")]
     public class TestController : Controller
     {
         private readonly ITestService _testService;
@@ -28,7 +28,7 @@ namespace APRST.WEB.Controllers
         {
             return View(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
         }
-
+        
         public ActionResult Create()
         {
             ViewBag.TestCategoryId = new SelectList(_categoryService.GetAll(), "Id", "NameOfCategory");
