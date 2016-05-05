@@ -55,7 +55,8 @@ namespace APRST.WEB.Models.Security
 
         public override string[] GetRolesForUser(string username)
         {
-            return new string[] { _roleService.GetRoleForUser(username) };
+            var a = new string[] { _roleService.GetRoleForUser(username) };
+            return a;
         }
 
         public override string[] GetUsersInRole(string roleName)
