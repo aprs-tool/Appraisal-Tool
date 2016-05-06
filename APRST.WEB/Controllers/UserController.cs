@@ -29,7 +29,7 @@ namespace APRST.WEB.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var profile = _userService.GetProfileWithTests(UserPrincipal.Current.SamAccountName);
+            var profile = _userService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
             if (profile == null)
             {
                 return RedirectToAction("Registration");
@@ -58,26 +58,26 @@ namespace APRST.WEB.Controllers
             _userService.CreateProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileForCreate));
             return RedirectToAction("Index");
         }
-        public ActionResult GiveTest(string id)
+        public ActionResult GiveTest(int id)
         {
             ViewBag.ABC = id;
             return View(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
         }
+
         [HttpPost]
         public ActionResult GiveTest(UserTestViewModel userTest)
         {
-            //TODO: REFACTOR THIS (TEST COMMIT)
-            _userService.AddTestToProfile(Int32.Parse(userTest.testid), userTest.userid);
-            return RedirectToAction("Profile", new {id=userTest.userid});
+            _userService.AddTestToProfile(userTest.testid, userTest.userid);
+            return RedirectToAction("Profile", new { id = userTest.userid });
         }
 
         public ActionResult All()
         {
             return View(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()));
         }
-        public new ActionResult Profile(string id)
+        public new ActionResult Profile(int id)
         {
-           var profile= _userService.GetProfileWithTests(id);
+            var profile = _userService.GetProfileWithTestsById(id);
             
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }

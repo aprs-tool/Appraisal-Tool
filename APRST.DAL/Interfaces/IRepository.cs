@@ -14,5 +14,6 @@ namespace APRST.DAL.Interfaces
         T GetEntityById(int id);
         void DeleteById(int id);
         IQueryable<T> GetEntities();
+        IQueryable<T> GetEntitiesNoTracking();
     }
 }

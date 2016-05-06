@@ -23,13 +23,21 @@ namespace APRST.DAL.Repositories
             //    UserProfile user = db.UserProfiles.Include(a => a.UserRole).FirstOrDefault(u => u.UserIdentityName == userIdentityName);
             //    return user;
             //}
-            return GetEntities().Include(d => d.UserRole).FirstOrDefault(s => s.UserIdentityName == userIdentityName);
+            return GetEntitiesNoTracking().Include(d => d.UserRole).FirstOrDefault(s => s.UserIdentityName == userIdentityName);
         }
 
-        public UserProfile GetProfileWithTests(string userPrincipalName)
+        public UserProfile GetProfileWithTestsById(int id)
         {
             return GetEntities()
-                .Where(s => s.SamAccoutName == userPrincipalName)
+                .Where(s => s.Id == id)
+                .Include(r => r.Tests)
+                .FirstOrDefault();
+        }
+
+        public UserProfile GetProfileWithTestsByUserIdentityName(string userIdentityName)
+        {
+            return GetEntities()
+                .Where(s => s.UserIdentityName == userIdentityName)
                 .Include(r => r.Tests)
                 .FirstOrDefault();
         }

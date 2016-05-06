@@ -39,7 +39,10 @@ namespace APRST.DAL.Repositories
 
         public IQueryable<T> GetEntities()
         {
-            //return DbSet.AsQueryable();
+            return DbSet.AsQueryable();
+        }
+        public IQueryable<T> GetEntitiesNoTracking()
+        {
             return DbSet.AsNoTracking();
         }
 

@@ -10,8 +10,9 @@ namespace APRST.BLL.Interfaces
 {
     public interface IUserProfileService
     {
-        void AddTestToProfile(int TestId, string userPrincipalName);
-        UserProfileIncludeTestsDTO GetProfileWithTests(string userPrincipalName);
+        void AddTestToProfile(int testId, int userId);
+        UserProfileIncludeTestsDTO GetProfileWithTestsById(int id);
+        UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName);
         void CreateProfile(UserProfileDTO user);
         IEnumerable<UserProfileDTO> GetAll();
     }

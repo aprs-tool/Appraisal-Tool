@@ -21,10 +21,10 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void AddTestToProfile(int testId,string userPrincipalName)
+        public void AddTestToProfile(int testId,int userId)
         {
            var test = _uow.TestRepository.GetEntityById(testId);
-            var profile = _uow.UserProfileRepository.GetProfileWithTests(userPrincipalName);
+            var profile = _uow.UserProfileRepository.GetProfileWithTestsById(userId);
             profile.Tests.Add(test);
             _uow.Save();
         }
@@ -44,10 +44,16 @@ namespace APRST.BLL.Services
            return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(_uow.UserProfileRepository.GetEntities());
         }
 
-        public UserProfileIncludeTestsDTO GetProfileWithTests(string userPrincipalName)
+        public UserProfileIncludeTestsDTO GetProfileWithTestsById(int id)
         {
            return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(
-                _uow.UserProfileRepository.GetProfileWithTests(userPrincipalName));
+                _uow.UserProfileRepository.GetProfileWithTestsById(id));
+        }
+
+        public UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName)
+        {
+            return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(
+                _uow.UserProfileRepository.GetProfileWithTestsByUserIdentityName(userIdentityName));
         }
     }
 }

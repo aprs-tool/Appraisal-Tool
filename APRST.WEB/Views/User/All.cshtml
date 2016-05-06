@@ -51,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td style="text-align: right;">
-                @Html.RouteLink("Просмотреть профиль", new { action = "profile", controller = "User", id = item.SamAccoutName }, new { @class = "btn btn-success btn-xs" })
+                @Html.RouteLink("Просмотреть профиль", new { action = "profile", controller = "User", id = item.Id }, new { @class = "btn btn-success btn-xs" })
             </td>
         </tr>
     }
