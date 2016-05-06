@@ -18,12 +18,12 @@ namespace APRST.DAL.Repositories
 
         public UserProfile GetProfileWithRole(string userIdentityName)
         {
-            using (AprstContext db = new AprstContext())
-            {
-                UserProfile user = db.UserProfiles.Include(a => a.UserRole).FirstOrDefault(u => u.UserIdentityName == userIdentityName);
-                return user;
-            }
-            //return GetEntities().Include(d => d.UserRole).FirstOrDefault(s => s.UserIdentityName == userIdentityName);
+            //using (AprstContext db = new AprstContext())
+            //{
+            //    UserProfile user = db.UserProfiles.Include(a => a.UserRole).FirstOrDefault(u => u.UserIdentityName == userIdentityName);
+            //    return user;
+            //}
+            return GetEntities().Include(d => d.UserRole).FirstOrDefault(s => s.UserIdentityName == userIdentityName);
         }
 
         public UserProfile GetProfileWithTests(string userPrincipalName)
