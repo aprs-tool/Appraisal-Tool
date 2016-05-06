@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
+using APRST.WEB.Filters;
 using APRST.WEB.Models;
 using AutoMapper;
 
 namespace APRST.WEB.Controllers
 {
-    [Authorize(Roles = "User")]
+    [AuthorizeUser(Roles = "User")]
     public class TestController : Controller
     {
         private readonly ITestService _testService;

@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using APRST.WEB.Filters;
 using APRST.WEB.Models;
 using AutoMapper;
 
 namespace APRST.WEB.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [AuthorizeUser(Roles = "Administrator")]
     public class TestCategoryController : Controller
     {
         private readonly ITestCategoryService _testCategoryService;
