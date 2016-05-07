@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -80,6 +81,34 @@ namespace APRST.WEB.Controllers
             var profile = _userService.GetProfileWithTestsById(id);
             
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
+        }
+
+        public ActionResult UpdateProfileImage()
+        {
+            var a = _userService.GetProfileWithTestsById(34);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfileImage(HttpPostedFileBase file)
+        {
+            int profileId = 34;
+            if (file!=null)
+            {
+                if (Path.GetExtension(file.FileName) != ".png")
+                {
+                    //TODO:Реализовать возврат сообщения о неверном формате
+                    ViewBag.error = "Формат изображения должен быть png";
+                    return View();
+                }
+                string pathOnServer = Path.Combine(
+                    Server.MapPath("~/Users_Data/"), $"{profileId}{Path.GetExtension(file.FileName)}");
+                string pathInDatabase = $"/Users_Data/{profileId}{Path.GetExtension(file.FileName)}";
+                file.SaveAs(pathOnServer);
+
+                _userService.UpdateProfileImage(34,pathInDatabase);
+            }
+            return View();
         }
     }
 }

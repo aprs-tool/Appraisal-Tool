@@ -55,5 +55,12 @@ namespace APRST.BLL.Services
             return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(
                 _uow.UserProfileRepository.GetProfileWithTestsByUserIdentityName(userIdentityName));
         }
+
+        public void UpdateProfileImage(int userId, string pathToImageInDatabase)
+        {
+            var user = _uow.UserProfileRepository.GetEntityById(userId);
+            user.Avatar = pathToImageInDatabase;
+            _uow.Save();
+        }
     }
 }

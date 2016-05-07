@@ -96,6 +96,10 @@
     <Compile Include="Migrations\201605051707094_UserIdentityName.Designer.cs">
       <DependentUpon>201605051707094_UserIdentityName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605071754135_AddAvatar.cs" />
+    <Compile Include="Migrations\201605071754135_AddAvatar.Designer.cs">
+      <DependentUpon>201605071754135_AddAvatar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605051707094_UserIdentityName.resx">
       <DependentUpon>201605051707094_UserIdentityName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605071754135_AddAvatar.resx">
+      <DependentUpon>201605071754135_AddAvatar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

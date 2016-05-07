@@ -15,5 +15,6 @@ namespace APRST.BLL.Interfaces
         UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName);
         void CreateProfile(UserProfileDTO user);
         IEnumerable<UserProfileDTO> GetAll();
+        void UpdateProfileImage(int userId, string pathToImageInDatabase);
     }
 }
