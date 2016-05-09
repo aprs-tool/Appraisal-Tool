@@ -17,6 +17,8 @@ namespace APRST.DAL.Repositories
         private ITestAnswerRepository testAnswerRepository;
         private IUserProfileRepository userProfileRepository;
         private IRoleRepository roleRepository;
+        private IQuestionnaireCategoryRepository questionnaireCategoryRepository;
+        private IQuestionnaireQuestionRepository questionnaireQuestionRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -78,6 +80,26 @@ namespace APRST.DAL.Repositories
                 if (roleRepository == null)
                     roleRepository = new RoleRepository(db);
                 return roleRepository;
+            }
+        }
+
+        public IQuestionnaireCategoryRepository QuestionnaireCategoryRepository
+        {
+            get
+            {
+                if (questionnaireCategoryRepository == null)
+                    questionnaireCategoryRepository = new QuestionnaireCategoryRepository(db);
+                return questionnaireCategoryRepository;
+            }
+        }
+
+        public IQuestionnaireQuestionRepository QuestionnaireQuestionRepository
+        {
+            get
+            {
+                if (questionnaireQuestionRepository == null)
+                    questionnaireQuestionRepository = new QuestionnaireQuestionRepository(db);
+                return questionnaireQuestionRepository;
             }
         }
 

@@ -154,6 +154,8 @@
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\QuestionnaireCategoryController.cs" />
+    <Compile Include="Controllers\QuestionnaireQuestionController.cs" />
     <Compile Include="Controllers\TestCategoryController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -161,6 +163,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionnaireCategoryIncludeQuestionsViewModel.cs" />
+    <Compile Include="Models\QuestionnaireCategoryViewModel.cs" />
+    <Compile Include="Models\QuestionnaireQuestionViewModel.cs" />
     <Compile Include="Models\Security\AppRoleProvider.cs" />
     <Compile Include="Models\TestAnswerViewModel.cs" />
     <Compile Include="Models\TestCategoryIncludeTestsViewModel.cs" />
@@ -235,6 +240,12 @@
     <Content Include="Views\User\GiveTest.cshtml" />
     <Content Include="Views\User\All.cshtml" />
     <Content Include="Views\User\UpdateProfileImage.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Index.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Create.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Edit.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Details.cshtml" />
+    <Content Include="Views\QuestionnaireQuestion\Create.cshtml" />
+    <Content Include="Views\QuestionnaireQuestion\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

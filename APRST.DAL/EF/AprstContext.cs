@@ -22,6 +22,8 @@ namespace APRST.DAL.EF
         public DbSet<Test> Tests { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<QuestionnaireCategory> QuestionnaireCategories { get; set; }
+        public DbSet<QuestionnaireQuestion> QuestionnaireQuestions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

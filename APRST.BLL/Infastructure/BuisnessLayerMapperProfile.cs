@@ -39,6 +39,14 @@ namespace APRST.BLL.Infastructure
             //UserProfileService
             CreateMap<UserProfile, UserProfileIncludeTestsDTO>();
             CreateMap<UserProfileDTO, UserProfile>().ReverseMap();
+
+            //QuestionnaireQuestionService
+            CreateMap<QuestionnaireQuestionDTO, QuestionnaireQuestion>().ReverseMap();
+
+            //QuestionnaireCategoryService
+            CreateMap<QuestionnaireCategoryDTO, QuestionnaireCategory>().ReverseMap();
+            CreateMap<QuestionnaireCategory, QuestionnaireCategoryIncludeQuestionsDTO>()
+                .ForMember(dto => dto.QuestionnaireQuestionDtos, opt => opt.MapFrom(src => src.QuestionnaireQuestions));
         }
     }
 }
