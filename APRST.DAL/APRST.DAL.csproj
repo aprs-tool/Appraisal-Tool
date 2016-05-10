@@ -50,8 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EF\AprstContext.cs" />
+    <Compile Include="Entities\Questionnaire.cs" />
     <Compile Include="Entities\QuestionnaireCategory.cs" />
     <Compile Include="Entities\QuestionnaireQuestion.cs" />
+    <Compile Include="Entities\QuestionnaireResult.cs" />
+    <Compile Include="Entities\QuestionnaireType.cs" />
     <Compile Include="Entities\Test.cs" />
     <Compile Include="Entities\TestAnswer.cs" />
     <Compile Include="Entities\TestCategory.cs" />
@@ -108,6 +111,10 @@
     <Compile Include="Migrations\201605081907165_QuestionnaireQuestionsAndCategory.Designer.cs">
       <DependentUpon>201605081907165_QuestionnaireQuestionsAndCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605101852423_QuestionnaireResultAndLink.cs" />
+    <Compile Include="Migrations\201605101852423_QuestionnaireResultAndLink.Designer.cs">
+      <DependentUpon>201605101852423_QuestionnaireResultAndLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -155,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605081907165_QuestionnaireQuestionsAndCategory.resx">
       <DependentUpon>201605081907165_QuestionnaireQuestionsAndCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605101852423_QuestionnaireResultAndLink.resx">
+      <DependentUpon>201605101852423_QuestionnaireResultAndLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
