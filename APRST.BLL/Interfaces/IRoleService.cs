@@ -8,7 +8,7 @@ using APRST.DAL.Interfaces;
 
 namespace APRST.BLL.Interfaces
 {
-    public interface IRoleService
+    public interface IRoleService:IDisposable
     {
         void AddUsersToRole(string[] username, int roleId);
         void RemoveUsersFromRole(string[] username, int roleId);

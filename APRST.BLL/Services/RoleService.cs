@@ -31,6 +31,11 @@ namespace APRST.BLL.Services
             }
         }
 
+        public void Dispose()
+        {
+            _uow.Dispose();
+        }
+
         public string GetRoleForUser(string userIdentityName)
         {
             var user = _uow.UserProfileRepository.GetProfileWithRole(userIdentityName);
