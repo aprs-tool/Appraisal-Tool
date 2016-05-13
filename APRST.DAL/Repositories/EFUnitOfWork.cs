@@ -19,6 +19,7 @@ namespace APRST.DAL.Repositories
         private IRoleRepository roleRepository;
         private IQuestionnaireCategoryRepository questionnaireCategoryRepository;
         private IQuestionnaireQuestionRepository questionnaireQuestionRepository;
+        private IQuestionnaireRepository questionnaireRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -100,6 +101,16 @@ namespace APRST.DAL.Repositories
                 if (questionnaireQuestionRepository == null)
                     questionnaireQuestionRepository = new QuestionnaireQuestionRepository(db);
                 return questionnaireQuestionRepository;
+            }
+        }
+
+        public IQuestionnaireRepository QuestionnaireRepository
+        {
+            get
+            {
+                if(questionnaireRepository == null)
+                    questionnaireRepository = new QuestionnaireRepository(db);
+                return questionnaireRepository;
             }
         }
 

@@ -35,6 +35,7 @@ namespace APRST.WEB.Util
             kernel.Bind<IRoleService>().To<RoleService>();
             kernel.Bind<IQuestionnaireCategoryService>().To<QuestionnaireCategoryService>();
             kernel.Bind<IQuestionnaireQuestionService>().To<QuestionnaireQuestionService>();
+            kernel.Bind<IQuestionnaireService>().To<QuestionnaireService>();
         }
     }
 }

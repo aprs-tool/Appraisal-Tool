@@ -60,6 +60,10 @@ namespace APRST.WEB.App_Start
             CreateMap<QuestionnaireCategoryIncludeQuestionsDTO, QuestionnaireCategoryIncludeQuestionsViewModel>()
                 .ForMember(dto => dto.Questions, opt => opt.MapFrom(src => src.QuestionnaireQuestionDtos));
 
+            //QuestionnaireController
+            CreateMap<QuestionnaireResultViewModel, QuestionnaireResultDTO>().ReverseMap();
+            CreateMap<QuestionnaireViewModel, QuestionnaireDTO>()
+              .ForMember(dto => dto.QuestionnaireResults, opt => opt.MapFrom(src => src.QuestionnaireResults));
         }
     }
 }

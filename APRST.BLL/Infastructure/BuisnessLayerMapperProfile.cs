@@ -37,7 +37,7 @@ namespace APRST.BLL.Infastructure
             CreateMap<TestAnswerDTO, TestAnswer>().ReverseMap();
 
             //UserProfileService
-            CreateMap<UserProfile, UserProfileIncludeTestsDTO>();
+            CreateMap<UserProfile, UserProfileIncludeTestsDTO>().ForMember(s=>s.Role,opt=>opt.MapFrom(src=>src.UserRole.RoleName));
             CreateMap<UserProfileDTO, UserProfile>().ReverseMap();
 
             //QuestionnaireQuestionService
@@ -47,6 +47,12 @@ namespace APRST.BLL.Infastructure
             CreateMap<QuestionnaireCategoryDTO, QuestionnaireCategory>().ReverseMap();
             CreateMap<QuestionnaireCategory, QuestionnaireCategoryIncludeQuestionsDTO>()
                 .ForMember(dto => dto.QuestionnaireQuestionDtos, opt => opt.MapFrom(src => src.QuestionnaireQuestions));
+
+            //QuestionnaireService
+            CreateMap<QuestionnaireResultDTO, QuestionnaireResult>().ReverseMap();
+            CreateMap<Questionnaire, QuestionnaireDTO>().ReverseMap();
+            CreateMap<Questionnaire, QuestionnaireDTO>()
+                .ForMember(s => s.QuestionnaireResults, opt => opt.MapFrom(src => src.QuestionnaireResults));
         }
     }
 }

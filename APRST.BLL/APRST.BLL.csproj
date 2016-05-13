@@ -59,7 +59,9 @@
   <ItemGroup>
     <Compile Include="DTO\QuestionnaireCategoryDTO.cs" />
     <Compile Include="DTO\QuestionnaireCategoryIncludeQuestionsDTO.cs" />
+    <Compile Include="DTO\QuestionnaireDTO.cs" />
     <Compile Include="DTO\QuestionnaireQuestionDTO.cs" />
+    <Compile Include="DTO\QuestionnaireResultDTO.cs" />
     <Compile Include="DTO\TestAnswerDTO.cs" />
     <Compile Include="DTO\TestAnswerInfoDTO.cs" />
     <Compile Include="DTO\TestCategoryDTO.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Infastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\IQuestionnaireCategoryService.cs" />
     <Compile Include="Interfaces\IQuestionnaireQuestionService.cs" />
+    <Compile Include="Interfaces\IQuestionnaireService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\ITestAnswerService.cs" />
     <Compile Include="Interfaces\ITestCategoryService.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\QuestionnaireCategoryService.cs" />
     <Compile Include="Services\QuestionnaireQuestionService.cs" />
+    <Compile Include="Services\QuestionnaireService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\TestAnswerService.cs" />
     <Compile Include="Services\TestCategoryService.cs" />

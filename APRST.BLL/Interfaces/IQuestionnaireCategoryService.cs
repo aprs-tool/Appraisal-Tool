@@ -16,5 +16,6 @@ namespace APRST.BLL.Interfaces
         void AddCategory(QuestionnaireCategoryDTO categoryDto);
         void RemoveCategoryById(int id);
         void UpdateCategory(QuestionnaireCategoryDTO categoryDto);
+        IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO> GetAllWithQuestions();
     }
 }

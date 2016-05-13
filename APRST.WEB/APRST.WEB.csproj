@@ -155,6 +155,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\QuestionnaireCategoryController.cs" />
+    <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Controllers\QuestionnaireQuestionController.cs" />
     <Compile Include="Controllers\TestCategoryController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -166,6 +167,8 @@
     <Compile Include="Models\QuestionnaireCategoryIncludeQuestionsViewModel.cs" />
     <Compile Include="Models\QuestionnaireCategoryViewModel.cs" />
     <Compile Include="Models\QuestionnaireQuestionViewModel.cs" />
+    <Compile Include="Models\QuestionnaireResultViewModel.cs" />
+    <Compile Include="Models\QuestionnaireViewModel.cs" />
     <Compile Include="Models\Security\AppRoleProvider.cs" />
     <Compile Include="Models\TestAnswerViewModel.cs" />
     <Compile Include="Models\TestCategoryIncludeTestsViewModel.cs" />
@@ -246,6 +249,7 @@
     <Content Include="Views\QuestionnaireCategory\Details.cshtml" />
     <Content Include="Views\QuestionnaireQuestion\Create.cshtml" />
     <Content Include="Views\QuestionnaireQuestion\Edit.cshtml" />
+    <Content Include="Views\Questionnaire\Questionnaire.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

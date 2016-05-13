@@ -31,6 +31,7 @@ namespace APRST.DAL.Repositories
             return GetEntities()
                 .Where(s => s.Id == id)
                 .Include(r => r.Tests)
+                .Include(u=>u.UserRole)
                 .FirstOrDefault();
         }
 
@@ -39,6 +40,7 @@ namespace APRST.DAL.Repositories
             return GetEntities()
                 .Where(s => s.UserIdentityName == userIdentityName)
                 .Include(r => r.Tests)
+                .Include(u=>u.UserRole)
                 .FirstOrDefault();
         }
     }

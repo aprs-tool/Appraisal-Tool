@@ -46,6 +46,10 @@ namespace APRST.WEB.Controllers
         public ActionResult Edit(int id)
         {
             var test = Mapper.Map<TestDTO, TestViewModel>(_testService.GetById(id));
+            if (test==null)
+            {
+                return HttpNotFound();
+            }
             ViewBag.TestCategoryId = new SelectList(_categoryService.GetAll(), "Id", "NameOfCategory", test.TestCategoryId);
             return View(test);
         }
@@ -77,7 +81,12 @@ namespace APRST.WEB.Controllers
 
         public ActionResult Details(int id)
         {
-             return View(Mapper.Map<TestIncludeQuestionsDTO, TestWithQuestionViewModel>(_testService.GetQuestionsForTest(id)));
+            var testDetails = Mapper.Map<TestIncludeQuestionsDTO, TestWithQuestionViewModel>(_testService.GetQuestionsForTest(id));
+            if (testDetails == null)
+            {
+                return HttpNotFound();
+            }
+            return View(testDetails);
         }
 
         public ActionResult Testing(int id)
