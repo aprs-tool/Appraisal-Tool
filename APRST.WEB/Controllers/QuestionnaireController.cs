@@ -24,6 +24,8 @@ namespace APRST.WEB.Controllers
         {
             //Получаем категории и вопросы для отображения.
              _questionnaireCategoryService.GetAllWithQuestions();
+            //Список всех типов анкет
+            var AllTypes = _questionnaireService.GetAllTypesOfQuestionnaire();
             return View();
         }
 

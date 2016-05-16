@@ -14,5 +14,6 @@ namespace APRST.BLL.Interfaces
         void Update(QuestionnaireDTO questionnaireDto);
         QuestionnaireDTO GetByUserId(int id);
         QuestionnaireDTO QuestionnaireWithResultsByUserId(int id);
+        IEnumerable<QuestionnaireTypeDTO> GetAllTypesOfQuestionnaire();
     }
 }

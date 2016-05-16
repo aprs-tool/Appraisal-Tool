@@ -20,6 +20,7 @@ namespace APRST.DAL.Repositories
         private IQuestionnaireCategoryRepository questionnaireCategoryRepository;
         private IQuestionnaireQuestionRepository questionnaireQuestionRepository;
         private IQuestionnaireRepository questionnaireRepository;
+        private IQuestionnaireTypeRepository questionnaireTypeRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -114,6 +115,15 @@ namespace APRST.DAL.Repositories
             }
         }
 
+        public IQuestionnaireTypeRepository QuestionnaireTypeRepository
+        {
+            get
+            {
+                if (questionnaireTypeRepository == null)
+                    questionnaireTypeRepository = new QuestionnaireTypeRepository(db);
+                return questionnaireTypeRepository;
+            }
+        }
         public void Save()
         {
             db.SaveChanges();

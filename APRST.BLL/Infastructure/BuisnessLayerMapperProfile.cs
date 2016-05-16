@@ -49,6 +49,7 @@ namespace APRST.BLL.Infastructure
                 .ForMember(dto => dto.QuestionnaireQuestionDtos, opt => opt.MapFrom(src => src.QuestionnaireQuestions));
 
             //QuestionnaireService
+            CreateMap<QuestionnaireTypeDTO, QuestionnaireType>().ReverseMap();
             CreateMap<QuestionnaireResultDTO, QuestionnaireResult>().ReverseMap();
             CreateMap<Questionnaire, QuestionnaireDTO>().ReverseMap();
             CreateMap<Questionnaire, QuestionnaireDTO>()

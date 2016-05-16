@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\IQuestionnaireCategoryRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireQuestionRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireRepository.cs" />
+    <Compile Include="Interfaces\IQuestionnaireTypeRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\ITestAnswerRepository.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Repositories\QuestionnaireCategoryRepository.cs" />
     <Compile Include="Repositories\QuestionnaireQuestionRepository.cs" />
     <Compile Include="Repositories\QuestionnaireRepository.cs" />
+    <Compile Include="Repositories\QuestionnaireTypeRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\TestAnswerRepository.cs" />
     <Compile Include="Repositories\TestCategoryRepository.cs" />
