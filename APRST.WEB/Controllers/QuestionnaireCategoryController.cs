@@ -7,15 +7,19 @@ using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
 using AutoMapper;
+using NLog;
+using WebGrease.Activities;
 
 namespace APRST.WEB.Controllers
 {
     public class QuestionnaireCategoryController : Controller
     {
         private readonly IQuestionnaireCategoryService _questionnaireCategoryService;
+        private readonly Logger _logger;
         public QuestionnaireCategoryController(IQuestionnaireCategoryService service)
         {
             _questionnaireCategoryService = service;
+            _logger = LogManager.GetLogger("logfile");
         }
         // GET: TestCategory
         public ActionResult Index()
@@ -32,6 +36,7 @@ namespace APRST.WEB.Controllers
         public ActionResult Create(QuestionnaireCategoryViewModel category)
         {
             _questionnaireCategoryService.AddCategory(Mapper.Map<QuestionnaireCategoryViewModel, QuestionnaireCategoryDTO>(category));
+            _logger.Info($"Добавлена категория {category.NameOfCategory}");
             return RedirectToAction("Index");
         }
 
