@@ -19,7 +19,7 @@ namespace APRST.WEB.Controllers
         public QuestionnaireCategoryController(IQuestionnaireCategoryService service)
         {
             _questionnaireCategoryService = service;
-            _logger = LogManager.GetLogger("logfile");
+            _logger = LogManager.GetCurrentClassLogger();
         }
         // GET: TestCategory
         public ActionResult Index()

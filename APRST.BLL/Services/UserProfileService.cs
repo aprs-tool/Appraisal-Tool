@@ -31,7 +31,7 @@ namespace APRST.BLL.Services
 
         public void CreateProfile(UserProfileDTO user)
         {
-            //TODO:REFACTOR
+            //TODO:Реализовать инициализатор базы данных чтобы заполнялся ролями (где 1 - роль пользователь)
             var profile = Mapper.Map<UserProfileDTO, UserProfile>(user);
             var role = _uow.RoleRepository.GetEntities().FirstOrDefault(s => s.Id == 1);
             profile.UserRoleId = role.Id;

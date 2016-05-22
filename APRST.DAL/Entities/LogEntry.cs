@@ -9,7 +9,7 @@ namespace APRST.DAL.Entities
     public class LogEntry
     {
         public int Id { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string Message { get; set; }
         public string Username { get; set; }
     }
