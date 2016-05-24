@@ -31,6 +31,7 @@ namespace APRST.WEB.Util
             kernel.Bind<ITestCategoryService>().To<TestCategoryService>();
             kernel.Bind<ITestQuestionService>().To<TestQuestionService>();
             kernel.Bind<ITestAnswerService>().To<TestAnswerService>();
+            kernel.Bind<ITestResultService>().To<TestResultService>();
             kernel.Bind<IUserProfileService>().To<UserProfileService>();
             kernel.Bind<IRoleService>().To<RoleService>();
             kernel.Bind<IQuestionnaireCategoryService>().To<QuestionnaireCategoryService>();

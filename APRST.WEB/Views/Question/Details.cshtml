@@ -1,56 +1,49 @@
-﻿@using APRST.WEB.Models
-@model APRST.WEB.Models.TestQuestionIncludeAnswersViewModel
+﻿@model APRST.WEB.Models.TestQuestionIncludeAnswersViewModel
 
 @{
     ViewBag.Title = "Подробнее о вопросе";
-    int counter = 1;
 }
 
-<h2>Подробнее о вопросе</h2>
+<section class="usertable" ng-controller="AnswersCtrl">
 
-<div>
-    <h4>@Html.DisplayFor(model => model.Question)</h4>
-    <hr />
+    <div class="container">
+        <div class="search-wrapper">
+            <input type="text" placeholder="Поиск..." class="input-g" ng-model="search" />
+        </div>
+    </div>
 
-    @Html.RouteLink("Добавить ответ", new { action = "Create", controller = "Answer", id = Model.Id }, new { @class = "btn btn-primary btn-xs" })
+    <div class="container">
 
-    <dl class="dl-horizontal">
+        <input type="number" value="@ViewBag.QuestionId" id="QuestionId" hidden />
 
-        <table class="table">
-            <tr class="success">
-                <th width="15%">Номер ответа</th>
-                <th>Ответ</th>
-                <th>Балл</th>
-                <th></th>
-                <th></th>
+        <div class="table-top">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            Ответы к вопросу: {{answers.Question}}
+            <button class="button-g" ng-click="CreateAnswer('', answers.Id)">Добавить ответ к вопросу</button>
+        </div>
+        <table>
+            <tr id="tr-head">
+                <td>
+                    Ответ
+                </td>
+                <td>
+                    Балл
+                </td>
+                <td></td>
             </tr>
 
-            @foreach (TestAnswerViewModel item in @Model.Answers)
-            {
-                <tr>
-                    <td>@counter</td>
-                    <td>@item.Answer</td>
-                    <td>@item.Point</td>
-                    <td style="text-align: right; padding: 8px 3px 8px 8px;">
-                        @Html.RouteLink("Редактировать", new { action = "Edit", controller = "Answer", id = item.Id }, new { @class = "btn btn-success btn-xs" })
-                    </td>
-                    <td width="5%" style="text-align: right; padding: 8px 8px 8px 0;">
-                        @using (Html.BeginForm("Delete", "Answer"))
-                        {
-                            <input name="id" value="@item.Id" hidden />
-                            <input type="submit" value="Удалить" class="btn btn-danger btn-xs" onclick="return confirm('Вы уверены?')" />
-                        }
-                    </td>
-                </tr>
-
-                counter++;
-            }
+            <tr ng-repeat="item in answers.Answers | filter : search" class="b-vs-true">
+                <td ng-cloak>{{item.Answer}}</td>
+                <td ng-cloak>{{item.Point}}</td>
+                <td style="text-align: right;">
+                    <div class="b-vs-false">
+                        <button class="button-edit" ng-click="EditAnswer('',item.Id)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button class="button-edit" ng-click="DeleteAnswer('sm',item.Id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
 
         </table>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Редактировать вопрос", "Edit", new { id = Model.Id }) |
-    <a href="@Request.UrlReferrer.ToString()">Назад, к списку вопросов</a>
-</p>
+        <div class="table-end"></div>
+    </div>
+</section>

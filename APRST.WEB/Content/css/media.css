@@ -1,0 +1,87 @@
+@media only screen and (max-width : 1200px) {
+	#block-counter {
+		font-size: 30px;
+	}
+
+	#block-content {
+		font-size: 12px;
+	}
+
+	.informs-block-r {
+	    padding-top: 33px;
+	    padding-left: 15px;
+	}
+}
+
+@media only screen and (max-width : 992px) {
+	.menubar-menu ul {
+    	display: none;
+    	position: absolute;
+    	width: 100%;
+    	top: 30px;
+    	left: 0;
+    	right: 0;
+    	border-radius: 0 0 5px 5px;
+    	border: 1px solid #e2e8e9;
+    	border-top: none;
+    	z-index: 100;
+    	overflow: hidden;
+	}
+
+	.menubar-menu ul li {
+		display: block;
+		padding: 5px 0 5px 0;
+		border-bottom: 1px solid #e2e8e9;
+		background: #fff;
+		text-align: center;
+		z-index: 100;
+	}
+
+	.menubar-menu a {
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+
+	.menubar-menu a:after {
+    	bottom: -5px;
+	}
+
+	#block-counter {
+		font-size: 40px;
+	}
+
+	#block-content {
+		font-size: 16px;
+	}
+
+	.informs-block-r {
+	    padding-top: 33px;
+	    padding-left: 20px;
+	}
+
+    .profile-table {
+        margin-bottom: 15px;
+    }
+}
+
+@media only screen and (max-width : 480px) {
+	#block-counter {
+		font-size: 25px;
+	}
+
+	#block-content {
+		font-size: 10px;
+		text-transform: uppercase;
+	}
+
+	.informs-block-r {
+	    padding-top: 33px;
+	    padding-left: 5px;
+	}
+}
+
+@media only screen and (min-width : 992px) {
+	.menubar-menu ul {
+    	display: inline-block !important;
+	}
+}

@@ -1,0 +1,1 @@
+﻿var app = angular.module("ApraisalToolApp", ['ngAnimate', 'ui.bootstrap']);

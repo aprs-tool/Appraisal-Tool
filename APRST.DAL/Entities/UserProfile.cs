@@ -12,6 +12,7 @@ namespace APRST.DAL.Entities
         {
             Tests=new List<Test>();
             Questionnaires=new List<Questionnaire>();
+            TestResults = new List<TestResult>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -26,5 +27,6 @@ namespace APRST.DAL.Entities
         public UserRole UserRole { get; set; }
         public ICollection<Questionnaire> Questionnaires { get; set; }
 
+        public List<TestResult> TestResults { get; set; }
     }
 }

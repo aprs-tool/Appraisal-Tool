@@ -15,6 +15,7 @@ namespace APRST.DAL.Repositories
         private ITestCategoryRepository testCategoryRepository;
         private ITestQuestionRepository testQuestionRepository;
         private ITestAnswerRepository testAnswerRepository;
+        private ITestResultRepository _testResultRepository;
         private IUserProfileRepository userProfileRepository;
         private IRoleRepository roleRepository;
         private IQuestionnaireCategoryRepository questionnaireCategoryRepository;
@@ -64,6 +65,8 @@ namespace APRST.DAL.Repositories
                 return testAnswerRepository;
             }
         }
+
+        public ITestResultRepository TestResultRepository => _testResultRepository ?? (_testResultRepository = new TestResultRepository(db));
 
         public IUserProfileRepository UserProfileRepository
         {

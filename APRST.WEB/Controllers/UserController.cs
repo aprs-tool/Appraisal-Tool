@@ -27,7 +27,7 @@ namespace APRST.WEB.Controllers
             _testService = testService;
             _roleService = roleService;
         }
-        // GET: User
+       
         public ActionResult Index()
         {
             var profile = _userService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
@@ -61,8 +61,8 @@ namespace APRST.WEB.Controllers
         }
         public ActionResult GiveTest(int id)
         {
-            ViewBag.ABC = id;
-            return View(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
+            ViewBag.UserId = id;
+            return PartialView(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
         }
 
         [HttpPost]
@@ -76,6 +76,12 @@ namespace APRST.WEB.Controllers
         {
             return View(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()));
         }
+
+        public JsonResult GetAll()
+        {
+            return Json(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()), JsonRequestBehavior.AllowGet);
+        }
+
         public new ActionResult Profile(int id)
         {
             var profile = _userService.GetProfileWithTestsById(id);

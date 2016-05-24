@@ -1,49 +1,48 @@
-﻿@using APRST.WEB.Models
-@model IEnumerable<APRST.WEB.Models.TestQuestionIncludeAnswersViewModel>
+﻿@model IEnumerable<APRST.WEB.Models.TestQuestionIncludeAnswersViewModel>
 
 @{
-    ViewBag.Title = "Testing";
-    int option = 1;
+    ViewBag.Title = "Прохождение теста - " + ViewBag.TestName;
 }
 
-<style>
-    .block {
-        background: #f5f5f5;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-
-        padding: 0 10px 0 10px;
-        margin: 5px 0 5px 0;
-    }
-
-</style>
-
-<h2>@ViewBag.TestName</h2>
-
-<hr />
-
-@foreach (TestQuestionIncludeAnswersViewModel item in Model)
-{
-    @Html.DisplayFor(model => item.Question)
-
-    <br />
-
-    <div class="block">
-
-        @foreach (TestAnswerViewModel answ in item.Answers)
-        {
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios{@option}" id="optionsRadios{@option}" value="option{@option}">
-                @Html.DisplayFor(model => answ.Answer)
-            </label>
+<section class="usertable" ng-controller="TestsingCtrl">
+    <div class="container">
+        <div class="table-top">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+            Прохождение теста - @ViewBag.TestName
         </div>
-        }
 
+        <div class="table-body" ng-show="divTestResult">
+
+            <span class="congrats">Тест завершен!</span>
+            <br/>
+            <span class="congrats congrats-b">Результаты тестирования отражены в вашем профиле.</span>
+            <hr/>
+            @Html.RouteLink("Перейти к профилю", new { action = "Index", controller = "User" }, htmlAttributes: new { @class = "button-primary"});
+
+        </div>
+
+        <div class="table-body" ng-show="divTest">
+
+            <input type="number" value="@ViewBag.TestId" id="TestId" disabled hidden/>
+
+            <div ng-repeat="item in QnAs" class="test-wrapper">
+
+                <div class="test-wrapper-title">
+                    {{item.Question}}
+                </div>
+
+                <div class="test-wrapper-body">
+                    <div ng-repeat="answ in item.Answers">
+                        <input type="radio" value="{{answ.Answer}}" name="{{item.Id}}" id="{{answ.Id}}">
+                        <label for="{{answ.Id}}">{{answ.Answer}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="button-primary" type="button" ng-click="finishTest()">Закончить тест</button>
+
+        </div>
+
+        <div class="table-end"></div>
     </div>
-
-    option++;
-    <br />
-}
-
-<button type="button" class="btn btn-success btn-lg">Завершить тест</button>
+</section>

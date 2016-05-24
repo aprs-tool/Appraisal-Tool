@@ -1,33 +1,24 @@
 ﻿@model APRST.WEB.Models.TestQuestionViewModel
 
-@{
-    ViewBag.Title = "Удаление";
-}
-
-<h2>Удаление</h2>
-
-<h3>Вы действительно хотите удалить данный вопрос?</h3>
-<div>
-    <h4>@Html.DisplayFor(model => model.Question)</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            Название вопроса
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Question)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            <a href="@Request.UrlReferrer.ToString()">Назад, к списку вопросов</a>
+<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Удаление вопроса
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="table-body">
+        <div class="t-desc-wrapper">
+            <h4>@Html.DisplayFor(model => model.Question)</h4>
         </div>
-    }
-</div>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                <input type="submit" value="Удалить" class="button-primary" />
+            </div>
+        }
+    </div>
+    <div class="table-end"></div>
+</section>

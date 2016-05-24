@@ -36,6 +36,11 @@ namespace APRST.BLL.Infastructure
             //TestAnswerService
             CreateMap<TestAnswerDTO, TestAnswer>().ReverseMap();
 
+            //TestResultService
+            CreateMap<TestResult, TestResultDTO>().ReverseMap();
+            CreateMap<TestResult, TestResultInfoDTO>()
+                .ForMember("TestName", opt => opt.MapFrom(src => src.Test.NameOfTest));
+
             //UserProfileService
             CreateMap<UserProfile, UserProfileIncludeTestsDTO>().ForMember(s=>s.Role,opt=>opt.MapFrom(src=>src.UserRole.RoleName));
             CreateMap<UserProfileDTO, UserProfile>().ReverseMap();

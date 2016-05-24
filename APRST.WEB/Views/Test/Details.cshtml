@@ -1,56 +1,44 @@
-﻿@using APRST.WEB.Models
-@model APRST.WEB.Models.TestWithQuestionViewModel
-
-@{
-    ViewBag.Title = "Details";
-    int counter = 1;
+﻿@{
+    ViewBag.Title = "Вопросы к тесту - " + ViewBag.TestName;
 }
 
-<h2>Подробнее о тесте</h2>
+<section class="usertable" ng-controller="QuestionsCtrl">
 
-<div>
-    <h4>@Html.DisplayFor(model => model.NameOfTest)</h4>
+    <div class="container">
+        <div class="search-wrapper">
+            <input type="text" placeholder="Поиск..." class="input-g" ng-model="search" />
+        </div>
+    </div>
 
-    <hr />
+    <div class="container">
 
-    @Html.RouteLink("Добавить вопрос к тесту", new { action = "Create", controller = "Question", id = Model.Id }, new { @class = "btn btn-primary btn-xs" })
+        <input type="number" value="@ViewBag.TestId" id="TestId" hidden/>
 
-    <dl class="dl-horizontal">
-
-        <table class="table">
-            <tr class="success">
-                <th width="15%">Номер вопроса</th>
-                <th>Вопрос</th>
-                <th></th>
-                <th></th>
+        <div class="table-top">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            Все вопросы теста: @ViewBag.TestName
+            <button class="button-g" ng-click="CreateQuestion('', questions.Id)">Добавить вопрос к тесту</button>
+        </div>
+        <table>
+            <tr id="tr-head">
+                <td>
+                    Вопрос
+                </td>
+                <td></td>
             </tr>
 
-            @foreach (TestQuestionViewModel item in @Model.Questions)
-            {
-                <tr>
-                    <td>@counter</td>
-                    <td>@Html.RouteLink(item.Question, new { action = "Details", controller = "Question", id = item.Id })</td>
-                    <td style="text-align: right; padding: 8px 3px 8px 8px;">
-                        @Html.RouteLink("Редактировать", new { action = "Edit", controller = "Question", id = item.Id }, new { @class = "btn btn-success btn-xs" })
-                        @Html.RouteLink("Подробнее", new { action = "Details", controller = "Question", id = item.Id }, new { @class = "btn btn-warning btn-xs" })
-                    </td>
-                    <td width="5%" style="text-align: right; padding: 8px 8px 8px 0;">
-                        @using (Html.BeginForm("Delete", "Question"))
-                        {
-                            <input name="id" value="@item.Id" hidden />
-                            <input type="submit" value="Удалить" class="btn btn-danger btn-xs" onclick="return confirm('Вы уверены?')" />
-                        }
-                    </td>
-                </tr>
-
-                counter++;
-            }
+            <tr ng-repeat="item in questions.Questions | filter : search" class="b-vs-true">
+                <td ng-cloak>{{item.Question}}</td>
+                <td style="text-align: right;">
+                    <div class="b-vs-false">
+                        <a href="/Question/Details/{{item.Id}}" class="button-edit">Ответы</a>
+                        <button class="button-edit" ng-click="EditQuestion('',item.Id)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button class="button-edit" ng-click="DeleteQuestion('sm',item.Id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
 
         </table>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Редактировать тест", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Назад, к списку тестов", "Index")
-</p>
+        <div class="table-end"></div>
+    </div>
+</section>
