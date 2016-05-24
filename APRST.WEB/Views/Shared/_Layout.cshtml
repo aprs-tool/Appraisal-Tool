@@ -1,44 +1,73 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="ApraisalToolApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Appraisal Tool</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/jquery")
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+    <header class="userbar">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <i class="fa fa-database navbar-brand"></i>
-                @Html.ActionLink("Appraisal Tool", "Index", "User", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Тесты", "Index", "Test")</li>
-                    <li>@Html.ActionLink("Категории", "Index", "TestCategory")</li>
-                    <li>@Html.ActionLink("Пользователи", "All", "User")</li>
-                </ul>
-                <p class="nav navbar-text navbar-right">Здравствуйте, @User.Identity.Name!</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="userbar-logo">
+                        <a href="#">
+                            <img src="~/content/images/logo.png" alt="Appraisal Tool">
+                        </a>
+                    </div>
+                    <div class="userbar-block">
+                        @Html.RouteLink(User.Identity.Name, new { action = "Index", controller = "User" }, new { @class = "hidden-sm hidden-xs" })
+                        @Html.RouteLink("?", new { action = "Index", controller = "User" }, new { @class = "noavatar" })
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Appraisal Tool</p>
-        </footer>
-    </div>
+    </header>
 
-    @Scripts.Render("~/bundles/jquery")
+    <nav class="menubar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="menubar-button hidden-md hidden-lg"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                    <div class="menubar-menu">
+                        <ul>
+                            <li>@Html.RouteLink("Главная", new { action = "Index", controller = "Admin" })</li>
+                            <li>@Html.RouteLink("Пользователи", new { action = "All", controller = "User" })</li>
+                            <li>
+                                <a href="#">
+                                    Анкеты
+                                    <div class="i-counter">
+                                        <span>24</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Test/Index">
+                                    Тесты
+                                    <div class="i-counter" ng-controller="TestsCtrl">
+                                        <span ng-bind="tests.length"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="menubar-settings">
+                        <a href="#">Настройки <i class="fa fa-cog" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/customJS")
+    @Scripts.Render("~/bundles/angular-ui")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using APRST.BLL.DTO;
 
@@ -12,53 +8,47 @@ namespace APRST.WEB.Controllers
 {
     public class AnswerController : Controller
     {
-        ITestAnswerService _testAnswerService;
+        private readonly ITestAnswerService _testAnswerService;
 
         public AnswerController(ITestAnswerService service)
         {
             _testAnswerService = service;
         }
 
-        // GET: Answer
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Create(int id)
         {
             ViewBag.QuestionId = id;
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
-        public ActionResult Create(TestAnswerViewModel _answer)
+        public ActionResult Create(TestAnswerViewModel answ)
         {
-            _testAnswerService.Add(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(_answer));
+            _testAnswerService.Add(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(answ));
 
             return RedirectToRoute(new
             {
                 controller = "Question",
                 action = "Details",
-                id = _answer.QuestionId
+                id = answ.QuestionId
             });
         }
 
         public ActionResult Edit(int id)
         {
-            return View(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(_testAnswerService.GetById(id)));
+            return PartialView(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(_testAnswerService.GetById(id)));
         }
 
         [HttpPost]
-        public ActionResult Edit(TestAnswerViewModel _answer)
+        public ActionResult Edit(TestAnswerViewModel answ)
         {
-            _testAnswerService.UpdateAnswer(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(_answer));
+            _testAnswerService.UpdateAnswer(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(answ));
 
             return RedirectToRoute(new
             {
                 controller = "Question",
                 action = "Details",
-                id = _answer.QuestionId
+                id = answ.QuestionId
             });
         }
 
@@ -68,9 +58,9 @@ namespace APRST.WEB.Controllers
             {
                 return HttpNotFound();
             }
-            int _id = (int)id;
+            int answerId = (int)id;
 
-            return View(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(_testAnswerService.GetById(_id)));
+            return PartialView(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(_testAnswerService.GetById(answerId)));
         }
 
         [HttpPost]

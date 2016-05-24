@@ -4,36 +4,28 @@
     ViewBag.Title = "Удаление теста";
 }
 
-<h2>Удаление</h2>
+<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Удаление теста
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
 
-<h3>Вы уверены, что хотите удалить этот тест?</h3>
-<div>
-    <h4>@Html.DisplayFor(model => model.NameOfTest)</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Название теста
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NameOfTest)
-        </dd>
-
-        <dt>
-            Описание
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Desc)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад, к списку тестов", "Index")
+    <div class="table-body">
+        <div class="t-desc-wrapper">
+            <h4>@Html.DisplayFor(model => model.NameOfTest)</h4>
         </div>
-    }
-</div>
+        <div class="desc-wrapper">
+            @Html.DisplayFor(model => model.Desc)
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                <input type="submit" value="Удалить" class="button-primary" />
+            </div>
+        }
+    </div>
+    <div class="table-end"></div>
+</section>

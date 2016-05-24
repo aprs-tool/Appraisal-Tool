@@ -11,7 +11,7 @@ using AutoMapper;
 
 namespace APRST.WEB.Controllers
 {
-    [AuthorizeUser(Roles = "Administrator")]
+    //[AuthorizeUser(Roles = "Administrator")]
     public class TestCategoryController : Controller
     {
         private readonly ITestCategoryService _testCategoryService;
@@ -19,10 +19,15 @@ namespace APRST.WEB.Controllers
         {
             _testCategoryService = service;
         }
-        // GET: TestCategory
+
         public ActionResult Index()
         {
-            return View(Mapper.Map<IEnumerable<TestCategoryDTO>, IEnumerable<TestCategoryViewModel>>(_testCategoryService.GetAll()));
+            return PartialView();
+        }
+
+        public JsonResult GetCategories()
+        {
+            return Json(Mapper.Map<IEnumerable<TestCategoryDTO>, IEnumerable<TestCategoryViewModel>>(_testCategoryService.GetAll()), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()

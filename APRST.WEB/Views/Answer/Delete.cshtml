@@ -1,40 +1,24 @@
 ﻿@model APRST.WEB.Models.TestAnswerViewModel
 
-@{
-    ViewBag.Title = "Удаление ответа";
-}
-
-<h2>Удаление ответа</h2>
-
-<h3>Вы уверены, что хотите удалить данный ответ?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            Балл за ответ
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Point)
-        </dd>
-
-        <dt>
-            Ответ
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Answer)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            <a href="@Request.UrlReferrer.ToString()">Назад, к списку ответов</a>
+<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Удаление ответа
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="table-body">
+        <div class="t-desc-wrapper">
+            <h4>@Html.DisplayFor(model => model.Answer)</h4>
         </div>
-    }
-</div>
+        <div class="desc-wrapper">
+            Балл за ответ: @Html.DisplayFor(model => model.Point)
+        </div>
+        @using (Html.BeginForm())
+        {
+            <div>
+                <input type="submit" value="Удалить" class="button-primary" />
+            </div>
+        }
+    </div>
+    <div class="table-end"></div>
+</section>

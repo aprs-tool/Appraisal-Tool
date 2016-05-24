@@ -1,67 +1,104 @@
-﻿@model APRST.WEB.Models.UserProfileIncludeTestsViewModel
+﻿@model UserProfileIncludeTestsViewModel
 @using APRST.WEB.Models
 @{
     ViewBag.Title = "Профиль";
 }
 
-<style>
-    .block {
-        background: #f5f5f5;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 10px;
-        margin: 5px 0 5px 0;
-    }
-</style>
+<section class="userprofile" ng-controller="UserProfileCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profile-table">
+                    <div class="profile-avatar-block">
+                        <div class="profile-avatar">
+                            <img src="~/content/images/no-avatar.png" alt="Ваш аватар">
+                        </div>
+                    </div>
+                    <div class="profile-links-block">
+                        <ul>
+                            <li><a href="#">Сменить аватар</a></li>
+                            <li><a href="#">Редактировать профиль</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-table">
+                    <div class="profile-username">
+                        @Html.DisplayFor(model => model.Name)
+                    </div>
 
+                    <div class="profile-info">
+                        <table>
+                            <tr>
+                                <td>Доменное имя:</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.UserPrincipalName)
+                                    <input type="text" value="@Model.Id" id="UserId" disabled hidden/>
+                                </td>
+                            </tr>
 
+                            <tr>
+                                <td>Группа:</td>
+                                <td>Администратор</td>
+                            </tr>
 
-<div>
-    <h3>Профиль</h3>
-    <hr />
-    <dl class="dl-horizontal block">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+                            <tr>
+                                <td>Email:</td>
+                                <td>@Html.DisplayFor(model => model.Email)</td>
+                            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                            <tr>
+                                <td>Номер телефона:</td>
+                                <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                            </tr>
+                        </table>
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                    <div class="profile-info-block">
+                        <a href="#" ng-repeat="item in userResults | limitTo: -5 | orderBy:'Date':true">
+                            <div class="profile-counter" ng-cloak>{{item.Point}}</div>
+                            <div class="profile-c-label" ng-cloak>{{item.TestName}}</div>
+                            <div class="profile-d-label" ng-cloak>{{item.Date | jsDate | date:"yyyy-MM-dd"}}</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+<section class="usertable" ng-controller="UserProfileCtrl">
+    <div class="container">
+        <div class="table-top">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            Доступные тесты
+            <button class="button-g" ng-click="GiveTest()">Выдать тест</button>
+        </div>
+        <table>
+            <tr id="tr-head">
+                <td>
+                    ID
+                </td>
+                <td>
+                    Название теста
+                </td>
+                <td>
+                    Описание
+                </td>
+                <td></td>
+            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-    </dl>
-</div>
-
-<h3>Доступные тесты</h3>
-    <table class="table">
-        <tr class="success">
-            <td>Id</td>
-            <td>Название теста</td>
-            <td>Описание</td>
-            <td style="text-align: right;">@Html.RouteLink("Выдать тест", new { action = "GiveTest", controller = "User", id = Model.SamAccoutName }, new { @class = "btn btn-success btn-xs" })</td>
-        </tr>
-    @foreach (TestInfoViewModel test in Model.Tests)
-    {
-        <tr>
-            <td>@test.Id</td>
-            <td>@test.NameOfTest</td>
-            <td>@test.Desc</td>
-            <td style="text-align: right;">@Html.RouteLink("Пройти", new { action = "Testing", controller = "Test", id = test.Id }, new { @class = "btn btn-primary btn-xs" })</td>
-        </tr>
-    }
-</table>
+            @foreach (TestInfoViewModel test in Model.Tests)
+            {
+                <tr>
+                    <td>@test.Id</td>
+                    <td>@test.NameOfTest</td>
+                    <td>@test.Desc</td>
+                    <td>@Html.RouteLink("Пройти", new { action = "Testing", controller = "Test", id = test.Id }, new { @class = "button-primary" })</td>
+                </tr>
+            }
+        </table>
+        <div class="table-end"></div>
+    </div>
+</section>

@@ -11,6 +11,7 @@ namespace APRST.DAL.Entities
         public UserProfile()
         {
             Tests=new List<Test>();
+            TestResults = new List<TestResult>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -22,6 +23,6 @@ namespace APRST.DAL.Entities
         public List<Test> Tests { get; set; }
         public int? UserRoleId { get; set; }
         public UserRole UserRole { get; set; }
-
+        public List<TestResult> TestResults { get; set; }
     }
 }

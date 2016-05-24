@@ -1,50 +1,40 @@
 ﻿@model APRST.WEB.Models.TestViewModel
 
 @{
-    ViewBag.Title = "Новый тест";
+    ViewBag.Title = "Создание нового теста";
 }
 
-<h2>Создать новый тест</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.NameOfTest, "Название", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NameOfTest, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NameOfTest, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Desc, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Desc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TestCategoryId, "Категория", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TestCategoryId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TestCategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
-            </div>
-        </div>
+<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Создание нового теста
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
     </div>
-}
+    <div class="table-body">
+        @using (Html.BeginForm())
+        {
+            <div>
+                @Html.EditorFor(model => model.NameOfTest, new { htmlAttributes = new { @class = "input-g", placeholder = "Название" } })
+            </div>
+            <br />
+            <div>
+                @Html.EditorFor(model => model.Desc, new { htmlAttributes = new { @class = "input-g", placeholder = "Описание" } })
+            </div>
+            <br />
+            <div class="modal-category">
+                <div class="modal-category-l">
+                    @Html.LabelFor(model => model.TestCategoryId, "Категория", htmlAttributes: new { @class = "modal-label" })
+                </div>
 
-<div>
-    @Html.ActionLink("Назад, к списку тестов", "Index")
-</div>
+                <div class="modal-category-r">
+                    @Html.DropDownList("TestCategoryId", null, htmlAttributes: new { @class = "input-g" })
+                </div>
+            </div>
+            <br />
+            <div>
+                <input type="submit" value="Добавить" class="button-primary" />
+            </div>
+        }
+    </div>
+    <div class="table-end"></div>
+</section>

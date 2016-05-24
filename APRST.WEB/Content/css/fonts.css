@@ -1,0 +1,29 @@
+﻿@font-face {
+	font-family: "RobotoRegular";
+	src: url("/Content/fonts/RobotoRegular/RobotoRegular.eot");
+	src: url("/Content/fonts/RobotoRegular/RobotoRegular.eot?#iefix")format("embedded-opentype"),
+	url("/Content/fonts/RobotoRegular/RobotoRegular.woff") format("woff"),
+	url("/Content/fonts/RobotoRegular/RobotoRegular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "RobotoLight";
+	src: url("/Content/fonts/RobotoLight/RobotoLight.eot");
+	src: url("/Content/fonts/RobotoLight/RobotoLight.eot?#iefix")format("embedded-opentype"),
+	url("/Content/fonts/RobotoLight/RobotoLight.woff") format("woff"),
+	url("/Content/fonts/RobotoLight/RobotoLight.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "RobotoMedium";
+	src: url("/Content/fonts/RobotoMedium/RobotoMedium.eot");
+	src: url("/Content/fonts/RobotoMedium/RobotoMedium.eot?#iefix")format("embedded-opentype"),
+	url("/Content/fonts/RobotoMedium/RobotoMedium.woff") format("woff"),
+	url("/Content/fonts/RobotoMedium/RobotoMedium.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
