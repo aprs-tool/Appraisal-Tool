@@ -15,6 +15,10 @@ namespace APRST.DAL.Interfaces
         ITestResultRepository TestResultRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
         IRoleRepository RoleRepository { get; }
+        IQuestionnaireCategoryRepository QuestionnaireCategoryRepository { get; }
+        IQuestionnaireQuestionRepository QuestionnaireQuestionRepository { get; }
+        IQuestionnaireRepository QuestionnaireRepository { get; }
+        IQuestionnaireTypeRepository QuestionnaireTypeRepository { get; }
         void Save();
     }
 }

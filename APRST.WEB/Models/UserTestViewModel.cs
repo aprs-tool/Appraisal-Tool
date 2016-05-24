@@ -8,7 +8,7 @@ namespace APRST.WEB.Models
     public class UserTestViewModel
     {
         // TODO REFACTOR
-        public string userid { get; set; }
-        public string testid { get; set; }
+        public int userid { get; set; }
+        public int testid { get; set; }
     }
 }

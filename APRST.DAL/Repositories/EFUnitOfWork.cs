@@ -18,6 +18,10 @@ namespace APRST.DAL.Repositories
         private ITestResultRepository _testResultRepository;
         private IUserProfileRepository userProfileRepository;
         private IRoleRepository roleRepository;
+        private IQuestionnaireCategoryRepository questionnaireCategoryRepository;
+        private IQuestionnaireQuestionRepository questionnaireQuestionRepository;
+        private IQuestionnaireRepository questionnaireRepository;
+        private IQuestionnaireTypeRepository questionnaireTypeRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -84,6 +88,45 @@ namespace APRST.DAL.Repositories
             }
         }
 
+        public IQuestionnaireCategoryRepository QuestionnaireCategoryRepository
+        {
+            get
+            {
+                if (questionnaireCategoryRepository == null)
+                    questionnaireCategoryRepository = new QuestionnaireCategoryRepository(db);
+                return questionnaireCategoryRepository;
+            }
+        }
+
+        public IQuestionnaireQuestionRepository QuestionnaireQuestionRepository
+        {
+            get
+            {
+                if (questionnaireQuestionRepository == null)
+                    questionnaireQuestionRepository = new QuestionnaireQuestionRepository(db);
+                return questionnaireQuestionRepository;
+            }
+        }
+
+        public IQuestionnaireRepository QuestionnaireRepository
+        {
+            get
+            {
+                if(questionnaireRepository == null)
+                    questionnaireRepository = new QuestionnaireRepository(db);
+                return questionnaireRepository;
+            }
+        }
+
+        public IQuestionnaireTypeRepository QuestionnaireTypeRepository
+        {
+            get
+            {
+                if (questionnaireTypeRepository == null)
+                    questionnaireTypeRepository = new QuestionnaireTypeRepository(db);
+                return questionnaireTypeRepository;
+            }
+        }
         public void Save()
         {
             db.SaveChanges();

@@ -73,6 +73,10 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
@@ -155,6 +159,9 @@
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\QuestionnaireCategoryController.cs" />
+    <Compile Include="Controllers\QuestionnaireController.cs" />
+    <Compile Include="Controllers\QuestionnaireQuestionController.cs" />
     <Compile Include="Controllers\TestCategoryController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -162,6 +169,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionnaireCategoryIncludeQuestionsViewModel.cs" />
+    <Compile Include="Models\QuestionnaireCategoryViewModel.cs" />
+    <Compile Include="Models\QuestionnaireQuestionViewModel.cs" />
+    <Compile Include="Models\QuestionnaireResultViewModel.cs" />
+    <Compile Include="Models\QuestionnaireViewModel.cs" />
     <Compile Include="Models\Security\AppRoleProvider.cs" />
     <Compile Include="Models\TestAnswerViewModel.cs" />
     <Compile Include="Models\TestCategoryIncludeTestsViewModel.cs" />
@@ -1047,11 +1059,20 @@
     <Content Include="Views\Test\Testing.cshtml" />
     <Content Include="Views\User\GiveTest.cshtml" />
     <Content Include="Views\User\All.cshtml" />
+    <Content Include="Views\User\UpdateProfileImage.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Index.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Create.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Edit.cshtml" />
+    <Content Include="Views\QuestionnaireCategory\Details.cshtml" />
+    <Content Include="Views\QuestionnaireQuestion\Create.cshtml" />
+    <Content Include="Views\QuestionnaireQuestion\Edit.cshtml" />
+    <Content Include="Views\Questionnaire\Questionnaire.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\version.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Users_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

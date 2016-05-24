@@ -13,8 +13,6 @@ namespace APRST.WEB.Models.Security
 {
     public class AppRoleProvider : RoleProvider
     {
-        private IRoleService _roleService= DependencyResolver.Current.GetService<IRoleService>();
-
         public override string ApplicationName
         {
             get
@@ -52,10 +50,14 @@ namespace APRST.WEB.Models.Security
         {
             throw new NotImplementedException();
         }
-
+    
         public override string[] GetRolesForUser(string username)
         {
-            return new string[] { _roleService.GetRoleForUser(username) };
+            using (IRoleService _role = DependencyResolver.Current.GetService<IRoleService>())
+            {
+                return new string[] { _role.GetRoleForUser(username) };
+            }
+            
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -65,7 +67,10 @@ namespace APRST.WEB.Models.Security
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            return _roleService.IsUserInRole(username, roleName);
+            using (IRoleService _role = DependencyResolver.Current.GetService<IRoleService>())
+            {
+                return _role.IsUserInRole(username, roleName);
+            }
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

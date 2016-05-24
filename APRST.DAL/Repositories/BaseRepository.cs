@@ -39,7 +39,10 @@ namespace APRST.DAL.Repositories
 
         public IQueryable<T> GetEntities()
         {
-            //return DbSet.AsQueryable();
+            return DbSet.AsQueryable();
+        }
+        public IQueryable<T> GetEntitiesNoTracking()
+        {
             return DbSet.AsNoTracking();
         }
 
@@ -50,8 +53,8 @@ namespace APRST.DAL.Repositories
 
         public void DeleteById(int id)
         {
-            var a = DbSet.Find(id);
-            DbSet.Remove(a);
+            var entityToDelete = DbSet.Find(id);
+            if (entityToDelete!=null) DbSet.Remove(entityToDelete);
         }
     }
 }

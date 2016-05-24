@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -29,7 +30,7 @@ namespace APRST.WEB.Controllers
        
         public ActionResult Index()
         {
-            var profile = _userService.GetProfileWithTests(UserPrincipal.Current.SamAccountName);
+            var profile = _userService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
             if (profile == null)
             {
                 return RedirectToAction("Registration");
@@ -58,17 +59,17 @@ namespace APRST.WEB.Controllers
             _userService.CreateProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileForCreate));
             return RedirectToAction("Index");
         }
-        public ActionResult GiveTest(string id)
+        public ActionResult GiveTest(int id)
         {
             ViewBag.UserId = id;
             return PartialView(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
         }
+
         [HttpPost]
         public ActionResult GiveTest(UserTestViewModel userTest)
         {
-            //TODO: REFACTOR THIS (TEST COMMIT)
-            _userService.AddTestToProfile(Int32.Parse(userTest.testid), userTest.userid);
-            return RedirectToAction("Profile", new {id=userTest.userid});
+            _userService.AddTestToProfile(userTest.testid, userTest.userid);
+            return RedirectToAction("Profile", new { id = userTest.userid });
         }
 
         public ActionResult All()
@@ -83,9 +84,37 @@ namespace APRST.WEB.Controllers
 
         public new ActionResult Profile(string id)
         {
-           var profile= _userService.GetProfileWithTests(id);
+            var profile = _userService.GetProfileWithTestsById(id);
             
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
+        }
+
+        public ActionResult UpdateProfileImage()
+        {
+            var a = _userService.GetProfileWithTestsById(34);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfileImage(HttpPostedFileBase file)
+        {
+            int profileId = 34;
+            if (file!=null)
+            {
+                if (Path.GetExtension(file.FileName) != ".png")
+                {
+                    //TODO:Реализовать возврат сообщения о неверном формате
+                    ViewBag.error = "Формат изображения должен быть png";
+                    return View();
+                }
+                string pathOnServer = Path.Combine(
+                    Server.MapPath("~/Users_Data/"), $"{profileId}{Path.GetExtension(file.FileName)}");
+                string pathInDatabase = $"/Users_Data/{profileId}{Path.GetExtension(file.FileName)}";
+                file.SaveAs(pathOnServer);
+
+                _userService.UpdateProfileImage(34,pathInDatabase);
+            }
+            return View();
         }
     }
 }

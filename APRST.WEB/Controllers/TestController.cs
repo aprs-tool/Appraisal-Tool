@@ -54,6 +54,10 @@ namespace APRST.WEB.Controllers
         public ActionResult Edit(int id)
         {
             var test = Mapper.Map<TestDTO, TestViewModel>(_testService.GetById(id));
+            if (test==null)
+            {
+                return HttpNotFound();
+            }
             ViewBag.TestCategoryId = new SelectList(_categoryService.GetAll(), "Id", "NameOfCategory", test.TestCategoryId);
             return PartialView(test);
         }

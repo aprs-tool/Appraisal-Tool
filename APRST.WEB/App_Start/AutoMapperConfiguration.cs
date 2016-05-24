@@ -51,6 +51,19 @@ namespace APRST.WEB.App_Start
             CreateMap<UserProfileDTO, UserProfileViewModel>().ReverseMap();
 
             CreateMap<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>().ReverseMap();
+            
+            //QuestionnaireQuestionController
+            CreateMap<QuestionnaireQuestionDTO, QuestionnaireQuestionViewModel>().ReverseMap();
+
+            //QuestionnaireCategoryController
+            CreateMap<QuestionnaireCategoryViewModel, QuestionnaireCategoryDTO>().ReverseMap();
+            CreateMap<QuestionnaireCategoryIncludeQuestionsDTO, QuestionnaireCategoryIncludeQuestionsViewModel>()
+                .ForMember(dto => dto.Questions, opt => opt.MapFrom(src => src.QuestionnaireQuestionDtos));
+
+            //QuestionnaireController
+            CreateMap<QuestionnaireResultViewModel, QuestionnaireResultDTO>().ReverseMap();
+            CreateMap<QuestionnaireViewModel, QuestionnaireDTO>()
+              .ForMember(dto => dto.QuestionnaireResults, opt => opt.MapFrom(src => src.QuestionnaireResults));
         }
     }
 }
