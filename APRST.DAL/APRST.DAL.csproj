@@ -76,57 +76,9 @@
     <Compile Include="Interfaces\ITestResultRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserProfileRepository.cs" />
-    <Compile Include="Migrations\201604171514002_init.cs" />
-    <Compile Include="Migrations\201604171514002_init.Designer.cs">
-      <DependentUpon>201604171514002_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604171541358_AddTestCategory.cs" />
-    <Compile Include="Migrations\201604171541358_AddTestCategory.Designer.cs">
-      <DependentUpon>201604171541358_AddTestCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604191733436_CascadeDelete.cs" />
-    <Compile Include="Migrations\201604191733436_CascadeDelete.Designer.cs">
-      <DependentUpon>201604191733436_CascadeDelete.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604201749458_questionadd.cs" />
-    <Compile Include="Migrations\201604201749458_questionadd.Designer.cs">
-      <DependentUpon>201604201749458_questionadd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604211639116_answersadd.cs" />
-    <Compile Include="Migrations\201604211639116_answersadd.Designer.cs">
-      <DependentUpon>201604211639116_answersadd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604251442001_AddUserProfileAndLinkWithTest.cs" />
-    <Compile Include="Migrations\201604251442001_AddUserProfileAndLinkWithTest.Designer.cs">
-      <DependentUpon>201604251442001_AddUserProfileAndLinkWithTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605041631520_UserRoles.cs" />
-    <Compile Include="Migrations\201605041631520_UserRoles.Designer.cs">
-      <DependentUpon>201605041631520_UserRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605051707094_UserIdentityName.cs" />
-    <Compile Include="Migrations\201605051707094_UserIdentityName.Designer.cs">
-      <DependentUpon>201605051707094_UserIdentityName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605071754135_AddAvatar.cs" />
-    <Compile Include="Migrations\201605071754135_AddAvatar.Designer.cs">
-      <DependentUpon>201605071754135_AddAvatar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605081907165_QuestionnaireQuestionsAndCategory.cs" />
-    <Compile Include="Migrations\201605081907165_QuestionnaireQuestionsAndCategory.Designer.cs">
-      <DependentUpon>201605081907165_QuestionnaireQuestionsAndCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605101852423_QuestionnaireResultAndLink.cs" />
-    <Compile Include="Migrations\201605101852423_QuestionnaireResultAndLink.Designer.cs">
-      <DependentUpon>201605101852423_QuestionnaireResultAndLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605191815578_LogEntries.cs" />
-    <Compile Include="Migrations\201605191815578_LogEntries.Designer.cs">
-      <DependentUpon>201605191815578_LogEntries.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605212151072_TestResult.cs" />
-    <Compile Include="Migrations\201605212151072_TestResult.Designer.cs">
-      <DependentUpon>201605212151072_TestResult.cs</DependentUpon>
+    <Compile Include="Migrations\201605242106581_merge.cs" />
+    <Compile Include="Migrations\201605242106581_merge.Designer.cs">
+      <DependentUpon>201605242106581_merge.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,44 +101,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604171514002_init.resx">
-      <DependentUpon>201604171514002_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604171541358_AddTestCategory.resx">
-      <DependentUpon>201604171541358_AddTestCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604191733436_CascadeDelete.resx">
-      <DependentUpon>201604191733436_CascadeDelete.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604201749458_questionadd.resx">
-      <DependentUpon>201604201749458_questionadd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604211639116_answersadd.resx">
-      <DependentUpon>201604211639116_answersadd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604251442001_AddUserProfileAndLinkWithTest.resx">
-      <DependentUpon>201604251442001_AddUserProfileAndLinkWithTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605041631520_UserRoles.resx">
-      <DependentUpon>201605041631520_UserRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605051707094_UserIdentityName.resx">
-      <DependentUpon>201605051707094_UserIdentityName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605071754135_AddAvatar.resx">
-      <DependentUpon>201605071754135_AddAvatar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605081907165_QuestionnaireQuestionsAndCategory.resx">
-      <DependentUpon>201605081907165_QuestionnaireQuestionsAndCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605101852423_QuestionnaireResultAndLink.resx">
-      <DependentUpon>201605101852423_QuestionnaireResultAndLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605191815578_LogEntries.resx">
-      <DependentUpon>201605191815578_LogEntries.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605212151072_TestResult.resx">
-      <DependentUpon>201605212151072_TestResult.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605242106581_merge.resx">
+      <DependentUpon>201605242106581_merge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

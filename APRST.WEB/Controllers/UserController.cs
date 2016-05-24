@@ -82,7 +82,7 @@ namespace APRST.WEB.Controllers
             return Json(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()), JsonRequestBehavior.AllowGet);
         }
 
-        public new ActionResult Profile(string id)
+        public new ActionResult Profile(int id)
         {
             var profile = _userService.GetProfileWithTestsById(id);
             

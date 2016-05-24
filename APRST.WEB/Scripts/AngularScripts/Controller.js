@@ -115,16 +115,6 @@ app.controller("UserCtrl", function ($scope, userService) {
         });
     }
 
-    $scope.GiveTest = function (size) {
-
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/User/GiveTest",
-            controller: "GiveTestInstanceCtrl",
-            size: size
-        });
-    };
-
 });
 
 app.controller("GiveTestInstanceCtrl", function ($scope, $uibModalInstance) {
@@ -137,10 +127,10 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
     $scope.animationsEnabled = true;
 
     $scope.GiveTest = function (size) {
-
+        var userId = document.getElementById("UserId").value;
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/User/GiveTest",
+            templateUrl: "/User/GiveTest/" + userId,
             controller: "GiveTestInstanceCtrl",
             size: size
         });

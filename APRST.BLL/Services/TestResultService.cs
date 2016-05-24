@@ -18,7 +18,7 @@ namespace APRST.BLL.Services
 
         public void Add(TestResultDTO testResult, string userIdentityName)
         {
-            _uow.UserProfileRepository.GetProfileWithTests(userIdentityName).TestResults.Add(Mapper.Map<TestResultDTO, TestResult>(testResult));
+            _uow.UserProfileRepository.GetProfileWithTestsByUserIdentityName(userIdentityName).TestResults.Add(Mapper.Map<TestResultDTO, TestResult>(testResult));
             _uow.Save();
         }
 
