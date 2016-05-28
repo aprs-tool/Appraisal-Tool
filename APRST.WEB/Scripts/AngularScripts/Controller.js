@@ -1,8 +1,9 @@
 ﻿app.controller("TestsCtrl", function ($scope, $uibModal, testService) {
+
+    $scope.animationsEnabled = true;
     getAllTests();
 
     function getAllTests() {
-        debugger;
         var getTestsData = testService.getTests();
         getTestsData.then(function (test) {
             $scope.tests = test.data;
@@ -11,69 +12,46 @@
         });
     }
 
-    $scope.animationsEnabled = true;
-
     $scope.CreateTest = function (size) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Test/Create",
-            controller: "CreateTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.DeleteTest = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Test/Delete/" + id,
-            controller: "DeleteTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.EditTest = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Test/Edit/" + id,
-            controller: "EditTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.showCategories = function (size) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/TestCategory/Index",
-            controller: "CreateTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
 });
 
-app.controller("CreateTestInstanceCtrl", function ($scope, $uibModalInstance) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss("cancel");
-    };
-});
-
-app.controller("DeleteTestInstanceCtrl", function ($scope, $uibModalInstance) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss("cancel");
-    };
-});
-
-app.controller("EditTestInstanceCtrl", function ($scope, $uibModalInstance) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss("cancel");
-    };
-});
-
 app.controller("TestsingCtrl", function ($scope, testService) {
+
     $scope.divTestResult = false;
     $scope.divTest = true;
 
@@ -82,7 +60,6 @@ app.controller("TestsingCtrl", function ($scope, testService) {
     getAllQnA(testId);
 
     function getAllQnA(id) {
-        debugger;
         var getQnAData = testService.getQnA(id);
         getQnAData.then(function (qna) {
             $scope.QnAs = qna.data;
@@ -102,11 +79,10 @@ app.controller("TestsingCtrl", function ($scope, testService) {
 
 app.controller("UserCtrl", function ($scope, userService) {
 
-    getAllUsers();
     $scope.animationsEnabled = true;
+    getAllUsers();
 
     function getAllUsers() {
-        debugger;
         var getUsersData = userService.getUsers();
         getUsersData.then(function (user) {
             $scope.users = user.data;
@@ -117,13 +93,8 @@ app.controller("UserCtrl", function ($scope, userService) {
 
 });
 
-app.controller("GiveTestInstanceCtrl", function ($scope, $uibModalInstance) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss("cancel");
-    };
-});
-
 app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
+
     $scope.animationsEnabled = true;
 
     $scope.GiveTest = function (size) {
@@ -131,7 +102,7 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/User/GiveTest/" + userId,
-            controller: "GiveTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
@@ -140,7 +111,7 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Questionnaire/Index/",
-            controller: "GiveTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
@@ -150,7 +121,6 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
     getUserTestsResults(userId);
 
     function getUserTestsResults(userId) {
-        debugger;
         var getUserTestsResultsData = userService.getUserTestsResults(userId);
         getUserTestsResultsData.then(function (userResult) {
             $scope.userResults = userResult.data;
@@ -167,7 +137,6 @@ app.controller("QuestionsCtrl", function ($scope, $uibModal, testService) {
     getAllQuestionsForTest(testId);
 
     function getAllQuestionsForTest(id) {
-        debugger;
         var getQuestionsData = testService.getQuestions(id);
         getQuestionsData.then(function (question) {
             $scope.questions = question.data;
@@ -179,31 +148,28 @@ app.controller("QuestionsCtrl", function ($scope, $uibModal, testService) {
     $scope.animationsEnabled = true;
 
     $scope.CreateQuestion = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Question/Create/" + id,
-            controller: "CreateTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.DeleteQuestion = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Question/Delete/" + id,
-            controller: "DeleteTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.EditQuestion = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Question/Edit/" + id,
-            controller: "EditTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
@@ -217,7 +183,6 @@ app.controller("AnswersCtrl", function ($scope, $uibModal, testService) {
     getAllAnswersForQuestion(questionId);
 
     function getAllAnswersForQuestion(id) {
-        debugger;
         var getAnswersData = testService.getAnswers(id);
         getAnswersData.then(function (answer) {
             $scope.answers = answer.data;
@@ -229,31 +194,28 @@ app.controller("AnswersCtrl", function ($scope, $uibModal, testService) {
     $scope.animationsEnabled = true;
 
     $scope.CreateAnswer = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Answer/Create/" + id,
-            controller: "CreateTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.DeleteAnswer = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Answer/Delete/" + id,
-            controller: "DeleteTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
 
     $scope.EditAnswer = function (size, id) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/Answer/Edit/" + id,
-            controller: "EditTestInstanceCtrl",
+            controller: "ModalInstanceCtrl",
             size: size
         });
     };
@@ -265,7 +227,6 @@ app.controller("CategoryCtrl", function ($scope, $uibModal, categoryService) {
     getTestCategories();
 
     function getTestCategories() {
-        debugger;
         var getCategoriesData = categoryService.getCategories();
         getCategoriesData.then(function (category) {
             $scope.categories = category.data;
@@ -353,7 +314,6 @@ app.controller("CategoryCtrl", function ($scope, $uibModal, categoryService) {
         });
     }
 
-
 });
 
 app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
@@ -368,7 +328,6 @@ app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
     $scope.isReadonly = false;
 
     function getQuestionnaire() {
-        debugger;
         var getQuestionnaireData = questionnaireService.getQuestionnaire();
         getQuestionnaireData.then(function (questionnaire) {
             $scope.Questionnaire = questionnaire.data;
@@ -378,7 +337,6 @@ app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
     }
 
     function getQuestionnaireResult() {
-        debugger;
         var getQuestionnaireResultData = questionnaireService.getQuestionnaireResult();
         getQuestionnaireResultData.then(function (questionnaireResult) {
             questionnaireResult = questionnaireResult.data;
@@ -429,5 +387,11 @@ app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
 app.filter("jsDate", function () {
     return function (x) {
         return new Date(parseInt(x.substr(6)));
+    };
+});
+
+app.controller("ModalInstanceCtrl", function ($scope, $uibModalInstance) {
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss("cancel");
     };
 });
