@@ -44,6 +44,12 @@ namespace APRST.BLL.Services
            return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(_uow.UserProfileRepository.GetEntities());
         }
 
+        public UserProfileIncludeRoleDTO GetProfileByIdentityName(string identityName)
+        {
+            return Mapper.Map<UserProfile, UserProfileIncludeRoleDTO>(
+                _uow.UserProfileRepository.GetProfileByIdentityName(identityName));
+        }
+
         public UserProfileIncludeTestsDTO GetProfileWithTestsById(int id)
         {
            return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(

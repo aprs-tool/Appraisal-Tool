@@ -12,6 +12,7 @@ namespace APRST.BLL.Interfaces
     {
         void AddTestToProfile(int testId, int userId);
         UserProfileIncludeTestsDTO GetProfileWithTestsById(int id);
+        UserProfileIncludeRoleDTO GetProfileByIdentityName(string identityName);
         UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName);
         void CreateProfile(UserProfileDTO user);
         IEnumerable<UserProfileDTO> GetAll();

@@ -76,11 +76,13 @@
     <Compile Include="DTO\TestResultDTO.cs" />
     <Compile Include="DTO\TestResultInfoDTO.cs" />
     <Compile Include="DTO\UserProfileDTO.cs" />
+    <Compile Include="DTO\UserProfileIncludeRoleDTO.cs" />
     <Compile Include="DTO\UserProfileIncludeTestsDTO.cs" />
     <Compile Include="Infastructure\BuisnessLayerMapperProfile.cs" />
     <Compile Include="Infastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\IQuestionnaireCategoryService.cs" />
     <Compile Include="Interfaces\IQuestionnaireQuestionService.cs" />
+    <Compile Include="Interfaces\IQuestionnaireResultService.cs" />
     <Compile Include="Interfaces\IQuestionnaireService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\ITestAnswerService.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\QuestionnaireCategoryService.cs" />
     <Compile Include="Services\QuestionnaireQuestionService.cs" />
+    <Compile Include="Services\QuestionnaireResultService.cs" />
     <Compile Include="Services\QuestionnaireService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\TestAnswerService.cs" />

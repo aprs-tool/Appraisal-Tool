@@ -1066,9 +1066,9 @@
     <Content Include="Views\QuestionnaireCategory\Details.cshtml" />
     <Content Include="Views\QuestionnaireQuestion\Create.cshtml" />
     <Content Include="Views\QuestionnaireQuestion\Edit.cshtml" />
-    <Content Include="Views\Questionnaire\Questionnaire.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Questionnaire\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

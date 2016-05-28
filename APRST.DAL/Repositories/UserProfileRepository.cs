@@ -16,6 +16,14 @@ namespace APRST.DAL.Repositories
         {
         }
 
+        public UserProfile GetProfileByIdentityName(string identityName)
+        {
+            return GetEntities()
+                .Where(s => s.UserIdentityName == identityName)
+                .Include(u => u.UserRole)
+                .FirstOrDefault();
+        }
+
         public UserProfile GetProfileWithRole(string userIdentityName)
         {
             //using (AprstContext db = new AprstContext())

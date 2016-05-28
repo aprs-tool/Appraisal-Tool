@@ -136,6 +136,15 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
         });
     };
 
+    $scope.GetQuestionnaire = function (size) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/Questionnaire/Index/",
+            controller: "GiveTestInstanceCtrl",
+            size: size
+        });
+    };
+
     var userId = document.getElementById("UserId").value;
 
     getUserTestsResults(userId);
@@ -344,6 +353,76 @@ app.controller("CategoryCtrl", function ($scope, $uibModal, categoryService) {
         });
     }
 
+
+});
+
+app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
+
+    getQuestionnaire();
+    getQuestionnaireResult();
+
+    var results = [];
+    var questionnaireResult;
+    $scope.rate = [];
+    $scope.max = 4;
+    $scope.isReadonly = false;
+
+    function getQuestionnaire() {
+        debugger;
+        var getQuestionnaireData = questionnaireService.getQuestionnaire();
+        getQuestionnaireData.then(function (questionnaire) {
+            $scope.Questionnaire = questionnaire.data;
+        }, function () {
+            alert("Ошибка получения анкеты для заполнения");
+        });
+    }
+
+    function getQuestionnaireResult() {
+        debugger;
+        var getQuestionnaireResultData = questionnaireService.getQuestionnaireResult();
+        getQuestionnaireResultData.then(function (questionnaireResult) {
+            questionnaireResult = questionnaireResult.data;
+
+            for (var i = 0; i < questionnaireResult.QuestionnaireResults.length; i++) {
+                $scope.rate[questionnaireResult.QuestionnaireResults[i]
+                    .QuestionnaireQuestionId] = questionnaireResult.QuestionnaireResults[i].Answer;
+                results[i] = questionnaireResult.QuestionnaireResults[i];
+            }
+
+        }, function () {
+            alert("Ошибка получения результатов анкеты");
+        });
+    }
+
+    function checkArray(array, keyText) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].QuestionnaireQuestionId === keyText) {
+                array[i].Answer = null;
+            }
+        }
+    }
+
+    function clearArray() {
+        for (var i = 0; i < results.length; i++) {
+            if (results[i].Answer === null) {
+                delete results[i];
+            }
+        }
+    }
+
+    $scope.AnswerPush = function (id) {
+        checkArray(results, id);
+        var ratingObject = {
+            QuestionnaireQuestionId: id,
+            Answer: $scope.rate[id]
+        }
+        results.push(ratingObject);
+    };
+
+    $scope.finishQuestionnaire = function() {
+        clearArray();
+        questionnaireService.addQuestionnaire(results);
+    };
 
 });
 

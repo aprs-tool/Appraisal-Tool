@@ -1,1 +1,2 @@
 2016-05-25 00:11:38.4476|INFO|logfile|Добавлена категория js
+2016-05-25 23:52:45.2576|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Операционные системы

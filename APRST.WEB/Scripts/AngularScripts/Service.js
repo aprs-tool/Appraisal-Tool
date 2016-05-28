@@ -77,3 +77,25 @@ app.service("userService", function ($http) {
     };
 
 });
+
+app.service("questionnaireService", function ($http) {
+
+    this.getQuestionnaire = function () {
+        return $http.get("/Questionnaire/GetQuestionnaire");
+    };
+
+    this.getQuestionnaireResult = function () {
+        return $http.get("/Questionnaire/GetQuestionnaireResult");
+    };
+
+    this.addQuestionnaire = function (qResult) {
+        var response = $http({
+            method: "post",
+            url: "/Questionnaire/Add",
+            data: JSON.stringify(qResult),
+            dataType: "json"
+        });
+        return response;
+    }
+
+});

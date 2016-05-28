@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\IQuestionnaireCategoryRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireQuestionRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireRepository.cs" />
+    <Compile Include="Interfaces\IQuestionnaireResultRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireTypeRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
@@ -84,6 +85,10 @@
     <Compile Include="Migrations\201605221638206_DateTimeInLogEntry.Designer.cs">
       <DependentUpon>201605221638206_DateTimeInLogEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605242155290_datetime.cs" />
+    <Compile Include="Migrations\201605242155290_datetime.Designer.cs">
+      <DependentUpon>201605242155290_datetime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -91,6 +96,7 @@
     <Compile Include="Repositories\QuestionnaireCategoryRepository.cs" />
     <Compile Include="Repositories\QuestionnaireQuestionRepository.cs" />
     <Compile Include="Repositories\QuestionnaireRepository.cs" />
+    <Compile Include="Repositories\QuestionnaireResultRepository.cs" />
     <Compile Include="Repositories\QuestionnaireTypeRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\TestAnswerRepository.cs" />
@@ -110,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605221638206_DateTimeInLogEntry.resx">
       <DependentUpon>201605221638206_DateTimeInLogEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605242155290_datetime.resx">
+      <DependentUpon>201605242155290_datetime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

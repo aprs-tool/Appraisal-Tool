@@ -704,7 +704,11 @@ a {
 }
 
 .button-edit:focus {
-	color: #6a6a6a;
+    outline: none;
+}
+
+.button-edit:active {
+    color: #8691A7;
     outline: none;
 }
 
@@ -828,4 +832,109 @@ h1, h2, h3, h4, h5, h6 {
     -ms-transition: all 0.26s ease;
     -o-transition: all 0.26s ease;
     transition: all 0.26s ease;
+}
+
+.button-g-blue {
+    float: right;
+    margin-top: 3px;
+}
+
+.accordion {
+    border: 1px solid #e0e6e7;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.accordion-h {
+    background: #f9f9f9;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-bottom: 1px solid #e0e6e7;
+    overflow: hidden;
+}
+
+.accordion-h a {
+    color: #888888;
+}
+
+.accordion-h a:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+.accordion-h a:active {
+    outline: none;
+    text-decoration: none;
+}
+
+.accordion-h a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+.accordion-pull-right {
+    float: right;
+    margin-top: 2px;
+}
+
+.accordion-b {
+    padding: 8px 10px;
+    display: block;
+    height: 35px;
+    transition: all 0.26s;
+}
+
+.accordion-b:hover {
+    background: #fcfcfc;
+    transition: all 0.26s;
+}
+
+.accordion-b-l {
+    float: left;
+}
+
+.accordion-b-r {
+    float: right;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.accordion-b-r span {
+    outline: none;
+}
+
+.star-o {
+    color: #eaeaff;
+    transition: all 0.52s;
+    outline: none;
+}
+
+.star-o:focus {
+    outline: none;
+}
+
+.star-o:active {
+    outline: none;
+}
+
+.star {
+    color: #8691A7;
+    transition: all 0.26s;
+}
+
+.star:focus {
+    outline: none;
+}
+
+.star:active {
+    outline: none;
+}
+
+.table-info {
+    background: #FBFBFB;
+    color: #a7a7a7;
+    font-size: 11px;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e7e7e7;
 }
