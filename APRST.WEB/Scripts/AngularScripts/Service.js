@@ -84,6 +84,10 @@ app.service("questionnaireService", function ($http) {
         return $http.get("/Questionnaire/GetQuestionnaire");
     };
 
+    this.getQuestionnaires = function () {
+        return $http.get("/Questionnaire/GetAllIncludeUserAndType");
+    };
+
     this.getQuestionnaireResult = function () {
         return $http.get("/Questionnaire/GetQuestionnaireResult");
     };

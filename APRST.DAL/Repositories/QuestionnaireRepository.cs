@@ -15,6 +15,11 @@ namespace APRST.DAL.Repositories
         {
         }
 
+        public IEnumerable<Questionnaire> GetAllIncludeUserAndType()
+        {
+            return GetEntities().Include(user => user.UserProfile).Include(type => type.QuestionnaireType);
+        }
+
         public Questionnaire GetIncludeResultsByUserId(int id)
         {
             return GetEntities().Include(d=>d.QuestionnaireResults).FirstOrDefault(s => s.UserProfileId == id);

@@ -14,7 +14,7 @@
 
         <div class="table-top">
             <i class="fa fa-file-text-o" aria-hidden="true"></i>
-            Анкеты для модерации
+            Анкеты в системе
 
             <button class="button-g" ng-click="QuestionnaireManage()">Управление анкетами</button>
         </div>
@@ -23,8 +23,17 @@
                 <td>
                     Пользователь
                 </td>
+                <td>
+                    Тип анкеты
+                </td>
                 <td></td>
             </tr>
+
+            <tr ng-repeat="item in questionnaires | filter : search" class="b-vs-true">
+            <td ng-cloak>{{item.UserProfile}}</td>
+            <td ng-cloak>{{item.QuestionnaireType}}</td>
+        </tr>
+
         </table>
         <div class="table-end"></div>
     </div>

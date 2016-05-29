@@ -62,6 +62,7 @@
     <Compile Include="DTO\QuestionnaireDTO.cs" />
     <Compile Include="DTO\QuestionnaireQuestionDTO.cs" />
     <Compile Include="DTO\QuestionnaireResultDTO.cs" />
+    <Compile Include="DTO\QuestionnairesDTO.cs" />
     <Compile Include="DTO\QuestionnaireTypeDTO.cs" />
     <Compile Include="DTO\TestAnswerDTO.cs" />
     <Compile Include="DTO\TestAnswerInfoDTO.cs" />

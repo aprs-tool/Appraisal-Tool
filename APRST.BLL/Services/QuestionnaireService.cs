@@ -54,5 +54,10 @@ namespace APRST.BLL.Services
         {
             return Mapper.Map<IEnumerable<QuestionnaireType>, List<QuestionnaireTypeDTO>>(_uow.QuestionnaireTypeRepository.GetEntities());
         }
+
+        public IEnumerable<QuestionnairesDTO> GetAllIncludeUserAndType()
+        {
+            return Mapper.Map< IEnumerable<Questionnaire>, IEnumerable<QuestionnairesDTO>>(_uow.QuestionnaireRepository.GetAllIncludeUserAndType());
+        }
     }
 }

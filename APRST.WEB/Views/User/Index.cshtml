@@ -26,7 +26,6 @@
                 <div class="profile-table">
                     <div class="profile-username">
                         @Html.DisplayFor(model => model.Name)
-                        <button class="button-edit button-g-blue" ng-click="GetQuestionnaire()">Моя анкета</button>
                     </div>
 
                     <div class="profile-info">
@@ -35,7 +34,7 @@
                                 <td>Доменное имя:</td>
                                 <td>
                                     @Html.DisplayFor(model => model.UserPrincipalName)
-                                    <input type="text" value="@Model.Id" id="UserId" disabled hidden/>
+                                    <input type="text" value="@Model.Id" id="UserId" disabled hidden />
                                 </td>
                             </tr>
 
@@ -74,7 +73,13 @@
         <div class="table-top">
             <i class="fa fa-file-text-o" aria-hidden="true"></i>
             Доступные тесты
-            <button class="button-g" ng-click="GiveTest()">Выдать тест</button>
+
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    <button class="button-g" ng-click="GiveTest()">Выдать тест</button>
+                }
+            }
         </div>
         <table>
             <tr id="tr-head">

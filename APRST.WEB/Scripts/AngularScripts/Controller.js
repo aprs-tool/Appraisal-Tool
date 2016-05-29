@@ -389,21 +389,30 @@ app.controller("QuestionnaireManageCtrl", function ($scope, $uibModal, questionn
 
     $scope.animationsEnabled = true;
 
-    //getAllTests();
+    getAllQuestionnaires();
 
-    //function getAllTests() {
-    //    var getTestsData = testService.getTests();
-    //    getTestsData.then(function (test) {
-    //        $scope.tests = test.data;
-    //    }, function () {
-    //        alert("Ошибка получения списка тестов");
-    //    });
-    //}
+    function getAllQuestionnaires() {
+        var getQuestionnairesData = questionnaireService.getQuestionnaires();
+        getQuestionnairesData.then(function (questionnaire) {
+            $scope.questionnaires = questionnaire.data;
+        }, function () {
+            alert("Ошибка получения списка анкет");
+        });
+    }
 
     $scope.QuestionnaireManage = function (size) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "/QuestionnaireCategory/Index",
+            controller: "ModalInstanceCtrl",
+            size: size
+        });
+    };
+
+    $scope.GetQuestionnaire = function (size) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/Questionnaire/Index/",
             controller: "ModalInstanceCtrl",
             size: size
         });

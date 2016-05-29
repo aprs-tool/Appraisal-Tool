@@ -11,5 +11,6 @@ namespace APRST.DAL.Interfaces
     {
         Questionnaire GetQuestionnaireByUserId(int id);
         Questionnaire GetIncludeResultsByUserId(int id);
+        IEnumerable<Questionnaire> GetAllIncludeUserAndType();
     }
 }

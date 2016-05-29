@@ -44,6 +44,11 @@ namespace APRST.WEB.Controllers
             return Json(_questionnaireService.QuestionnaireWithResultsByUserId(user.Id), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetAllIncludeUserAndType()
+        {
+            return Json(_questionnaireService.GetAllIncludeUserAndType(), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public void Add(List<QuestionnaireResultViewModel> results)
         {
