@@ -28,6 +28,11 @@ namespace APRST.WEB.Controllers
             return PartialView();
         }
 
+        public ActionResult Manage()
+        {
+            return View();
+        }
+
         public JsonResult GetQuestionnaire()
         {
             return Json(Mapper.Map<IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO>, IEnumerable<QuestionnaireCategoryIncludeQuestionsViewModel>>(_questionnaireCategoryService.GetAllWithQuestions()), JsonRequestBehavior.AllowGet);

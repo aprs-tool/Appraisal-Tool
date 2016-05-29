@@ -308,6 +308,7 @@ app.controller("CategoryCtrl", function ($scope, $uibModal, categoryService) {
         var getCategoriesData = categoryService.EditCategory(category);
         getCategoriesData.then(function () {
             $scope.trEdit = false;
+            clearFields();
             getTestCategories();
         }, function () {
             alert("Ошибка редактирования выбранной категории");
@@ -384,14 +385,238 @@ app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
 
 });
 
-app.filter("jsDate", function () {
-    return function (x) {
-        return new Date(parseInt(x.substr(6)));
+app.controller("QuestionnaireManageCtrl", function ($scope, $uibModal, questionnaireService) {
+
+    $scope.animationsEnabled = true;
+
+    //getAllTests();
+
+    //function getAllTests() {
+    //    var getTestsData = testService.getTests();
+    //    getTestsData.then(function (test) {
+    //        $scope.tests = test.data;
+    //    }, function () {
+    //        alert("Ошибка получения списка тестов");
+    //    });
+    //}
+
+    $scope.QuestionnaireManage = function (size) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/QuestionnaireCategory/Index",
+            controller: "ModalInstanceCtrl",
+            size: size
+        });
     };
+
+});
+
+app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, questionnaireService) {
+
+    $scope.trQuestions = false;
+    $scope.trCategories = true;
+    getQuestionnairesCategories();
+    var CategoryId = 0;
+
+    function getQuestionnairesCategories() {
+        var getCategoriesData = questionnaireService.getCategories();
+        getCategoriesData.then(function (category) {
+            $scope.categories = category.data;
+        }, function () {
+            alert("Ошибка получения списка категорий");
+        });
+    };
+
+    function getQuestionsForCategory(categoryId) {
+        var getQuestionsData = questionnaireService.getQuestions(categoryId);
+        getQuestionsData.then(function (question) {
+            $scope.questions = question.data;
+        }, function () {
+            alert("Ошибка получения списка вопросов");
+        });
+    };
+
+    function clearFields() {
+        $scope.NameOfCategory = "";
+        $scope.NameOfQuestion = "";
+        $scope.Desc = "";
+    };
+
+    $scope.ShowQuestionsForCategory = function(item) {
+        getQuestionsForCategory(item.Id);
+        CategoryId = item.Id;
+        $scope.CategoryName = item.NameOfCategory;
+        $scope.trCategories = false;
+        $scope.trQuestions = true;
+    };
+
+    $scope.toCategories = function() {
+        $scope.trQuestions = false;
+        $scope.trCategories = true;
+    };
+
+    $scope.ShowAddCategory = function () {
+        $scope.trEditCategory = false;
+        $scope.trDeleteCategory = false;
+        $scope.trAddCategory = true;
+    };
+
+    $scope.ShowDeleteCategory = function(item) {
+        $scope.trAddCategory = false;
+        $scope.trEditCategory = false;
+        $scope.categoryId = item.Id;
+        $scope.NameOfCategory = item.NameOfCategory;
+        $scope.Desc = item.Desc;
+        $scope.trDeleteCategory = true;
+    };
+
+    $scope.ShowEditCategory = function(item) {
+        $scope.trAddCategory = false;
+        $scope.trDeleteCategory = false;
+        $scope.categoryId = item.Id;
+        $scope.NameOfCategory = item.NameOfCategory;
+        $scope.Desc = item.Desc;
+        $scope.trEditCategory = true;
+    };
+
+    $scope.CancelCategory = function () {
+        $scope.trAddCategory = false;
+        $scope.trEditCategory = false;
+        $scope.trDeleteCategory = false;
+    };
+
+    $scope.AddCategory = function() {
+        $scope.trAddCategory = false;
+        var category = {
+            NameOfCategory: $scope.NameOfCategory,
+            Desc: $scope.Desc
+        };
+        var getCategoriesData = questionnaireService.AddCategory(category);
+        getCategoriesData.then(function() {
+                getQuestionnairesCategories();
+                clearFields();
+            },
+            function() {
+                alert("Ошибка добавления категории");
+            });
+    };
+
+    $scope.EditCategory = function () {
+        $scope.trEditCategory = false;
+        var category = {
+            NameOfCategory: $scope.NameOfCategory,
+            Desc: $scope.Desc
+        };
+
+        category.Id = $scope.categoryId;
+
+        var getCategoriesData = questionnaireService.EditCategory(category);
+        getCategoriesData.then(function() {
+                getQuestionnairesCategories();
+                clearFields();
+            },
+            function() {
+                alert("Ошибка редактирования выбранной категории");
+            });
+    };
+
+    $scope.DeleteCategory = function () {
+        $scope.trDeleteCategory = false;
+        var getCategoriesData = questionnaireService.DeleteCategory($scope.categoryId);
+        getCategoriesData.then(function() {
+                getQuestionnairesCategories();
+                clearFields();
+            },
+            function() {
+                alert("Ошибка удаления выбранной категории");
+            });
+    };
+
+    $scope.ShowAddQuestion = function () {
+        $scope.trEditQuestion = false;
+        $scope.trDeleteQuestion = false;
+        $scope.trAddQuestion = true;
+    };
+
+    $scope.ShowDeleteQuestion = function (item) {
+        $scope.trAddQuestion = false;
+        $scope.trEditQuestion = false;
+        $scope.questionId = item.Id;
+        $scope.NameOfQuestion = item.NameOfQuestion;
+        $scope.trDeleteQuestion = true;
+    };
+
+    $scope.ShowEditQuestion = function (item) {
+        $scope.trAddQuestion = false;
+        $scope.trDeleteQuestion = false;
+        $scope.questionId = item.Id;
+        $scope.NameOfQuestion = item.NameOfQuestion;
+        $scope.trEditQuestion = true;
+    };
+
+    $scope.CancelQuestion = function () {
+        $scope.trAddQuestion = false;
+        $scope.trEditQuestion = false;
+        $scope.trDeleteQuestion = false;
+    };
+
+    $scope.AddQuestion = function () {
+        $scope.trAddQuestion = false;
+        var question = {
+            NameOfQuestion: $scope.NameOfQuestion,
+            QuestionnaireCategoryId: CategoryId
+        };
+        var getQuestionsData = questionnaireService.AddQuestion(question);
+        getQuestionsData.then(function () {
+            getQuestionsForCategory(CategoryId);
+            clearFields();
+        },
+            function () {
+                alert("Ошибка добавления вопроса");
+            });
+    };
+
+    $scope.EditQuestion = function () {
+        $scope.trEditQuestion = false;
+        var question = {
+            NameOfQuestion: $scope.NameOfQuestion,
+            QuestionnaireCategoryId: CategoryId
+        };
+
+        question.Id = $scope.questionId;
+
+        var getQuestionsData = questionnaireService.EditQuestion(question);
+        getQuestionsData.then(function () {
+            getQuestionsForCategory(CategoryId);
+            clearFields();
+        },
+            function () {
+                alert("Ошибка редактирования выбранного вопроса");
+            });
+    };
+
+    $scope.DeleteQuestion = function () {
+        $scope.trDeleteQuestion = false;
+        var getQuestionsData = questionnaireService.DeleteQuestion($scope.questionId);
+        getQuestionsData.then(function () {
+            getQuestionsForCategory(CategoryId);
+            clearFields();
+        },
+            function () {
+                alert("Ошибка удаления выбранного вопроса");
+            });
+    };
+
 });
 
 app.controller("ModalInstanceCtrl", function ($scope, $uibModalInstance) {
     $scope.cancel = function () {
         $uibModalInstance.dismiss("cancel");
+    };
+});
+
+app.filter("jsDate", function () {
+    return function (x) {
+        return new Date(parseInt(x.substr(6)));
     };
 });

@@ -1,47 +1,127 @@
-﻿@model IEnumerable<APRST.WEB.Models.QuestionnaireCategoryViewModel>
+﻿<section class="usertable" ng-controller="QuestionnaireManageMCtrl">
+    <div class="table-top">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <span ng-show="trCategories">Управление анкетами</span>
+        <span ng-show="trQuestions" ng-bind="CategoryName"></span>
+        <button class="button-g" ng-show="trCategories" ng-click="cancel()">Закрыть</button>
+        <button class="button-g" ng-show="trCategories" ng-click="ShowAddCategory()">Добавить категорию</button>
+        <button class="button-g" ng-show="trQuestions" ng-click="toCategories()">Назад</button>
+        <button class="button-g" ng-show="trQuestions" ng-click="ShowAddQuestion()">Добавить вопрос</button>
+    </div>
+    <table ng-show="trCategories" class="animate-show">
 
-@{
-    ViewBag.Title = "Index";
-}
+        <tr ng-show="trAddCategory" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Название категории" ng-model="NameOfCategory"/>
+            </td>
+            <td>
+                <input type="text" class="input-g" placeholder="Описание" ng-model="Desc"/>
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" ng-click="AddCategory()">Добавить</button>
+                <button class="button-edit" ng-click="CancelCategory()">Отмена</button>
+            </td>
+        </tr>
 
-<h2>Категории вопросов в анкатах</h2>
+        <tr ng-show="trEditCategory" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Название категории" ng-model="NameOfCategory" />
+            </td>
+            <td>
+                <input type="text" class="input-g" placeholder="Описание" ng-model="Desc" />
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" ng-click="EditCategory()">Сохранить</button>
+                <button class="button-edit" ng-click="CancelCategory()">Отмена</button>
+            </td>
+        </tr>
 
-<p>
-    @Html.ActionLink("Создать новую категорию", "Create", new { area = "" }, new { @class = "btn btn-primary btn-xs" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NameOfCategory)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Desc)
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
+        <tr ng-show="trDeleteCategory" class="animate-show">
+            <td>
+                <input type="text" class="input-g input-g-delete" placeholder="Название категории" ng-model="NameOfCategory" />
+            </td>
+            <td>
+                <input type="text" class="input-g input-g-delete" placeholder="Описание" ng-model="Desc" />
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" ng-click="DeleteCategory()">Удалить</button>
+                <button class="button-edit" ng-click="CancelCategory()">Отмена</button>
+            </td>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameOfCategory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Desc)
-        </td>
-        <td style="text-align: right;">
-            @Html.ActionLink("Редактировать", "Edit", new {id = item.Id}, new {@class = "btn btn-success btn-xs"})
-            @Html.ActionLink("Подробнее", "Details", new {id = item.Id}, new {@class = "btn btn-warning btn-xs"})
-        </td>
-        <td width="5%" style="text-align: right; padding: 8px 8px 8px 0;">
-            @using (Html.BeginForm("Delete", "QuestionnaireCategory"))
-            {
-                <input name="id" value="@item.Id" hidden />
-                        <input type="submit" value="Удалить" class="btn btn-danger btn-xs" onclick="return confirm('Вы уверены?')" />
-            }
-        </td>
+        <tr id="tr-head">
+            <td>
+                Категория
+            </td>
+            <td>
+                Описание
+            </td>
+            <td></td>
+        </tr>
 
-    </tr>
-}
+        <tr ng-repeat="item in categories" class="b-vs-true">
+            <td ng-cloak><span uib-tooltip="{{item.NameOfCategory}}" tooltip-placement="bottom">{{item.NameOfCategory | limitTo: 20}}{{item.NameOfCategory.length > 30 ? '...' : ''}}</span></td>
+            <td ng-cloak><span uib-tooltip="{{item.Desc}}" tooltip-placement="bottom">{{item.Desc | limitTo: 25}}{{item.Desc.length > 25 ? '...' : ''}}</span></td>
+            <td style="text-align: right;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="ShowQuestionsForCategory(item)">Вопросы</button>
+                    <button class="button-edit" ng-click="ShowEditCategory(item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="ShowDeleteCategory(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
 
-</table>
+    </table>
+
+    <table ng-show="trQuestions" class="animate-show">
+
+        <tr ng-show="trAddQuestion" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Вопрос" ng-model="NameOfQuestion" />
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" ng-click="AddQuestion()">Добавить</button>
+                <button class="button-edit" ng-click="CancelQuestion()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr ng-show="trEditQuestion" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Вопрос" ng-model="NameOfQuestion" />
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" ng-click="EditQuestion()">Сохранить</button>
+                <button class="button-edit" ng-click="CancelQuestion()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr ng-show="trDeleteQuestion" class="animate-show">
+            <td>
+                <input type="text" class="input-g input-g-delete" placeholder="Вопрос" ng-model="NameOfQuestion" />
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" ng-click="DeleteQuestion()">Удалить</button>
+                <button class="button-edit" ng-click="CancelQuestion()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr id="tr-head">
+            <td>
+                Вопрос
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in questions.QuestionnaireQuestionDtos" class="b-vs-true">
+            <td ng-cloak><span uib-tooltip="{{item.NameOfQuestion}}" tooltip-placement="bottom">{{item.NameOfQuestion | limitTo: 40}}{{item.NameOfQuestion.length > 40 ? '...' : ''}}</span></td>
+            <td style="text-align: right;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="ShowEditQuestion(item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="ShowDeleteQuestion(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+</section>

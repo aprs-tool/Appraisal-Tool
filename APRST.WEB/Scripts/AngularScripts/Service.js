@@ -88,12 +88,82 @@ app.service("questionnaireService", function ($http) {
         return $http.get("/Questionnaire/GetQuestionnaireResult");
     };
 
+    this.getCategories = function () {
+        return $http.get("/QuestionnaireCategory/GetCategories");
+    };
+
+    this.getQuestions = function (categoryId) {
+        return $http.get("/QuestionnaireCategory/GetCategoryWithQuestions/" + categoryId);
+    };
+
     this.addQuestionnaire = function (qResult) {
         var response = $http({
             method: "post",
             url: "/Questionnaire/Add",
             data: JSON.stringify(qResult),
             dataType: "json"
+        });
+        return response;
+    }
+
+    this.AddCategory = function (category) {
+        var response = $http({
+            method: "post",
+            url: "/QuestionnaireCategory/Create",
+            data: JSON.stringify(category),
+            dataType: "json"
+        });
+        return response;
+    }
+
+    this.EditCategory = function (category) {
+        var response = $http({
+            method: "post",
+            url: "/QuestionnaireCategory/Edit",
+            data: JSON.stringify(category),
+            dataType: "json"
+        });
+        return response;
+    }
+
+    this.DeleteCategory = function (id) {
+        var response = $http({
+            method: "post",
+            url: "/QuestionnaireCategory/Delete",
+            params: {
+                Id: JSON.stringify(id)
+            }
+        });
+        return response;
+    }
+
+    this.AddQuestion = function (question) {
+        var response = $http({
+            method: "post",
+            url: "/QuestionnaireQuestion/Create",
+            data: JSON.stringify(question),
+            dataType: "json"
+        });
+        return response;
+    }
+
+    this.EditQuestion = function (question) {
+        var response = $http({
+            method: "post",
+            url: "/QuestionnaireQuestion/Edit",
+            data: JSON.stringify(question),
+            dataType: "json"
+        });
+        return response;
+    }
+
+    this.DeleteQuestion = function (id) {
+        var response = $http({
+            method: "post",
+            url: "/QuestionnaireQuestion/Delete",
+            params: {
+                Id: JSON.stringify(id)
+            }
         });
         return response;
     }

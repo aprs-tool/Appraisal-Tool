@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Управление анкетами";
+}
+
+<section class="usertable" ng-controller="QuestionnaireManageCtrl">
+
+    <div class="container">
+        <div class="search-wrapper">
+            <input type="text" placeholder="Поиск..." class="input-g" ng-model="search" />
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="table-top">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            Анкеты для модерации
+
+            <button class="button-g" ng-click="QuestionnaireManage()">Управление анкетами</button>
+        </div>
+        <table>
+            <tr id="tr-head">
+                <td>
+                    Пользователь
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="table-end"></div>
+    </div>
+</section>

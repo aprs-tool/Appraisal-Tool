@@ -1,2 +1,7 @@
 2016-05-25 00:11:38.4476|INFO|logfile|Добавлена категория js
 2016-05-25 23:52:45.2576|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Операционные системы
+2016-05-29 16:40:24.3728|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тест
+2016-05-29 16:44:04.7589|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория 123123
+2016-05-29 17:36:00.1374|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тестовая категория
+2016-05-29 17:37:28.3205|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория 
+2016-05-29 17:55:02.0949|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тестовая категория 2

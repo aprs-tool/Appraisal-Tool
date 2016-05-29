@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
@@ -12,59 +8,29 @@ namespace APRST.WEB.Controllers
 {
     public class QuestionnaireQuestionController : Controller
     {
-        private IQuestionnaireQuestionService _service;
-        private IQuestionnaireCategoryService _categoryService;
-        public QuestionnaireQuestionController(IQuestionnaireQuestionService service, IQuestionnaireCategoryService categoryService)
-        {
-            _service = service;
-            _categoryService = categoryService;
-        }
-        // GET: QuestionnaireQuestion
+        private readonly IQuestionnaireQuestionService _questionService;
 
-
-        public ActionResult Create(int id)
+        public QuestionnaireQuestionController(IQuestionnaireQuestionService questionService)
         {
-            ViewBag.CategoryId = id;
-            return View();
+            _questionService = questionService;
         }
 
         [HttpPost]
-        public ActionResult Create(QuestionnaireQuestionViewModel question)
+        public void Create(QuestionnaireQuestionViewModel question)
         {
-            _service.Add(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
-            return RedirectToRoute(new
-            {
-                controller = "QuestionnaireCategory",
-                action = "Details",
-                id = question.QuestionnaireCategoryId
-            });
-        }
-
-        public ActionResult Edit(int id)
-        {
-            var question = Mapper.Map<QuestionnaireQuestionDTO, QuestionnaireQuestionViewModel>(_service.GetById(id));
-            ViewBag.QuestionnaireCategoryId = new SelectList(_categoryService.GetAll(), "Id", "NameOfCategory", question.QuestionnaireCategoryId);
-            return View(question);
+            _questionService.Add(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
         }
 
         [HttpPost]
-        public ActionResult Edit(QuestionnaireQuestionViewModel question)
+        public void Edit(QuestionnaireQuestionViewModel question)
         {
-            _service.UpdateQuestion(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
-            return RedirectToRoute(new
-            {
-                controller = "QuestionnaireCategory",
-                action = "Details",
-                id = question.QuestionnaireCategoryId
-            });
+            _questionService.UpdateQuestion(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
         }
-
 
         [HttpPost]
         public void Delete(int id)
         {
-            _service.RemoveQuestionById(id);
-            Response.Redirect(Request.UrlReferrer.ToString());
+            _questionService.RemoveQuestionById(id);
         }
     }
 }
