@@ -14,14 +14,13 @@ namespace APRST.WEB.Controllers
     {
         private readonly ITestService _testService;
         private readonly IUserProfileService _userService;
-        private readonly IRoleService _roleService;
+
         private readonly IUserProfileService _userProfileService;
 
-        public UserController(IUserProfileService service, ITestService testService, IRoleService roleService, IUserProfileService userProfileService)
+        public UserController(IUserProfileService service, ITestService testService, IUserProfileService userProfileService)
         {
             _userService = service;
             _testService = testService;
-            _roleService = roleService;
             _userProfileService = userProfileService;
         }
 
@@ -80,7 +79,7 @@ namespace APRST.WEB.Controllers
             return Json(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()), JsonRequestBehavior.AllowGet);
         }
 
-        public new ActionResult Profile(int id)
+        public ActionResult Profile(int id)
         {
             var profile = _userService.GetProfileWithTestsById(id);
 

@@ -1,0 +1,4 @@
+2016-05-31 00:43:47.7422|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тест 1
+2016-05-31 00:43:54.1569|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тест 2
+2016-05-31 01:16:43.9219|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тест 1
+2016-05-31 01:16:48.2052|INFO|APRST.WEB.Controllers.QuestionnaireCategoryController|Добавлена категория Тест 2

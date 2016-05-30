@@ -59,41 +59,55 @@ namespace APRST.WEB.Controllers
 
             var questionaire = _questionnaireService.QuestionnaireWithResultsByUserId(user.Id);
 
-            var existing = questionaire.QuestionnaireResults
-                .Select(c => new { c.Id, c.QuestionnaireQuestionId, c.Answer });
-
-            var resultsUpdate = results
-                .Where(x => existing.Any(y => y.QuestionnaireQuestionId == x.QuestionnaireQuestionId))
-                .ToList();
-
-            var resultsAdd = results
-                .Where(x => existing.All(y => y.QuestionnaireQuestionId != x.QuestionnaireQuestionId))
-                .ToList();
-
-            resultsUpdate.ForEach(x =>
-            {
-                var firstOrDefault = existing.FirstOrDefault(y => y.QuestionnaireQuestionId == x.QuestionnaireQuestionId);
-                if (firstOrDefault != null)
-                    x.Id = firstOrDefault.Id;
-            });
-
-            if (questionaire.UserProfileId == user.Id)
-            {
-                _questionnaireResultService.AddResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsAdd), user.Id);
-            }
-            else
+            if (questionaire == null)
             {
                 var newQuestionaire = new QuestionnaireViewModel()
                 {
-                    QuestionnaireResults = resultsAdd,
+                    QuestionnaireResults = results,
                     QuestionnaireTypeId = questionnaireType,
                     UserProfileId = user.Id
                 };
 
                 _questionnaireService.Add(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
             }
+            else
+            {
+                var existing = questionaire.QuestionnaireResults
+                .Select(c => new { c.Id, c.QuestionnaireQuestionId, c.Answer });
 
-            _questionnaireResultService.UpdateResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsUpdate));
+                var resultsUpdate = results
+                    .Where(x => existing.Any(y => y.QuestionnaireQuestionId == x.QuestionnaireQuestionId))
+                    .ToList();
+
+                var resultsAdd = results
+                    .Where(x => existing.All(y => y.QuestionnaireQuestionId != x.QuestionnaireQuestionId))
+                    .ToList();
+
+                resultsUpdate.ForEach(x =>
+                {
+                    var firstOrDefault = existing.FirstOrDefault(y => y.QuestionnaireQuestionId == x.QuestionnaireQuestionId);
+                    if (firstOrDefault != null)
+                        x.Id = firstOrDefault.Id;
+                });
+
+                if (questionaire.UserProfileId == user.Id)
+                {
+                    _questionnaireResultService.AddResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsAdd), user.Id);
+                }
+                else
+                {
+                    var newQuestionaire = new QuestionnaireViewModel()
+                    {
+                        QuestionnaireResults = resultsAdd,
+                        QuestionnaireTypeId = questionnaireType,
+                        UserProfileId = user.Id
+                    };
+
+                    _questionnaireService.Add(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
+                }
+
+                _questionnaireResultService.UpdateResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsUpdate));
+            }
 
         }
     }
