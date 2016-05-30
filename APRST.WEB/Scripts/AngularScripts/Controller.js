@@ -680,6 +680,7 @@ app.controller("AvatarCtrl", function ($scope, userService) {
     function getUserProfile() {
         var getProfileData = userService.getUserProfile();
         getProfileData.then(function (profile) {
+            $scope.user = profile.data;
             if (profile.data.Avatar != null) {
                 $scope.avatar = profile.data.Avatar;
             } else {
