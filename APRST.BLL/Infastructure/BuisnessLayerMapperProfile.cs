@@ -68,6 +68,9 @@ namespace APRST.BLL.Infastructure
                     opt => opt.MapFrom(src => src.QuestionnaireType.TypeOfQuestionnaire))
                 .ForMember(s => s.UserProfile, opt => opt.MapFrom(src => src.UserProfile.UserIdentityName))
                 .ForMember(s => s.UserId, opt => opt.MapFrom(src => src.UserProfile.Id));
+
+            //LogService
+            CreateMap<LogEntryDTO, LogEntry>().ReverseMap();
         }
     }
 }

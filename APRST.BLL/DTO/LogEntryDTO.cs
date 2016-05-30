@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace APRST.DAL.Entities
+namespace APRST.BLL.DTO
 {
-    public class LogEntry
+    public class LogEntryDTO
     {
         public int Id { get; set; }
-        //:TODO DateTime2
         public DateTime Date { get; set; }
         public string Message { get; set; }
         public string Username { get; set; }

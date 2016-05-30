@@ -63,6 +63,7 @@
     <Compile Include="Entities\TestResult.cs" />
     <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Entities\UserRole.cs" />
+    <Compile Include="Interfaces\ILogRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireCategoryRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireQuestionRepository.cs" />
     <Compile Include="Interfaces\IQuestionnaireRepository.cs" />
@@ -77,22 +78,11 @@
     <Compile Include="Interfaces\ITestResultRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserProfileRepository.cs" />
-    <Compile Include="Migrations\201605242106581_merge.cs" />
-    <Compile Include="Migrations\201605242106581_merge.Designer.cs">
-      <DependentUpon>201605242106581_merge.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605221638206_DateTimeInLogEntry.cs" />
-    <Compile Include="Migrations\201605221638206_DateTimeInLogEntry.Designer.cs">
-      <DependentUpon>201605221638206_DateTimeInLogEntry.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605242155290_datetime.cs" />
-    <Compile Include="Migrations\201605242155290_datetime.Designer.cs">
-      <DependentUpon>201605242155290_datetime.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />
+    <Compile Include="Repositories\LogRepository.cs" />
     <Compile Include="Repositories\QuestionnaireCategoryRepository.cs" />
     <Compile Include="Repositories\QuestionnaireQuestionRepository.cs" />
     <Compile Include="Repositories\QuestionnaireRepository.cs" />
@@ -109,17 +99,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605242106581_merge.resx">
-      <DependentUpon>201605242106581_merge.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605221638206_DateTimeInLogEntry.resx">
-      <DependentUpon>201605221638206_DateTimeInLogEntry.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605242155290_datetime.resx">
-      <DependentUpon>201605242155290_datetime.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

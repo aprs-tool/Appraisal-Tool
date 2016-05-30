@@ -38,6 +38,7 @@ namespace APRST.WEB.Util
             kernel.Bind<IQuestionnaireQuestionService>().To<QuestionnaireQuestionService>();
             kernel.Bind<IQuestionnaireResultService>().To<QuestionnaireResultService>();
             kernel.Bind<IQuestionnaireService>().To<QuestionnaireService>();
+            kernel.Bind<ILogService>().To<LogService>();
         }
     }
 }

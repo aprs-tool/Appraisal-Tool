@@ -20,6 +20,7 @@ namespace APRST.DAL.Interfaces
         IQuestionnaireRepository QuestionnaireRepository { get; }
         IQuestionnaireTypeRepository QuestionnaireTypeRepository { get; }
         IQuestionnaireResultRepository QuestionnaireResultRepository { get; }
+        ILogRepository LogRepository { get; }
         void Save();
     }
 }

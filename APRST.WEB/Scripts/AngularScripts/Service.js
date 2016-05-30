@@ -173,3 +173,11 @@ app.service("questionnaireService", function ($http) {
     }
 
 });
+
+app.service("adminService", function ($http) {
+
+    this.getLog = function () {
+        return $http.get("/Admin/GetLog");
+    };
+
+});

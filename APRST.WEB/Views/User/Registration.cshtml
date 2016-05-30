@@ -1,77 +1,102 @@
 ﻿@model APRST.WEB.Models.UserProfileViewModel
 
 @{
-    ViewBag.Title = "Registration";
+    ViewBag.Title = "Регистрация пользователя";
 }
 
-<h2>Registration</h2>
+<section class="usertable">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>UserProfileViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+    <div class="container">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
+        <div class="table-top">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            Регистрация пользователя
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserPrincipalName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserPrincipalName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserPrincipalName, "", new { @class = "text-danger" })
-            </div>
+        <div class="table-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="reg-titles">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                Ваше имя в системе
+                            </span>
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input-g" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="reg-titles">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                Имя участника-пользователя
+                            </span>
+                            @Html.EditorFor(model => model.UserPrincipalName, new { htmlAttributes = new { @class = "input-g" } })
+                            @Html.ValidationMessageFor(model => model.UserPrincipalName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="reg-titles">
+                                <i class="fa fa-windows" aria-hidden="true"></i>
+                                Логин в Active Directory
+                            </span>
+                            @Html.EditorFor(model => model.SamAccoutName, new { htmlAttributes = new { @class = "input-g", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.SamAccoutName, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="reg-titles">
+                                <i class="fa fa-desktop" aria-hidden="true"></i>
+                                Сетевое имя
+                            </span>
+                            @Html.EditorFor(model => model.UserIdentityName, new { htmlAttributes = new { @class = "input-g", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.UserIdentityName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="reg-titles">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                Email
+                            </span>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input-g" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="reg-titles">
+                                <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                Номер телефона
+                            </span>
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "input-g" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="submit" value="Зарегистрироваться" class="button-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SamAccoutName, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SamAccoutName, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.SamAccoutName, "", new {@class = "text-danger"})
-            </div>
-            
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserIdentityName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserIdentityName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserIdentityName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        <div class="table-end"></div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>

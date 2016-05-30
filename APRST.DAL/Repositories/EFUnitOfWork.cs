@@ -23,6 +23,7 @@ namespace APRST.DAL.Repositories
         private IQuestionnaireRepository questionnaireRepository;
         private IQuestionnaireTypeRepository questionnaireTypeRepository;
         private IQuestionnaireResultRepository _questionnaireResultRepository;
+        private ILogRepository _logRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -130,6 +131,8 @@ namespace APRST.DAL.Repositories
         }
 
         public IQuestionnaireResultRepository QuestionnaireResultRepository => _questionnaireResultRepository ?? (_questionnaireResultRepository = new QuestionnaireResultRepository(db));
+
+        public ILogRepository LogRepository => _logRepository ?? (_logRepository = new LogRepository(db));
 
         public void Save()
         {

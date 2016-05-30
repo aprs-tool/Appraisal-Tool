@@ -618,6 +618,21 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
 
 });
 
+app.controller("AdminCtrl", function ($scope, adminService) {
+
+    getLog();
+
+    function getLog() {
+        var getLogData = adminService.getLog();
+        getLogData.then(function (log) {
+            $scope.log = log.data;
+        }, function () {
+            alert("Ошибка получения лога");
+        });
+    }
+
+});
+
 app.controller("ModalInstanceCtrl", function ($scope, $uibModalInstance) {
     $scope.cancel = function () {
         $uibModalInstance.dismiss("cancel");
