@@ -90,7 +90,6 @@ app.controller("UserCtrl", function ($scope, userService) {
             alert("Ошибка получения списка пользователей");
         });
     }
-
 });
 
 app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
@@ -116,6 +115,24 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
         });
     };
 
+    $scope.changeAvatar = function (size) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/User/UpdateProfileImage/",
+            controller: "ModalInstanceCtrl",
+            size: size
+        });
+    };
+
+    $scope.editProfile = function (size) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/User/EditProfile/",
+            controller: "ModalInstanceCtrl",
+            size: size
+        });
+    };
+
     var userId = document.getElementById("UserId").value;
 
     getUserTestsResults(userId);
@@ -128,6 +145,29 @@ app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
             alert("Ошибка получения результатов тестирования");
         });
     }
+});
+
+app.controller("UserProfileEditCtrl", function ($scope, userService) {
+
+    getUserProfile();
+
+    function getUserProfile() {
+        var getProfileData = userService.getUserProfile();
+        getProfileData.then(function (profile) {
+            $scope.user = profile.data;
+        }, function () {
+            alert("Ошибка получения данных профиля");
+        });
+    }
+
+    $scope.SaveProfile = function() {
+        var getProfileData = userService.EditProfile($scope.user);
+        getProfileData.then(function () {
+        }, function () {
+            alert("Ошибка редактирования профиля");
+        });
+    }
+
 });
 
 app.controller("QuestionsCtrl", function ($scope, $uibModal, testService) {
@@ -378,7 +418,7 @@ app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
         results.push(ratingObject);
     };
 
-    $scope.finishQuestionnaire = function() {
+    $scope.finishQuestionnaire = function () {
         clearArray();
         questionnaireService.addQuestionnaire(results);
     };
@@ -451,7 +491,7 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
         $scope.Desc = "";
     };
 
-    $scope.ShowQuestionsForCategory = function(item) {
+    $scope.ShowQuestionsForCategory = function (item) {
         getQuestionsForCategory(item.Id);
         CategoryId = item.Id;
         $scope.CategoryName = item.NameOfCategory;
@@ -459,7 +499,7 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
         $scope.trQuestions = true;
     };
 
-    $scope.toCategories = function() {
+    $scope.toCategories = function () {
         $scope.trQuestions = false;
         $scope.trCategories = true;
     };
@@ -470,7 +510,7 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
         $scope.trAddCategory = true;
     };
 
-    $scope.ShowDeleteCategory = function(item) {
+    $scope.ShowDeleteCategory = function (item) {
         $scope.trAddCategory = false;
         $scope.trEditCategory = false;
         $scope.categoryId = item.Id;
@@ -479,7 +519,7 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
         $scope.trDeleteCategory = true;
     };
 
-    $scope.ShowEditCategory = function(item) {
+    $scope.ShowEditCategory = function (item) {
         $scope.trAddCategory = false;
         $scope.trDeleteCategory = false;
         $scope.categoryId = item.Id;
@@ -494,18 +534,18 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
         $scope.trDeleteCategory = false;
     };
 
-    $scope.AddCategory = function() {
+    $scope.AddCategory = function () {
         $scope.trAddCategory = false;
         var category = {
             NameOfCategory: $scope.NameOfCategory,
             Desc: $scope.Desc
         };
         var getCategoriesData = questionnaireService.AddCategory(category);
-        getCategoriesData.then(function() {
-                getQuestionnairesCategories();
-                clearFields();
-            },
-            function() {
+        getCategoriesData.then(function () {
+            getQuestionnairesCategories();
+            clearFields();
+        },
+            function () {
                 alert("Ошибка добавления категории");
             });
     };
@@ -520,11 +560,11 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
         category.Id = $scope.categoryId;
 
         var getCategoriesData = questionnaireService.EditCategory(category);
-        getCategoriesData.then(function() {
-                getQuestionnairesCategories();
-                clearFields();
-            },
-            function() {
+        getCategoriesData.then(function () {
+            getQuestionnairesCategories();
+            clearFields();
+        },
+            function () {
                 alert("Ошибка редактирования выбранной категории");
             });
     };
@@ -532,11 +572,11 @@ app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, question
     $scope.DeleteCategory = function () {
         $scope.trDeleteCategory = false;
         var getCategoriesData = questionnaireService.DeleteCategory($scope.categoryId);
-        getCategoriesData.then(function() {
-                getQuestionnairesCategories();
-                clearFields();
-            },
-            function() {
+        getCategoriesData.then(function () {
+            getQuestionnairesCategories();
+            clearFields();
+        },
+            function () {
                 alert("Ошибка удаления выбранной категории");
             });
     };
@@ -633,9 +673,32 @@ app.controller("AdminCtrl", function ($scope, adminService) {
 
 });
 
-app.controller("ModalInstanceCtrl", function ($scope, $uibModalInstance) {
+app.controller("AvatarCtrl", function ($scope, userService) {
+
+    getUserProfile();
+
+    function getUserProfile() {
+        var getProfileData = userService.getUserProfile();
+        getProfileData.then(function (profile) {
+            if (profile.data.Avatar != null) {
+                $scope.avatar = profile.data.Avatar;
+            } else {
+                $scope.avatar = "/content/images/no-avatar.png";
+            }
+        }, function () {
+            alert("Ошибка получения данных профиля");
+        });
+    }
+
+});
+
+app.controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $window) {
     $scope.cancel = function () {
         $uibModalInstance.dismiss("cancel");
+    };
+
+    $scope.reload = function () {
+        $window.location.href = "/User/Index";
     };
 });
 

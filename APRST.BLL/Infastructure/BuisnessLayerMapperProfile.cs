@@ -43,7 +43,9 @@ namespace APRST.BLL.Infastructure
 
             //UserProfileService
             CreateMap<UserProfile, UserProfileIncludeTestsDTO>().ForMember(s=>s.Role,opt=>opt.MapFrom(src=>src.UserRole.RoleName));
-            CreateMap<UserProfile, UserProfileIncludeRoleDTO>().ForMember(s => s.Role, opt => opt.MapFrom(src => src.UserRole.RoleName));
+            CreateMap<UserProfile, UserProfileIncludeRoleDTO>()
+                .ForMember(s => s.Role, opt => opt.MapFrom(src => src.UserRole.RoleName))
+                .ForMember(s => s.UserRoleId, opt => opt.MapFrom(src => src.UserRole.Id));
             CreateMap<UserProfileDTO, UserProfile>().ReverseMap();
 
             //QuestionnaireQuestionService

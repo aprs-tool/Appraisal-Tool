@@ -76,6 +76,20 @@ app.service("userService", function ($http) {
         return $http.get("/Test/GetUserTestsResults/" + upn);
     };
 
+    this.getUserProfile = function () {
+        return $http.get("/User/GetProfile");
+    };
+
+    this.EditProfile = function (user) {
+        var response = $http({
+            method: "post",
+            url: "/User/EditProfile",
+            data: JSON.stringify(user),
+            dataType: "json"
+        });
+        return response;
+    }
+
 });
 
 app.service("questionnaireService", function ($http) {

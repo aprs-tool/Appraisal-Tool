@@ -185,6 +185,7 @@
     <Compile Include="Models\TestQuestionViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Models\TestWithQuestionViewModel.cs" />
+    <Compile Include="Models\UserProfileEditViewModel.cs" />
     <Compile Include="Models\UserProfileIncludeTestsViewModel.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="Models\UserTestViewModel.cs" />
@@ -1065,6 +1066,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Questionnaire\Index.cshtml" />
     <Content Include="Views\Questionnaire\Manage.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

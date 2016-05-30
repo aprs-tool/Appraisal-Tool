@@ -15,6 +15,7 @@ namespace APRST.BLL.Interfaces
         UserProfileIncludeRoleDTO GetProfileByIdentityName(string identityName);
         UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName);
         void CreateProfile(UserProfileDTO user);
+        void EditProfile(UserProfileDTO user);
         IEnumerable<UserProfileDTO> GetAll();
         void UpdateProfileImage(int userId, string pathToImageInDatabase);
     }

@@ -20,9 +20,11 @@
                             <img src="~/content/images/logo.png" alt="Appraisal Tool">
                         </a>
                     </div>
-                    <div class="userbar-block">
+                    <div class="userbar-block" ng-controller="AvatarCtrl">
                         @Html.RouteLink(User.Identity.Name, new { action = "Index", controller = "User" }, new { @class = "hidden-sm hidden-xs" })
-                        @Html.RouteLink("?", new { action = "Index", controller = "User" }, new { @class = "noavatar" })
+                        <a class="noavatar" ng-cloak>
+                            <img src="{{avatar}}">
+                        </a>
                     </div>
                 </div>
             </div>

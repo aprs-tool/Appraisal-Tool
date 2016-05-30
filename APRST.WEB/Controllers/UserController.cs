@@ -1,33 +1,30 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
-using System.Linq;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
 using AutoMapper;
 using APRST.BLL.DTO;
-using APRST.WEB.Models.Security;
 
 namespace APRST.WEB.Controllers
 {
     public class UserController : Controller
     {
-        private ITestService _testService;
-        private IUserProfileService _userService;
-        private IRoleService _roleService;
+        private readonly ITestService _testService;
+        private readonly IUserProfileService _userService;
+        private readonly IRoleService _roleService;
+        private readonly IUserProfileService _userProfileService;
 
-        public UserController(IUserProfileService service, ITestService testService, IRoleService roleService)
+        public UserController(IUserProfileService service, ITestService testService, IRoleService roleService, IUserProfileService userProfileService)
         {
             _userService = service;
             _testService = testService;
             _roleService = roleService;
+            _userProfileService = userProfileService;
         }
-       
+
         public ActionResult Index()
         {
             var profile = _userService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
@@ -41,7 +38,7 @@ namespace APRST.WEB.Controllers
 
         public ActionResult Registration()
         {
-           UserProfileViewModel profile = new UserProfileViewModel
+            var profile = new UserProfileViewModel
             {
                 SamAccoutName = UserPrincipal.Current.SamAccountName,
                 Email = UserPrincipal.Current.EmailAddress,
@@ -59,6 +56,7 @@ namespace APRST.WEB.Controllers
             _userService.CreateProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileForCreate));
             return RedirectToAction("Index");
         }
+
         public ActionResult GiveTest(int id)
         {
             ViewBag.UserId = id;
@@ -85,36 +83,54 @@ namespace APRST.WEB.Controllers
         public new ActionResult Profile(int id)
         {
             var profile = _userService.GetProfileWithTestsById(id);
-            
+
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }
 
         public ActionResult UpdateProfileImage()
         {
-            var a = _userService.GetProfileWithTestsById(34);
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
         public ActionResult UpdateProfileImage(HttpPostedFileBase file)
         {
-            int profileId = 34;
-            if (file!=null)
-            {
-                if (Path.GetExtension(file.FileName) != ".png")
-                {
-                    //TODO:Реализовать возврат сообщения о неверном формате
-                    ViewBag.error = "Формат изображения должен быть png";
-                    return View();
-                }
-                string pathOnServer = Path.Combine(
-                    Server.MapPath("~/Users_Data/"), $"{profileId}{Path.GetExtension(file.FileName)}");
-                string pathInDatabase = $"/Users_Data/{profileId}{Path.GetExtension(file.FileName)}";
-                file.SaveAs(pathOnServer);
+            var user = _userProfileService.GetProfileByIdentityName(User.Identity.Name);
 
-                _userService.UpdateProfileImage(34,pathInDatabase);
+            if (file == null) return RedirectToAction("Index");
+            if (Path.GetExtension(file.FileName) != ".png")
+            {
+                //TODO:Реализовать возврат сообщения о неверном формате
+                ViewBag.error = "Формат изображения должен быть png";
+                return RedirectToAction("Index");
             }
-            return View();
+            var pathOnServer = Path.Combine(
+                Server.MapPath("~/Users_Data/"), $"{user.Id}{Path.GetExtension(file.FileName)}");
+            string pathInDatabase = $"/Users_Data/{user.Id}{Path.GetExtension(file.FileName)}";
+            file.SaveAs(pathOnServer);
+
+            _userService.UpdateProfileImage(user.Id, pathInDatabase);
+            return RedirectToRoute(new
+            {
+                controller = "User",
+                action = "Index"
+            });
+        }
+
+        public JsonResult GetProfile()
+        {
+            return Json(_userProfileService.GetProfileByIdentityName(User.Identity.Name), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditProfile()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public void EditProfile(UserProfileViewModel profileEdit)
+        {
+            _userProfileService.EditProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileEdit));
         }
     }
 }

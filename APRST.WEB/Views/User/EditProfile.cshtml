@@ -1,0 +1,25 @@
+﻿<section class="usertable" ng-controller="UserProfileEditCtrl">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Редактирование данных пользователя
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="table-body">
+            <div>
+                <input type="text" value="{{user.Name}}" placeholder="Ваше имя" ng-model="user.Name" class="input-g"/>
+            </div>
+            <br />
+            <div>
+                <input type="text" value="{{user.Email}}" placeholder="Ваш адрес электронной почты" ng-model="user.Email" class="input-g"/>
+            </div>
+            <br />
+            <div>
+                <input type="text" value="{{user.PhoneNumber}}" placeholder="Ваш номер мобильного телефона" ng-model="user.PhoneNumber" class="input-g"/>
+            </div>
+            <br />
+            <div>
+                <button class="button-primary" ng-click="SaveProfile(); reload()">Сохранить</button>
+            </div>
+    </div>
+    <div class="table-end"></div>
+</section>

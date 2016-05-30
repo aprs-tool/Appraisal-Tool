@@ -39,6 +39,13 @@ namespace APRST.BLL.Services
             _uow.Save();
         }
 
+        public void EditProfile(UserProfileDTO user)
+        {
+            var profile = Mapper.Map<UserProfileDTO, UserProfile>(user);
+            _uow.UserProfileRepository.Update(profile);
+            _uow.Save();
+        }
+
         public IEnumerable<UserProfileDTO> GetAll()
         {
            return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(_uow.UserProfileRepository.GetEntities());

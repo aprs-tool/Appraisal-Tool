@@ -1,13 +1,24 @@
-﻿
-@{
-    ViewBag.Title = "UpdateProfileImage";
-}
-
-@using (Html.BeginForm("UpdateProfileImage", "User", FormMethod.Post,
-                                                    new { enctype = "multipart/form-data" }))
-{
-    <label for="file">Upload Image:</label>
-    <input type="file" name="file" id="file" style="width: 100%;" />
-    <input type="submit" value="Upload" class="submit"/>
-    @ViewBag.error
-}
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Обновление аватара пользователя
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="table-info">
+        Загружаемое изображение должно быть в формате PNG.
+    </div>
+    <div class="table-body">
+        @using (Html.BeginForm("UpdateProfileImage", "User", FormMethod.Post,
+                                                            new { enctype = "multipart/form-data" }))
+        {
+            <div class="button-primary">
+                <input type="file" name="file"/>
+            </div>
+            
+            <br/>
+            <input type="submit" value="Загрузить!" class="button-primary"/>
+            @ViewBag.error
+        }
+    </div>
+    <div class="table-end"></div>
+</section>

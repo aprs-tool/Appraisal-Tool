@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace APRST.WEB.Models
 {
@@ -20,5 +15,7 @@ namespace APRST.WEB.Models
         public string Email { get; set; }
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
+        public string Avatar { get; set; }
+        public int UserRoleId { get; set; }
     }
 }

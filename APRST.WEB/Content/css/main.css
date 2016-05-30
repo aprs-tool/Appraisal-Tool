@@ -19,18 +19,17 @@ a {
 }
 
 .noavatar {
-    background: #181B1F;
+    background-color: #181B1F;
 	width: 25px;
 	height: 25px;
 	border: 1px solid #4773BE;
-	text-align: center;
-    -ms-border-radius: 25px;
     border-radius: 25px;
-    padding-top: 2px;
+    overflow: hidden;
 }
 
-.noavatar i {
-	font-size: 9px;
+.noavatar img {
+	max-width: 100%;
+    min-height: 100%;
 }
 
 #username {
@@ -396,7 +395,8 @@ a {
 }
 
 .profile-avatar img {
-	max-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
 }
 
 .profile-links-block {
@@ -428,6 +428,7 @@ a {
 	display: block;
     -ms-border-radius: 4px;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .profile-links-block ul li a:hover {

@@ -8,6 +8,7 @@
         public string SamAccoutName { get; set; }
         public string UserIdentityName { get; set; }
         public string Role { get; set; }
+        public int UserRoleId { get; set; }
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }

@@ -1,4 +1,5 @@
 ﻿@model UserProfileIncludeTestsViewModel
+@using APRST.BLL.Services
 @using APRST.WEB.Models
 @{
     ViewBag.Title = "Профиль";
@@ -11,13 +12,22 @@
                 <div class="profile-table">
                     <div class="profile-avatar-block">
                         <div class="profile-avatar">
-                            <img src="~/content/images/no-avatar.png" alt="Ваш аватар">
+                            @{
+                                if (Model.Avatar != null)
+                                {
+                                    <img src="@Model.Avatar" alt="Ваш аватар">
+                                }
+                                else
+                                {
+                                    <img src="~/content/images/no-avatar.png" alt="Ваш аватар">
+                                }
+                            }
                         </div>
                     </div>
                     <div class="profile-links-block">
                         <ul>
-                            <li><a href="#" ng-click="">Сменить аватар</a></li>
-                            <li><a href="#">Редактировать профиль</a></li>
+                            <li><a ng-click="changeAvatar()">Сменить аватар</a></li>
+                            <li><a ng-click="editProfile()">Редактировать профиль</a></li>
                         </ul>
                     </div>
                 </div>
