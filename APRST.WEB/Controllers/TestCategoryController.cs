@@ -3,6 +3,7 @@ using APRST.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using APRST.WEB.Filters;
@@ -25,9 +26,9 @@ namespace APRST.WEB.Controllers
             return PartialView();
         }
 
-        public JsonResult GetCategories()
+        public async Task<JsonResult> GetCategories()
         {
-            return Json(Mapper.Map<IEnumerable<TestCategoryDTO>, IEnumerable<TestCategoryViewModel>>(_testCategoryService.GetAll()), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<IEnumerable<TestCategoryDTO>, IEnumerable<TestCategoryViewModel>>(await _testCategoryService.GetAllAsync()), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
@@ -36,26 +37,26 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(TestCategoryViewModel category)
+        public async Task<ActionResult> Create(TestCategoryViewModel category)
         {
-            _testCategoryService.AddCategory(Mapper.Map<TestCategoryViewModel, TestCategoryDTO>(category));
+            await _testCategoryService.AddCategoryAsync(Mapper.Map<TestCategoryViewModel, TestCategoryDTO>(category));
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var category = Mapper.Map<TestCategoryDTO, TestCategoryViewModel>(_testCategoryService.GetById(id));
+            var category = Mapper.Map<TestCategoryDTO, TestCategoryViewModel>(await _testCategoryService.GetByIdAsync(id));
             return View(category);
         }
 
         [HttpPost]
-        public ActionResult Edit(TestCategoryViewModel category)
+        public async Task<ActionResult> Edit(TestCategoryViewModel category)
         {
-            _testCategoryService.UpdateCategory(Mapper.Map<TestCategoryViewModel, TestCategoryDTO>(category));
+            await _testCategoryService.UpdateCategoryAsync(Mapper.Map<TestCategoryViewModel, TestCategoryDTO>(category));
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -63,19 +64,19 @@ namespace APRST.WEB.Controllers
             }
             int _id = (int)id;
 
-            return View(Mapper.Map<TestCategoryDTO, TestCategoryViewModel>(_testCategoryService.GetById(_id)));
+            return View(Mapper.Map<TestCategoryDTO, TestCategoryViewModel>(await _testCategoryService.GetByIdAsync(_id)));
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            _testCategoryService.RemoveCategoryById(id);
+            await _testCategoryService.RemoveCategoryByIdAsync(id);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View(Mapper.Map<TestCategoryIncludeTestsDTO, TestCategoryIncludeTestsViewModel>(_testCategoryService.TestCategoryWithTests(id)));
+            return View(Mapper.Map<TestCategoryIncludeTestsDTO, TestCategoryIncludeTestsViewModel>(await _testCategoryService.TestCategoryWithTestsAsync(id)));
         }
 
     }

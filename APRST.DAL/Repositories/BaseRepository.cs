@@ -56,5 +56,21 @@ namespace APRST.DAL.Repositories
             var entityToDelete = DbSet.Find(id);
             if (entityToDelete!=null) DbSet.Remove(entityToDelete);
         }
+
+        public async Task<T> GetEntityByIdAsync(int id)
+        {
+            return await DbSet.FindAsync(id);
+        }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            var entityToDelete = await DbSet.FindAsync(id);
+            if (entityToDelete != null) DbSet.Remove(entityToDelete);
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await DbSet.ToListAsync();
+        }
     }
 }

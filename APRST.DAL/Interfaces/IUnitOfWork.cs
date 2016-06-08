@@ -22,5 +22,6 @@ namespace APRST.DAL.Interfaces
         IQuestionnaireResultRepository QuestionnaireResultRepository { get; }
         ILogRepository LogRepository { get; }
         void Save();
+        Task SaveAsync();
     }
 }

@@ -15,9 +15,9 @@ namespace APRST.DAL.Repositories
         {
         }
 
-        public TestCategory TestCategoryWithTests(int id)
+        public async Task<TestCategory> TestCategoryWithTestsAsync(int id)
         {
-           return GetEntities().Where(s => s.Id == id).Include(src => src.Tests).FirstOrDefault();
+           return await GetEntities().Where(s => s.Id == id).Include(src => src.Tests).FirstOrDefaultAsync();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -28,48 +29,48 @@ namespace APRST.WEB.Controllers
             _resultService = resultService;
         }
        
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
+            return View(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(await _testService.GetAllAsync()));
         }
 
-        public JsonResult GetAllTests()
+        public async Task<JsonResult> GetAllTests()
         {
-            return Json(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(await _testService.GetAllAsync()), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.TestCategoryId = new SelectList(_categoryService.GetAll(), "Id", "NameOfCategory");
+            ViewBag.TestCategoryId = new SelectList( await _categoryService.GetAllAsync(), "Id", "NameOfCategory");
             return PartialView();
         }
 
         [HttpPost]
-        public ActionResult Create(TestViewModel test)
+        public async Task<ActionResult> Create(TestViewModel test)
         {
-            _testService.AddTest((Mapper.Map<TestViewModel, TestDTO>(test)));
+            await _testService.AddTestAsync((Mapper.Map<TestViewModel, TestDTO>(test)));
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var test = Mapper.Map<TestDTO, TestViewModel>(_testService.GetById(id));
+            var test = Mapper.Map<TestDTO, TestViewModel>(await _testService.GetByIdAsync(id));
             if (test==null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TestCategoryId = new SelectList(_categoryService.GetAll(), "Id", "NameOfCategory", test.TestCategoryId);
+            ViewBag.TestCategoryId = new SelectList(await _categoryService.GetAllAsync(), "Id", "NameOfCategory", test.TestCategoryId);
             return PartialView(test);
         }
 
         [HttpPost]
-        public ActionResult Edit(TestViewModel test)
+        public async Task<ActionResult> Edit(TestViewModel test)
         {
-            _testService.UpdateTest(Mapper.Map<TestViewModel, TestDTO>(test));
+            await _testService.UpdateTestAsync(Mapper.Map<TestViewModel, TestDTO>(test));
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -77,32 +78,32 @@ namespace APRST.WEB.Controllers
             }
             int _id = (int)id;
 
-            return PartialView(Mapper.Map<TestDTO, TestInfoViewModel>(_testService.GetById(_id)));
+            return PartialView(Mapper.Map<TestDTO, TestInfoViewModel>(await _testService.GetByIdAsync(_id)));
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            _testService.RemoveTestById(id);
+            await _testService.RemoveTestByIdAsync(id);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var test = _testService.GetById(id);
+            var test = await _testService.GetByIdAsync(id);
             ViewBag.TestName = test.NameOfTest;
             ViewBag.TestId = test.Id;
             return View();
         }
 
-        public JsonResult GetQuestions(int id)
+        public async Task<JsonResult> GetQuestions(int id)
         {
-            return Json(Mapper.Map<TestIncludeQuestionsDTO, TestWithQuestionViewModel>(_testService.GetQuestionsForTest(id)), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<TestIncludeQuestionsDTO, TestWithQuestionViewModel>( await _testService.GetQuestionsForTestAsync(id)), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Testing(int id)
+        public async Task<ActionResult> Testing(int id)
         {
-            var a = _testService.GetById(id);
+            var a = await _testService.GetByIdAsync(id);
             ViewBag.TestId = a.Id;
             ViewBag.TestName = a.NameOfTest;
             return View(Mapper.Map<IEnumerable<TestQuestionIncludeAnswersDTO>, IEnumerable<TestQuestionIncludeAnswersViewModel>>(_questionService.GetQA(id)));

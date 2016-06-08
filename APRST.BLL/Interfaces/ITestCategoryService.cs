@@ -10,12 +10,12 @@ namespace APRST.BLL.Interfaces
 {
     public interface ITestCategoryService
     {
-        TestCategoryIncludeTestsDTO TestCategoryWithTests(int id);
-        IEnumerable<TestCategoryDTO> GetAll();
-        TestCategoryDTO GetById(int id);
-        void AddCategory(TestCategoryDTO categoryDto);
-        void RemoveCategoryById(int id);
-        void UpdateCategory(TestCategoryDTO categoryDto);
+        Task<TestCategoryIncludeTestsDTO> TestCategoryWithTestsAsync(int id);
+        Task<IEnumerable<TestCategoryDTO>> GetAllAsync();
+        Task<TestCategoryDTO> GetByIdAsync(int id);
+        Task AddCategoryAsync(TestCategoryDTO categoryDto);
+        Task RemoveCategoryByIdAsync(int id);
+        Task UpdateCategoryAsync(TestCategoryDTO categoryDto);
 
     }
 }

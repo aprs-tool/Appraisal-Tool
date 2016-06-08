@@ -158,5 +158,10 @@ namespace APRST.DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public async Task SaveAsync()
+        {
+            await db.SaveChangesAsync();
+        }
     }
 }

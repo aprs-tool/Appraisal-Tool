@@ -15,24 +15,24 @@ namespace APRST.DAL.Repositories
         {
         }
 
-        public IEnumerable<Test> TestWithCategory()
+        public async Task<IEnumerable<Test>> TestWithCategoryAsync()
         {
-            return GetEntities().Include(s => s.TestCategory);
+            return await GetEntities().Include(s => s.TestCategory).ToListAsync();
         }
 
-        public IEnumerable<Test> GetByIdWithCategory(int id)
+        public async Task<IEnumerable<Test>> GetByIdWithCategoryAsync(int id)
         {
-            return GetEntities().Include(s => s.TestCategory);
+            return await GetEntities().Include(s => s.TestCategory).ToListAsync();
         }
 
-        public IEnumerable<Test> GetTestByCategoryId(int id)
+        public async Task<IEnumerable<Test>> GetTestByCategoryIdAsync(int id)
         {
-            return GetEntities().Where(s => s.TestCategoryId == id);
+            return await GetEntities().Where(s => s.TestCategoryId == id).ToListAsync();
         }
 
-        public Test GetQuestionsForTest(int id)
+        public async Task<Test> GetQuestionsForTestAsync(int id)
         {
-            return GetEntities().Where(s => s.Id == id).Include(pr => pr.Questions).FirstOrDefault();
+            return await GetEntities().Where(s => s.Id == id).Include(pr => pr.Questions).FirstOrDefaultAsync();
         }
     }
 }

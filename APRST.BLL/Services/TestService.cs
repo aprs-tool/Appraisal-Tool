@@ -13,52 +13,53 @@ namespace APRST.BLL.Services
 {
     public class TestService : ITestService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
 
         public TestService(IUnitOfWork uow)
         {
             _uow = uow;
         }
-        public void AddTest(TestDTO testDto)
+
+        public async Task<IEnumerable<TestInfoDTO>> GetAllAsync()
+        {
+            return Mapper.Map<IEnumerable<Test>, List<TestInfoDTO>>(await _uow.TestRepository.TestWithCategoryAsync());
+        }
+
+        public async Task<TestDTO> GetByIdAsync(int id)
+        {
+            return Mapper.Map<Test, TestDTO>( await _uow.TestRepository.GetEntityByIdAsync(id));   
+        }
+
+        public async Task<IEnumerable<TestDTO>> GetTestsByCategoryIdAsync(int id)
+        {
+            return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(await _uow.TestRepository.GetTestByCategoryIdAsync(id));  
+        }
+
+        public async Task<TestIncludeQuestionsDTO> GetQuestionsForTestAsync(int id)
+        {
+            return Mapper.Map<Test, TestIncludeQuestionsDTO>(await _uow.TestRepository.GetQuestionsForTestAsync(id));
+        }
+
+        public async Task AddTestAsync(TestDTO testDto)
         {
             _uow.TestRepository.Add(Mapper.Map<TestDTO, Test>(testDto));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void RemoveTestById(int id)
+        public async Task RemoveTestByIdAsync(int id)
         {
-            _uow.TestRepository.DeleteById(id);
-            _uow.Save();
+            await _uow.TestRepository.DeleteByIdAsync(id);
+            await _uow.SaveAsync();
         }
 
-        public void UpdateTest(TestDTO testDto)
+        public async Task UpdateTestAsync(TestDTO testDto)
         {
             _uow.TestRepository.Update(Mapper.Map<TestDTO, Test>(testDto));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
         public void Dispose()
         {
             throw new NotImplementedException();
-        }
-
-        public IEnumerable<TestInfoDTO> GetAll()
-        {
-            return Mapper.Map<IEnumerable<Test>, List<TestInfoDTO>>(_uow.TestRepository.TestWithCategory());
-        }
-
-        public TestDTO GetById(int id)
-        {
-            return Mapper.Map<Test, TestDTO>(_uow.TestRepository.GetEntityById(id));   
-        }
-
-        public IEnumerable<TestDTO> GetTestsByCategoryId(int id)
-        {
-            return Mapper.Map<IEnumerable<Test>, List<TestDTO>>(_uow.TestRepository.GetTestByCategoryId(id));  
-        }
-
-        public TestIncludeQuestionsDTO GetQuestionsForTest(int id)
-        {
-            return Mapper.Map<Test, TestIncludeQuestionsDTO>(_uow.TestRepository.GetQuestionsForTest(id));
         }
     }
 }

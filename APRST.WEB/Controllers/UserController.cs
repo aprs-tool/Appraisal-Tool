@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using APRST.BLL.Interfaces;
@@ -56,10 +57,10 @@ namespace APRST.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GiveTest(int id)
+        public async Task<ActionResult> GiveTest(int id)
         {
             ViewBag.UserId = id;
-            return PartialView(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(_testService.GetAll()));
+            return PartialView(Mapper.Map<IEnumerable<TestInfoDTO>, IEnumerable<TestInfoViewModel>>(await _testService.GetAllAsync()));
         }
 
         [HttpPost]
