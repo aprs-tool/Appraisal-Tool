@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
@@ -22,9 +23,9 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(TestQuestionViewModel questionVm)
+        public async Task<ActionResult> Create(TestQuestionViewModel questionVm)
         {
-            _testQuestionService.Add(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(questionVm));
+            await _testQuestionService.AddAsync(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(questionVm));
             return RedirectToRoute(new
             {
                 controller = "Test",
@@ -33,15 +34,15 @@ namespace APRST.WEB.Controllers
             });
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return PartialView(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(id)));
+            return PartialView(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(await _testQuestionService.GetByIdAsync(id)));
         }
 
         [HttpPost]
-        public ActionResult Edit(TestQuestionViewModel questionVm)
+        public async Task<ActionResult> Edit(TestQuestionViewModel questionVm)
         {
-            _testQuestionService.UpdateTest(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(questionVm));
+            await _testQuestionService.UpdateTestAsync(Mapper.Map<TestQuestionViewModel, TestQuestionDTO>(questionVm));
             return RedirectToRoute(new
             {
                 controller = "Test",
@@ -50,20 +51,20 @@ namespace APRST.WEB.Controllers
             });
         }
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return HttpNotFound();
             }
             int questionId = (int)id;
-            return PartialView(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(_testQuestionService.GetById(questionId)));
+            return PartialView(Mapper.Map<TestQuestionDTO, TestQuestionViewModel>(await _testQuestionService.GetByIdAsync(questionId)));
         }
 
         [HttpPost]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _testQuestionService.RemoveTestById(id);
+            await _testQuestionService.RemoveTestByIdAsync(id);
             Response.Redirect(Request.UrlReferrer.ToString());
         }
 
@@ -73,9 +74,9 @@ namespace APRST.WEB.Controllers
             return View();
         }
 
-        public JsonResult GetAnswers(int id)
+        public async Task<JsonResult> GetAnswers(int id)
         {
-            return Json(Mapper.Map<TestQuestionIncludeAnswersDTO, TestQuestionIncludeAnswersViewModel>(_testQuestionService.GetAnswersForQuestion(id)), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<TestQuestionIncludeAnswersDTO, TestQuestionIncludeAnswersViewModel>(await _testQuestionService.GetAnswersForQuestionAsync(id)), JsonRequestBehavior.AllowGet);
         }
     }
 }

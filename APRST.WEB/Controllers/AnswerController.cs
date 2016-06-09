@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
 using System.Web.Mvc;
@@ -22,9 +23,9 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(TestAnswerViewModel answ)
+        public async Task<ActionResult> Create(TestAnswerViewModel answ)
         {
-            _testAnswerService.Add(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(answ));
+            await _testAnswerService.AddAsync(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(answ));
 
             return RedirectToRoute(new
             {
@@ -34,15 +35,15 @@ namespace APRST.WEB.Controllers
             });
         }
 
-        public ActionResult Edit(int id)
+        public async  Task<ActionResult> Edit(int id)
         {
-            return PartialView(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(_testAnswerService.GetById(id)));
+            return PartialView(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(await _testAnswerService.GetByIdAsync(id)));
         }
 
         [HttpPost]
-        public ActionResult Edit(TestAnswerViewModel answ)
+        public async Task<ActionResult> Edit(TestAnswerViewModel answ)
         {
-            _testAnswerService.UpdateAnswer(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(answ));
+            await _testAnswerService.UpdateAnswerAsync(Mapper.Map<TestAnswerViewModel, TestAnswerDTO>(answ));
 
             return RedirectToRoute(new
             {
@@ -52,7 +53,7 @@ namespace APRST.WEB.Controllers
             });
         }
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -60,13 +61,13 @@ namespace APRST.WEB.Controllers
             }
             int answerId = (int)id;
 
-            return PartialView(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(_testAnswerService.GetById(answerId)));
+            return PartialView(Mapper.Map<TestAnswerDTO, TestAnswerViewModel>(await _testAnswerService.GetByIdAsync(answerId)));
         }
 
         [HttpPost]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _testAnswerService.RemoveAnswerById(id);
+            await _testAnswerService.RemoveAnswerByIdAsync(id);
             Response.Redirect(Request.UrlReferrer.ToString());
         }
     }

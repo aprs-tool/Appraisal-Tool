@@ -9,7 +9,7 @@ namespace APRST.DAL.Interfaces
 {
     public interface ITestQuestionRepository : IRepository<TestQuestion>
     {
-        TestQuestion GetAnswersForQuestion(int id);
-        IEnumerable<TestQuestion> GetQA(int testId);
+        Task<TestQuestion> GetAnswersForQuestionAsync(int id);
+        Task<IEnumerable<TestQuestion>> GetQAAsync(int testId);
     }
 }

@@ -3,6 +3,7 @@ using APRST.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace APRST.DAL.Repositories
 {
@@ -12,10 +13,10 @@ namespace APRST.DAL.Repositories
         {
         }
 
-        public List<TestResult> GetUserTestsResults(int id)
+        public async Task<List<TestResult>> GetUserTestsResultsAsync(int id)
         {
-            return GetEntities()
-                .Where(user => user.UserProfiles.FirstOrDefault().Id == id).Include(test => test.Test).ToList();
+            return await GetEntities()
+                .Where(user => user.UserProfiles.FirstOrDefault().Id == id).Include(test => test.Test).ToListAsync();
         }
     }
 }

@@ -106,18 +106,18 @@ namespace APRST.WEB.Controllers
             var a = await _testService.GetByIdAsync(id);
             ViewBag.TestId = a.Id;
             ViewBag.TestName = a.NameOfTest;
-            return View(Mapper.Map<IEnumerable<TestQuestionIncludeAnswersDTO>, IEnumerable<TestQuestionIncludeAnswersViewModel>>(_questionService.GetQA(id)));
+            return View(Mapper.Map<IEnumerable<TestQuestionIncludeAnswersDTO>, IEnumerable<TestQuestionIncludeAnswersViewModel>>(await _questionService.GetQAAsync(id)));
         }
 
-        public JsonResult GetQnA(int id)
+        public async Task<JsonResult> GetQnA(int id)
         {
-            return Json(Mapper.Map<IEnumerable<TestQuestionIncludeAnswersDTO>, IEnumerable<TestQuestionIncludeAnswersViewModel>>(_questionService.GetQA(id)), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<IEnumerable<TestQuestionIncludeAnswersDTO>, IEnumerable<TestQuestionIncludeAnswersViewModel>>(await _questionService.GetQAAsync(id)), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AddPoints(List<TestData> testResult, int? id)
+        public async Task<ActionResult> AddPoints(List<TestData> testResult, int? id)
         {
             if (id == null) return HttpNotFound();
-            var qna = _questionService.GetQA((int)id);
+            var qna = await _questionService.GetQAAsync((int)id);
 
             var points = testResult.AsParallel().Sum(
                 t => int.Parse(
@@ -136,13 +136,13 @@ namespace APRST.WEB.Controllers
 
             var a = User.Identity.Name;
 
-            _resultService.Add(result, a);
+            await _resultService.AddAsync(result, a);
             return null;
         }
 
-        public JsonResult GetUserTestsResults(int id)
+        public async Task<JsonResult> GetUserTestsResults(int id)
         {
-            return Json(_resultService.GetUserTestsResults(id), JsonRequestBehavior.AllowGet);
+            return Json(await _resultService.GetUserTestsResultsAsync(id), JsonRequestBehavior.AllowGet);
         }
 
     }

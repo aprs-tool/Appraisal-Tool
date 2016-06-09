@@ -9,12 +9,12 @@ namespace APRST.BLL.Interfaces
 {
     public interface ITestQuestionService
     {
-        void Add(TestQuestionDTO questionDTO);
-        void UpdateTest(TestQuestionDTO questionDTO);
-        void RemoveTestById(int id);
-        IEnumerable<TestQuestionIncludeAnswersDTO> GetQA(int testId);
-        IEnumerable<TestQuestionInfoDTO> GetAll();
-        TestQuestionDTO GetById(int id);
-        TestQuestionIncludeAnswersDTO GetAnswersForQuestion(int id);
+        Task AddAsync(TestQuestionDTO questionDTO);
+        Task UpdateTestAsync(TestQuestionDTO questionDTO);
+        Task RemoveTestByIdAsync(int id);
+        Task<IEnumerable<TestQuestionIncludeAnswersDTO>> GetQAAsync(int testId);
+        Task<IEnumerable<TestQuestionInfoDTO>> GetAllAsync();
+        Task<TestQuestionDTO> GetByIdAsync(int id);
+        Task<TestQuestionIncludeAnswersDTO> GetAnswersForQuestionAsync(int id);
     }
 }
