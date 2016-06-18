@@ -39,6 +39,11 @@ namespace APRST.DAL.EF
                   .WithOptional(x => x.TestCategory)
                   .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Test>()
+                  .HasMany<TestResult>(c => c.Results)
+                  .WithOptional(x => x.Test)
+                  .WillCascadeOnDelete(true);
+
             base.OnModelCreating(modelBuilder);
         }
     }
