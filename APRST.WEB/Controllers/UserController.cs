@@ -25,9 +25,9 @@ namespace APRST.WEB.Controllers
             _userProfileService = userProfileService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var profile = _userService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
+            var profile = await _userService.GetProfileWithTestsByUserIdentityNameAsync(User.Identity.Name);
             if (profile == null)
             {
                 return RedirectToAction("Registration");
@@ -51,9 +51,9 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registration(UserProfileViewModel profileForCreate)
+        public async Task<ActionResult> Registration(UserProfileViewModel profileForCreate)
         {
-            _userService.CreateProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileForCreate));
+            await _userService.CreateProfileAsync(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileForCreate));
             return RedirectToAction("Index");
         }
 
@@ -64,25 +64,25 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult GiveTest(UserTestViewModel userTest)
+        public async Task<ActionResult> GiveTest(UserTestViewModel userTest)
         {
-            _userService.AddTestToProfile(userTest.testid, userTest.userid);
+            await _userService.AddTestToProfileAsync(userTest.testid, userTest.userid);
             return RedirectToAction("Profile", new { id = userTest.userid });
         }
 
-        public ActionResult All()
+        public async Task<ActionResult> All()
         {
-            return View(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()));
+            return View(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(await _userService.GetAllAsync()));
         }
 
-        public JsonResult GetAll()
+        public async Task<JsonResult> GetAll()
         {
-            return Json(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(_userService.GetAll()), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<IEnumerable<UserProfileDTO>, IEnumerable<UserProfileViewModel>>(await _userService.GetAllAsync()), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Profile(int id)
+        public async Task<ActionResult> Profile(int id)
         {
-            var profile = _userService.GetProfileWithTestsById(id);
+            var profile = await _userService.GetProfileWithTestsByIdAsync(id);
 
             return View("Index", Mapper.Map<UserProfileIncludeTestsDTO, UserProfileIncludeTestsViewModel>(profile));
         }
@@ -93,9 +93,9 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProfileImage(HttpPostedFileBase file)
+        public async Task<ActionResult> UpdateProfileImage(HttpPostedFileBase file)
         {
-            var user = _userProfileService.GetProfileByIdentityName(User.Identity.Name);
+            var user = await _userProfileService.GetProfileByIdentityNameAsync(User.Identity.Name);
 
             if (file == null) return RedirectToAction("Index");
             if (Path.GetExtension(file.FileName) != ".png")
@@ -109,7 +109,7 @@ namespace APRST.WEB.Controllers
             string pathInDatabase = $"/Users_Data/{user.Id}{Path.GetExtension(file.FileName)}";
             file.SaveAs(pathOnServer);
 
-            _userService.UpdateProfileImage(user.Id, pathInDatabase);
+            await _userService.UpdateProfileImageAsync(user.Id, pathInDatabase);
             return RedirectToRoute(new
             {
                 controller = "User",
@@ -117,9 +117,9 @@ namespace APRST.WEB.Controllers
             });
         }
 
-        public JsonResult GetProfile()
+        public async Task<JsonResult> GetProfile()
         {
-            return Json(_userProfileService.GetProfileByIdentityName(User.Identity.Name), JsonRequestBehavior.AllowGet);
+            return Json(await _userProfileService.GetProfileByIdentityNameAsync(User.Identity.Name), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult EditProfile()
@@ -128,9 +128,9 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public void EditProfile(UserProfileViewModel profileEdit)
+        public async Task EditProfile(UserProfileViewModel profileEdit)
         {
-            _userProfileService.EditProfile(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileEdit));
+            await _userProfileService.EditProfileAsync(Mapper.Map<UserProfileViewModel, UserProfileDTO>(profileEdit));
         }
     }
 }

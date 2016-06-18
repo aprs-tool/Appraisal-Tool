@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
@@ -16,21 +17,21 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public void Create(QuestionnaireQuestionViewModel question)
+        public async Task Create(QuestionnaireQuestionViewModel question)
         {
-            _questionService.Add(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
+            await _questionService.AddAsync(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
         }
 
         [HttpPost]
-        public void Edit(QuestionnaireQuestionViewModel question)
+        public async Task Edit(QuestionnaireQuestionViewModel question)
         {
-            _questionService.UpdateQuestion(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
+            await _questionService.UpdateQuestionAsync(Mapper.Map<QuestionnaireQuestionViewModel, QuestionnaireQuestionDTO>(question));
         }
 
         [HttpPost]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _questionService.RemoveQuestionById(id);
+            await _questionService.RemoveQuestionByIdAsync(id);
         }
     }
 }

@@ -10,12 +10,12 @@ namespace APRST.BLL.Interfaces
     public interface IQuestionnaireCategoryService
     {
         //TODO: ПЕРЕДЕЛАТЬ TESTCATEGORY INCLUDE DTO
-       QuestionnaireCategoryIncludeQuestionsDTO QuestionnaireCategoryWithQuestionsDTO(int id);
-        IEnumerable<QuestionnaireCategoryDTO> GetAll();
-        QuestionnaireCategoryDTO GetById(int id);
-        void AddCategory(QuestionnaireCategoryDTO categoryDto);
-        void RemoveCategoryById(int id);
-        void UpdateCategory(QuestionnaireCategoryDTO categoryDto);
-        IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO> GetAllWithQuestions();
+        Task<QuestionnaireCategoryIncludeQuestionsDTO> QuestionnaireCategoryWithQuestionsDTOAsync(int id);
+        Task<IEnumerable<QuestionnaireCategoryDTO>> GetAllAsync();
+        Task<QuestionnaireCategoryDTO> GetByIdAsync(int id);
+        Task AddCategoryAsync(QuestionnaireCategoryDTO categoryDto);
+        Task RemoveCategoryByIdAsync(int id);
+        Task UpdateCategoryAsync(QuestionnaireCategoryDTO categoryDto);
+        Task<IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO>> GetAllWithQuestionsAsync();
     }
 }

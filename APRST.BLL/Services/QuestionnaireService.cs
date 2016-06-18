@@ -21,43 +21,42 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void Add(QuestionnaireDTO questionnaireDto)
+        public async Task AddAsync(QuestionnaireDTO questionnaireDto)
         {
-
             _uow.QuestionnaireRepository.Add(Mapper.Map<QuestionnaireDTO, Questionnaire>(questionnaireDto));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void RemoveById(int id)
+        public async Task RemoveByIdAsync(int id)
         {
             _uow.QuestionnaireRepository.DeleteById(id);
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void Update(QuestionnaireDTO questionnaireDto)
+        public async Task UpdateAsync(QuestionnaireDTO questionnaireDto)
         {
             _uow.QuestionnaireRepository.Update(Mapper.Map<QuestionnaireDTO, Questionnaire>(questionnaireDto));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public QuestionnaireDTO GetByUserId(int id)
+        public async Task<QuestionnaireDTO> GetByUserIdAsync(int id)
         {
-            return Mapper.Map<Questionnaire, QuestionnaireDTO>(_uow.QuestionnaireRepository.GetQuestionnaireByUserId(id));
+            return Mapper.Map<Questionnaire, QuestionnaireDTO>(await _uow.QuestionnaireRepository.GetQuestionnaireByUserIdAsync(id));
         }
 
-        public QuestionnaireDTO QuestionnaireWithResultsByUserId(int id)
+        public async Task<QuestionnaireDTO> QuestionnaireWithResultsByUserIdAsync(int id)
         {
-            return Mapper.Map<Questionnaire, QuestionnaireDTO>(_uow.QuestionnaireRepository.GetIncludeResultsByUserId(id));
+            return Mapper.Map<Questionnaire, QuestionnaireDTO>(await _uow.QuestionnaireRepository.GetIncludeResultsByUserIdAsync(id));
         }
 
-        public IEnumerable<QuestionnaireTypeDTO> GetAllTypesOfQuestionnaire()
+        public async Task<IEnumerable<QuestionnaireTypeDTO>> GetAllTypesOfQuestionnaireAsync()
         {
-            return Mapper.Map<IEnumerable<QuestionnaireType>, List<QuestionnaireTypeDTO>>(_uow.QuestionnaireTypeRepository.GetEntities());
+            return Mapper.Map<IEnumerable<QuestionnaireType>, List<QuestionnaireTypeDTO>>(await _uow.QuestionnaireTypeRepository.GetAllAsync());
         }
 
-        public IEnumerable<QuestionnairesDTO> GetAllIncludeUserAndType()
+        public async Task<IEnumerable<QuestionnairesDTO>> GetAllIncludeUserAndTypeAsync()
         {
-            return Mapper.Map< IEnumerable<Questionnaire>, IEnumerable<QuestionnairesDTO>>(_uow.QuestionnaireRepository.GetAllIncludeUserAndType());
+            return Mapper.Map< IEnumerable<Questionnaire>, IEnumerable<QuestionnairesDTO>>(await _uow.QuestionnaireRepository.GetAllIncludeUserAndTypeAsync());
         }
     }
 }

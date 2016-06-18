@@ -9,9 +9,11 @@ namespace APRST.DAL.Interfaces
 {
     public interface IUserProfileRepository:IRepository<UserProfile>
     {
-        UserProfile GetProfileWithTestsById(int id);
-        UserProfile GetProfileByIdentityName(string identityName);
-        UserProfile GetProfileWithTestsByUserIdentityName(string userIdentityName);
+        Task<UserProfile> GetProfileWithTestsByIdAsync(int id);
+        Task<UserProfile> GetProfileByIdentityNameAsync(string identityName);
         UserProfile GetProfileWithRole(string userIdentityName);
+        Task<UserProfile> GetProfileWithRoleAsync(string userIdentityName);
+        UserProfile GetProfileWithTestsByUserIdentityName(string userIdentityName);
+        Task<UserProfile> GetProfileWithTestsByUserIdentityNameAsync(string userIdentityName);
     }
 }

@@ -10,7 +10,8 @@ namespace APRST.DAL.Interfaces
     public interface IQuestionnaireRepository:IRepository<Questionnaire>
     {
         Questionnaire GetQuestionnaireByUserId(int id);
-        Questionnaire GetIncludeResultsByUserId(int id);
-        IEnumerable<Questionnaire> GetAllIncludeUserAndType();
+        Task<Questionnaire> GetQuestionnaireByUserIdAsync(int id);
+        Task<Questionnaire> GetIncludeResultsByUserIdAsync(int id);
+        Task<IEnumerable<Questionnaire>> GetAllIncludeUserAndTypeAsync();
     }
 }

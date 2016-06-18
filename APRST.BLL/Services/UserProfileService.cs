@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,59 +22,58 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void AddTestToProfile(int testId,int userId)
+        public async Task AddTestToProfileAsync(int testId,int userId)
         {
-           var test = _uow.TestRepository.GetEntityById(testId);
-            var profile = _uow.UserProfileRepository.GetProfileWithTestsById(userId);
+           var test = await _uow.TestRepository.GetEntityByIdAsync(testId);
+            var profile = await _uow.UserProfileRepository.GetProfileWithTestsByIdAsync(userId);
             profile.Tests.Add(test);
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void CreateProfile(UserProfileDTO user)
+        public async Task CreateProfileAsync(UserProfileDTO user)
         {
-            //TODO:Реализовать инициализатор базы данных чтобы заполнялся ролями (где 1 - роль пользователь)
             var profile = Mapper.Map<UserProfileDTO, UserProfile>(user);
-            var role = _uow.RoleRepository.GetEntities().FirstOrDefault(s => s.Id == 1);
+            var role = await _uow.RoleRepository.GetEntities().FirstOrDefaultAsync(s => s.Id == 1);
             profile.UserRoleId = role.Id;
             _uow.UserProfileRepository.Add(profile);
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void EditProfile(UserProfileDTO user)
+        public async Task EditProfileAsync(UserProfileDTO user)
         {
             var profile = Mapper.Map<UserProfileDTO, UserProfile>(user);
             _uow.UserProfileRepository.Update(profile);
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public IEnumerable<UserProfileDTO> GetAll()
+        public async Task<IEnumerable<UserProfileDTO>> GetAllAsync()
         {
-           return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(_uow.UserProfileRepository.GetEntities());
+           return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(await _uow.UserProfileRepository.GetAllAsync());
         }
 
-        public UserProfileIncludeRoleDTO GetProfileByIdentityName(string identityName)
+        public async Task<UserProfileIncludeRoleDTO> GetProfileByIdentityNameAsync(string userIdentityName)
         {
             return Mapper.Map<UserProfile, UserProfileIncludeRoleDTO>(
-                _uow.UserProfileRepository.GetProfileByIdentityName(identityName));
+                await _uow.UserProfileRepository.GetProfileByIdentityNameAsync(userIdentityName));
         }
 
-        public UserProfileIncludeTestsDTO GetProfileWithTestsById(int id)
+        public async Task<UserProfileIncludeTestsDTO> GetProfileWithTestsByIdAsync(int id)
         {
            return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(
-                _uow.UserProfileRepository.GetProfileWithTestsById(id));
+                await _uow.UserProfileRepository.GetProfileWithTestsByIdAsync(id));
         }
 
-        public UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName)
+        public async Task<UserProfileIncludeTestsDTO> GetProfileWithTestsByUserIdentityNameAsync(string userIdentityName)
         {
             return Mapper.Map<UserProfile, UserProfileIncludeTestsDTO>(
-                _uow.UserProfileRepository.GetProfileWithTestsByUserIdentityName(userIdentityName));
+                await _uow.UserProfileRepository.GetProfileWithTestsByUserIdentityNameAsync(userIdentityName));
         }
 
-        public void UpdateProfileImage(int userId, string pathToImageInDatabase)
+        public async Task UpdateProfileImageAsync(int userId, string pathToImageInDatabase)
         {
-            var user = _uow.UserProfileRepository.GetEntityById(userId);
+            var user = await _uow.UserProfileRepository.GetEntityByIdAsync(userId);
             user.Avatar = pathToImageInDatabase;
-            _uow.Save();
+            await _uow.SaveAsync();
         }
     }
 }

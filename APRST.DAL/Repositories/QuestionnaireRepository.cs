@@ -15,19 +15,24 @@ namespace APRST.DAL.Repositories
         {
         }
 
-        public IEnumerable<Questionnaire> GetAllIncludeUserAndType()
+        public async Task<IEnumerable<Questionnaire>> GetAllIncludeUserAndTypeAsync()
         {
-            return GetEntities().Include(user => user.UserProfile).Include(type => type.QuestionnaireType);
+            return await GetEntities().Include(user => user.UserProfile).Include(type => type.QuestionnaireType).ToListAsync();
         }
 
-        public Questionnaire GetIncludeResultsByUserId(int id)
+        public async Task<Questionnaire> GetIncludeResultsByUserIdAsync(int id)
         {
-            return GetEntities().Include(d=>d.QuestionnaireResults).FirstOrDefault(s => s.UserProfileId == id);
+            return await GetEntities().Include(d=>d.QuestionnaireResults).FirstOrDefaultAsync(s => s.UserProfileId == id);
         }
 
         public Questionnaire GetQuestionnaireByUserId(int id)
         {
             return GetEntities().FirstOrDefault(s => s.UserProfileId == id);
+        }
+
+        public async Task<Questionnaire> GetQuestionnaireByUserIdAsync(int id)
+        {
+            return await GetEntities().FirstOrDefaultAsync(s => s.UserProfileId == id);
         }
     }
 }

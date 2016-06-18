@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.WEB.Models;
@@ -23,33 +24,33 @@ namespace APRST.WEB.Controllers
             return PartialView();
         }
 
-        public JsonResult GetCategories()
+        public async Task<JsonResult> GetCategories()
         {
-            return Json(_questionnaireCategoryService.GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(await _questionnaireCategoryService.GetAllAsync(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCategoryWithQuestions(int id)
+        public async Task<JsonResult> GetCategoryWithQuestions(int id)
         {
-            return Json(_questionnaireCategoryService.QuestionnaireCategoryWithQuestionsDTO(id), JsonRequestBehavior.AllowGet);
+            return Json(await _questionnaireCategoryService.QuestionnaireCategoryWithQuestionsDTOAsync(id), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public void Create(QuestionnaireCategoryViewModel category)
+        public async Task Create(QuestionnaireCategoryViewModel category)
         {
-            _questionnaireCategoryService.AddCategory(Mapper.Map<QuestionnaireCategoryViewModel, QuestionnaireCategoryDTO>(category));
+            await _questionnaireCategoryService.AddCategoryAsync(Mapper.Map<QuestionnaireCategoryViewModel, QuestionnaireCategoryDTO>(category));
             _logger.Info($"Добавлена категория {category.NameOfCategory}");
         }
 
         [HttpPost]
-        public void Edit(QuestionnaireCategoryViewModel category)
+        public async Task Edit(QuestionnaireCategoryViewModel category)
         {
-            _questionnaireCategoryService.UpdateCategory(Mapper.Map<QuestionnaireCategoryViewModel, QuestionnaireCategoryDTO>(category));
+            await _questionnaireCategoryService.UpdateCategoryAsync(Mapper.Map<QuestionnaireCategoryViewModel, QuestionnaireCategoryDTO>(category));
         }
 
         [HttpPost]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _questionnaireCategoryService.RemoveCategoryById(id);
+            await _questionnaireCategoryService.RemoveCategoryByIdAsync(id);
         }
     }
 }

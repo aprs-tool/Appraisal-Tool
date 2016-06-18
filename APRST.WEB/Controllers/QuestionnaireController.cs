@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
@@ -33,31 +34,31 @@ namespace APRST.WEB.Controllers
             return View();
         }
 
-        public JsonResult GetQuestionnaire()
+        public async Task<JsonResult> GetQuestionnaire()
         {
-            return Json(Mapper.Map<IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO>, IEnumerable<QuestionnaireCategoryIncludeQuestionsViewModel>>(_questionnaireCategoryService.GetAllWithQuestions()), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO>, IEnumerable<QuestionnaireCategoryIncludeQuestionsViewModel>>(await _questionnaireCategoryService.GetAllWithQuestionsAsync()), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetQuestionnaireResult()
+        public async Task<JsonResult> GetQuestionnaireResult()
         {
-            var user = _userProfileService.GetProfileByIdentityName(User.Identity.Name);
-            return Json(_questionnaireService.QuestionnaireWithResultsByUserId(user.Id), JsonRequestBehavior.AllowGet);
+            var user =await _userProfileService.GetProfileByIdentityNameAsync(User.Identity.Name);
+            return Json(await _questionnaireService.QuestionnaireWithResultsByUserIdAsync(user.Id), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAllIncludeUserAndType()
+        public async Task<JsonResult> GetAllIncludeUserAndType()
         {
-            return Json(_questionnaireService.GetAllIncludeUserAndType(), JsonRequestBehavior.AllowGet);
+            return Json(await _questionnaireService.GetAllIncludeUserAndTypeAsync(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public void Add(List<QuestionnaireResultViewModel> results)
+        public async Task Add(List<QuestionnaireResultViewModel> results)
         {
             results.RemoveAll(item => item == null);
 
-            var user = _userProfileService.GetProfileByIdentityName(User.Identity.Name);
+            var user = await _userProfileService.GetProfileByIdentityNameAsync(User.Identity.Name);
             var questionnaireType = user.Role == "User" ? 1 : 2;
 
-            var questionaire = _questionnaireService.QuestionnaireWithResultsByUserId(user.Id);
+            var questionaire =  await _questionnaireService.QuestionnaireWithResultsByUserIdAsync(user.Id);
 
             if (questionaire == null)
             {
@@ -68,7 +69,7 @@ namespace APRST.WEB.Controllers
                     UserProfileId = user.Id
                 };
 
-                _questionnaireService.Add(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
+                await _questionnaireService.AddAsync(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
             }
             else
             {
@@ -92,7 +93,7 @@ namespace APRST.WEB.Controllers
 
                 if (questionaire.UserProfileId == user.Id)
                 {
-                    _questionnaireResultService.AddResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsAdd), user.Id);
+                    await _questionnaireResultService.AddResultAsync(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsAdd), user.Id);
                 }
                 else
                 {
@@ -103,10 +104,10 @@ namespace APRST.WEB.Controllers
                         UserProfileId = user.Id
                     };
 
-                    _questionnaireService.Add(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
+                    await _questionnaireService.AddAsync(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
                 }
 
-                _questionnaireResultService.UpdateResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsUpdate));
+                await _questionnaireResultService.UpdateResultAsync(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsUpdate));
             }
 
         }

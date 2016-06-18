@@ -9,12 +9,12 @@ namespace APRST.BLL.Interfaces
 {
     public interface IQuestionnaireService
     {
-        void Add(QuestionnaireDTO questionnaireDto);
-        void RemoveById(int id);
-        void Update(QuestionnaireDTO questionnaireDto);
-        QuestionnaireDTO GetByUserId(int id);
-        QuestionnaireDTO QuestionnaireWithResultsByUserId(int id);
-        IEnumerable<QuestionnaireTypeDTO> GetAllTypesOfQuestionnaire();
-        IEnumerable<QuestionnairesDTO> GetAllIncludeUserAndType();
+        Task AddAsync(QuestionnaireDTO questionnaireDto);
+        Task RemoveByIdAsync(int id);
+        Task UpdateAsync(QuestionnaireDTO questionnaireDto);
+        Task<QuestionnaireDTO> GetByUserIdAsync(int id);
+        Task<QuestionnaireDTO> QuestionnaireWithResultsByUserIdAsync(int id);
+        Task<IEnumerable<QuestionnaireTypeDTO>> GetAllTypesOfQuestionnaireAsync();
+        Task<IEnumerable<QuestionnairesDTO>> GetAllIncludeUserAndTypeAsync();
     }
 }

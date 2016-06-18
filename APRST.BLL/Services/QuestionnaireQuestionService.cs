@@ -18,27 +18,27 @@ namespace APRST.BLL.Services
         {
             _uow = uow;
         }
-        public void Add(QuestionnaireQuestionDTO question)
+        public async Task AddAsync(QuestionnaireQuestionDTO question)
         {
             _uow.QuestionnaireQuestionRepository.Add(Mapper.Map<QuestionnaireQuestionDTO, QuestionnaireQuestion>(question));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public QuestionnaireQuestionDTO GetById(int id)
+        public async Task<QuestionnaireQuestionDTO> GetByIdAsync(int id)
         {
-            return Mapper.Map<QuestionnaireQuestion, QuestionnaireQuestionDTO>(_uow.QuestionnaireQuestionRepository.GetEntityById(id));
+            return Mapper.Map<QuestionnaireQuestion, QuestionnaireQuestionDTO>(await _uow.QuestionnaireQuestionRepository.GetEntityByIdAsync(id));
         }
 
-        public void RemoveQuestionById(int id)
+        public async Task RemoveQuestionByIdAsync(int id)
         {
             _uow.QuestionnaireQuestionRepository.DeleteById(id);
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void UpdateQuestion(QuestionnaireQuestionDTO question)
+        public async Task UpdateQuestionAsync(QuestionnaireQuestionDTO question)
         {
             _uow.QuestionnaireQuestionRepository.Update(Mapper.Map<QuestionnaireQuestionDTO, QuestionnaireQuestion>(question));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
     }
 }

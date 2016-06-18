@@ -21,42 +21,42 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void AddCategory(QuestionnaireCategoryDTO categoryDto)
+        public async Task AddCategoryAsync(QuestionnaireCategoryDTO categoryDto)
         {
             _uow.QuestionnaireCategoryRepository.Add(Mapper.Map<QuestionnaireCategoryDTO, QuestionnaireCategory>(categoryDto));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public IEnumerable<QuestionnaireCategoryDTO> GetAll()
+        public async Task<IEnumerable<QuestionnaireCategoryDTO>> GetAllAsync()
         {
-            return Mapper.Map<IEnumerable<QuestionnaireCategory>, List<QuestionnaireCategoryDTO>>(_uow.QuestionnaireCategoryRepository.GetEntities());
+            return Mapper.Map<IEnumerable<QuestionnaireCategory>, List<QuestionnaireCategoryDTO>>(await _uow.QuestionnaireCategoryRepository.GetAllAsync());
         }
 
-        public IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO> GetAllWithQuestions()
+        public async Task<IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO>> GetAllWithQuestionsAsync()
         {
-            return Mapper.Map<IEnumerable<QuestionnaireCategory>, List<QuestionnaireCategoryIncludeQuestionsDTO>>(_uow.QuestionnaireCategoryRepository.GetEntities().Include(S=>S.QuestionnaireQuestions));
+            return Mapper.Map<IEnumerable<QuestionnaireCategory>, List<QuestionnaireCategoryIncludeQuestionsDTO>>(await _uow.QuestionnaireCategoryRepository.GetEntities().Include(S=>S.QuestionnaireQuestions).ToListAsync());
         }
 
-        public QuestionnaireCategoryDTO GetById(int id)
+        public async Task<QuestionnaireCategoryDTO> GetByIdAsync(int id)
         {
-            return Mapper.Map<QuestionnaireCategory, QuestionnaireCategoryDTO>(_uow.QuestionnaireCategoryRepository.GetEntityById(id));
+            return Mapper.Map<QuestionnaireCategory, QuestionnaireCategoryDTO>(await _uow.QuestionnaireCategoryRepository.GetEntityByIdAsync(id));
         }
 
-        public QuestionnaireCategoryIncludeQuestionsDTO QuestionnaireCategoryWithQuestionsDTO(int id)
+        public async Task<QuestionnaireCategoryIncludeQuestionsDTO> QuestionnaireCategoryWithQuestionsDTOAsync(int id)
         {
-            return Mapper.Map<QuestionnaireCategory, QuestionnaireCategoryIncludeQuestionsDTO>(_uow.QuestionnaireCategoryRepository.QuestionnaireCategoryWithQuestions(id));
+            return Mapper.Map<QuestionnaireCategory, QuestionnaireCategoryIncludeQuestionsDTO>(await _uow.QuestionnaireCategoryRepository.QuestionnaireCategoryWithQuestionsAsync(id));
         }
 
-        public void RemoveCategoryById(int id)
+        public async Task RemoveCategoryByIdAsync(int id)
         {
-            _uow.QuestionnaireCategoryRepository.DeleteById(id);
-            _uow.Save();
+            await _uow.QuestionnaireCategoryRepository.DeleteByIdAsync(id);
+            await _uow.SaveAsync();
         }
 
-        public void UpdateCategory(QuestionnaireCategoryDTO categoryDto)
+        public async Task UpdateCategoryAsync(QuestionnaireCategoryDTO categoryDto)
         {
             _uow.QuestionnaireCategoryRepository.Update(Mapper.Map<QuestionnaireCategoryDTO, QuestionnaireCategory>(categoryDto));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
     }
 }
