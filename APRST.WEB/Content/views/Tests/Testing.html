@@ -1,0 +1,40 @@
+﻿<section class="usertable" ng-controller="TestsingCtrl">
+    <div class="container">
+        <div class="table-top">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+            Прохождение теста {{nameoftest}}
+        </div>
+
+        <div class="table-body" ng-show="divTestResult">
+
+            <span class="congrats">Тест завершен!</span>
+            <br />
+            <span class="congrats congrats-b">Результаты тестирования отражены в вашем профиле.</span>
+            <hr />
+            <a href="#/User" class="button-primary" ng-click="updateProfile()">Перейти к профилю</a>
+
+        </div>
+
+        <div class="table-body" ng-show="divTest">
+
+            <div ng-repeat="item in QnAs" class="test-wrapper">
+
+                <div class="test-wrapper-title">
+                    {{item.Question}}
+                </div>
+
+                <div class="test-wrapper-body">
+                    <div ng-repeat="answ in item.AnswersDTO">
+                        <input type="radio" value="{{answ.Answer}}" name="{{item.Id}}" id="{{answ.Id}}">
+                        <label for="{{answ.Id}}">{{answ.Answer}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="button-primary" type="button" ng-click="finishTest()">Закончить тест</button>
+
+        </div>
+
+        <div class="table-end"></div>
+    </div>
+</section>

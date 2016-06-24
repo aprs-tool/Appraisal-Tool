@@ -1,0 +1,39 @@
+﻿<section class="usertable" ng-controller="QuestionnairesCtrl">
+
+    <div class="container">
+        <div class="search-wrapper">
+            <input type="text" placeholder="Поиск..." class="input-g" ng-model="search" />
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="table-top">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            Анкеты в системе
+            <button class="button-g" ng-click="QuestionnairesManage()">Управление анкетами</button>
+        </div>
+        <table>
+            <tr id="tr-head">
+                <td>
+                    Пользователь
+                </td>
+                <td>
+                    Тип анкеты
+                </td>
+                <td></td>
+            </tr>
+
+            <tr ng-repeat="item in questionnaires.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter : search" class="b-vs-true">
+                <td ng-cloak>{{item.UserProfile}}</td>
+                <td ng-cloak>{{item.QuestionnaireType}}</td>
+                <td>
+                    <button class="button-primary" ng-click="GetUserQuestionnaire('', item)">Анкета</button>
+                </td>
+            </tr>
+
+        </table>
+        <div class="table-end"></div>
+        <uib-pagination total-items="TotalItems" ng-model="currentPage" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="Предыдущая" next-text="Следующая"></uib-pagination>
+    </div>
+</section>

@@ -1,0 +1,24 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        Роли пользователей
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <table>
+        <tr id="tr-head">
+            <td>
+                Роль
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in roles">
+            <td ng-cloak>{{item.RoleName}}</td>
+            <td style="text-align: right;">
+                <button class="button-primary" ng-click="ok(item)">Выдать</button>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+</section>

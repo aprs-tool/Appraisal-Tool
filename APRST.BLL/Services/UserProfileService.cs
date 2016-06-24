@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.DAL.Entities;
@@ -51,6 +46,11 @@ namespace APRST.BLL.Services
            return Mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileDTO>>(_uow.UserProfileRepository.GetEntities());
         }
 
+        public int GetCount()
+        {
+            return _uow.UserProfileRepository.GetCount();
+        }
+
         public UserProfileIncludeRoleDTO GetProfileByIdentityName(string identityName)
         {
             return Mapper.Map<UserProfile, UserProfileIncludeRoleDTO>(
@@ -75,5 +75,6 @@ namespace APRST.BLL.Services
             user.Avatar = pathToImageInDatabase;
             _uow.Save();
         }
+
     }
 }

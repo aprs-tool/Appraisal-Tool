@@ -1,197 +1,222 @@
-﻿app.service("testService", function ($http) {
+﻿app
+    .constant("testApiUrl", "/api/Tests/")
+    .service("testService", function ($http, $resource, testApiUrl) {
 
-    this.getTests = function () {
-        return $http.get("/Test/GetAllTests");
-    };
-    
-    this.getQuestions = function (id) {
-        return $http.get("/Test/GetQuestions/" + id);
-    };
+        this.getTests = function () {
+            return $resource(testApiUrl + ":Id", { id: "@Id" });
+        };
 
-    this.getAnswers = function (id) {
-        return $http.get("/Question/GetAnswers/" + id);
-    };
+        this.finishTest = function (data, testId) {
+            var response = $http({
+                method: "post",
+                url: "/Test/AddPoints/" + testId,
+                data: JSON.stringify(data),
+                dataType: "json"
+            });
+            return response;
+        };
+    });
 
-    this.getQnA = function (id) {
-        return $http.get("/Test/GetQnA/" + id);
-    };
+app
+    .constant("testsQuestionsApiUrl", "/api/TestsQuestions/")
+    .service("testsQuestionsService", function ($http, $resource, testsQuestionsApiUrl) {
 
-    this.finishTest = function (data, testId) {
-        var response = $http({
-            method: "post",
-            url: "/Test/AddPoints/" + testId,
-            data: JSON.stringify(data),
-            dataType: "json"
-        });
-        return response;
-    }
-});
+        this.getQuestions = function () {
+            return $resource(testsQuestionsApiUrl + ":Id", { id: "@Id" });
+        };
+    });
 
-app.service("categoryService", function ($http) {
+app
+    .constant("testsAnswersApiUrl", "/api/TestsAnswers/")
+    .service("testsAnswersService", function ($http, $resource, testsAnswersApiUrl) {
 
-    this.getCategories = function () {
-        return $http.get("/TestCategory/GetCategories");
-    };
+        this.getAnswers = function () {
+            return $resource(testsAnswersApiUrl + ":Id", { id: "@Id" });
+        };
+    });
 
-    this.AddCategory = function (category) {
-        var response = $http({
-            method: "post",
-            url: "/TestCategory/Create",
-            data: JSON.stringify(category),
-            dataType: "json"
-        });
-        return response;
-    }
+app
+    .constant("testsCategoriesApiUrl", "/api/TestsCategories/")
+    .service("testsCategoriesService", function ($http, $resource, testsCategoriesApiUrl) {
 
-    this.EditCategory = function (category) {
-        var response = $http({
-            method: "post",
-            url: "/TestCategory/Edit",
-            data: JSON.stringify(category),
-            dataType: "json"
-        });
-        return response;
-    }
+        this.getCategories = function () {
+            return $resource(testsCategoriesApiUrl + ":Id", { id: "@Id" });
+        };
+    });
 
-    this.DeleteCategory = function (id) {
-        var response = $http({
-            method: "post",
-            url: "/TestCategory/Delete",
-            params: {
-                Id: JSON.stringify(id)
-            }
-        });
-        return response;
-    }
+app
+    .constant("testingApiUrl", "/api/Testing/")
+    .service("testingService", function ($http, $resource, testingApiUrl) {
+        this.get = function () {
+            return $resource(testingApiUrl + ":Id", { id: "@Id" });
+        };
 
-});
+        this.finishTest = function (data, id) {
+            var response = $http({
+                method: "post",
+                url: "/api/Testing/Post/" + id,
+                data: JSON.stringify(data),
+                dataType: "json"
+            });
+            return response;
+        }
+    });
 
-app.service("userService", function ($http) {
+app
+    .constant("questionnairesApiUrl", "/api/Questionnaires/")
+    .service("questionnairesService", function ($http, $resource, questionnairesApiUrl) {
 
-    this.getUsers = function () {
-        return $http.get("/User/GetAll");
-    };
+        this.get = function () {
+            return $resource(questionnairesApiUrl + ":Id", { id: "@Id" });
+        };
+    });
 
-    this.getUserTestsResults = function (upn) {
-        return $http.get("/Test/GetUserTestsResults/" + upn);
-    };
+app
+    .constant("questionnaireApiUrl", "/api/Questionnaire/")
+    .service("questionnaireService", function ($http, $resource, questionnaireApiUrl) {
 
-    this.getUserProfile = function () {
-        return $http.get("/User/GetProfile");
-    };
+        this.get = function () {
+            return $resource(questionnaireApiUrl + ":Id", { id: "@Id" });
+        };
+    });
 
-    this.EditProfile = function (user) {
-        var response = $http({
-            method: "post",
-            url: "/User/EditProfile",
-            data: JSON.stringify(user),
-            dataType: "json"
-        });
-        return response;
-    }
+app
+    .constant("usersApiUrl", "/api/Users/")
+    .service("usersService", function ($http, $resource, usersApiUrl) {
 
-});
+        this.get = function () {
+            return $resource(usersApiUrl + ":Id", { id: "@Id" });
+        };
+    });
 
-app.service("questionnaireService", function ($http) {
+app
+    .constant("userApiUrl", "/api/User/")
+    .service("userService", function ($http, $resource, userApiUrl) {
 
-    this.getQuestionnaire = function () {
-        return $http.get("/Questionnaire/GetQuestionnaire");
-    };
+        this.get = function () {
+            return $resource(userApiUrl + ":Id", { id: "@Id" });
+        };
 
-    this.getQuestionnaires = function () {
-        return $http.get("/Questionnaire/GetAllIncludeUserAndType");
-    };
+        this.changeAvatar = function (file) {
+            var formData = new FormData();
+            formData.append("file", file);
+            var response = $http.post(userApiUrl + "/UpdateProfileImage",
+                formData,
+                {
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                });
+            return response;
+        };
+    });
 
-    this.getQuestionnaireResult = function () {
-        return $http.get("/Questionnaire/GetQuestionnaireResult");
-    };
-
-    this.getCategories = function () {
-        return $http.get("/QuestionnaireCategory/GetCategories");
-    };
-
-    this.getQuestions = function (categoryId) {
-        return $http.get("/QuestionnaireCategory/GetCategoryWithQuestions/" + categoryId);
-    };
-
-    this.addQuestionnaire = function (qResult) {
-        var response = $http({
-            method: "post",
-            url: "/Questionnaire/Add",
-            data: JSON.stringify(qResult),
-            dataType: "json"
-        });
-        return response;
-    }
-
-    this.AddCategory = function (category) {
-        var response = $http({
-            method: "post",
-            url: "/QuestionnaireCategory/Create",
-            data: JSON.stringify(category),
-            dataType: "json"
-        });
-        return response;
-    }
-
-    this.EditCategory = function (category) {
-        var response = $http({
-            method: "post",
-            url: "/QuestionnaireCategory/Edit",
-            data: JSON.stringify(category),
-            dataType: "json"
-        });
-        return response;
-    }
-
-    this.DeleteCategory = function (id) {
-        var response = $http({
-            method: "post",
-            url: "/QuestionnaireCategory/Delete",
-            params: {
-                Id: JSON.stringify(id)
-            }
-        });
-        return response;
-    }
-
-    this.AddQuestion = function (question) {
-        var response = $http({
-            method: "post",
-            url: "/QuestionnaireQuestion/Create",
-            data: JSON.stringify(question),
-            dataType: "json"
-        });
-        return response;
-    }
-
-    this.EditQuestion = function (question) {
-        var response = $http({
-            method: "post",
-            url: "/QuestionnaireQuestion/Edit",
-            data: JSON.stringify(question),
-            dataType: "json"
-        });
-        return response;
-    }
-
-    this.DeleteQuestion = function (id) {
-        var response = $http({
-            method: "post",
-            url: "/QuestionnaireQuestion/Delete",
-            params: {
-                Id: JSON.stringify(id)
-            }
-        });
-        return response;
-    }
-
-});
-
-app.service("adminService", function ($http) {
-
+app.service("adminService", function ($http, $resource) {
     this.getLog = function () {
-        return $http.get("/Admin/GetLog");
+        return $resource("/api/Admin/GetLog" + ":Id", { id: "@Id" });
     };
 
+    this.getCounters = function () {
+        return $resource("/api/Admin/GetCounters" + ":Id", { id: "@Id" });
+    };
+
+    this.getRoles = function () {
+        return $resource("/api/Admin/GetRoles" + ":Id", { id: "@Id" });
+    };
 });
+
+///Factories///
+
+app.factory("scopes", function () {
+    var mem = {};
+
+    return {
+        store: function (key, value) {
+            mem[key] = value;
+        },
+        get: function (key) {
+            return mem[key];
+        }
+    };
+});
+
+///For Put///
+
+app.factory("testsPut", ["$resource", function ($resource) {
+    return $resource("/api/Tests/", null,
+    {
+        'update': { method: "PUT" }
+    });
+}]);
+
+app.factory("testsQuestionsPut", ["$resource", function ($resource) {
+    return $resource("/api/TestsQuestions/", null,
+    {
+        'update': { method: "PUT" },
+        'delete': { method: "DELETE" }
+    });
+}]);
+
+app.factory("testsAnswersPut", ["$resource", function ($resource) {
+    return $resource("/api/TestsAnswers/", null,
+    {
+        'update': { method: "PUT" },
+        'delete': { method: "DELETE" }
+    });
+}]);
+
+app.factory("testsCategoriesPut", ["$resource", function ($resource) {
+    return $resource("/api/TestsCategories/", null,
+    {
+        'update': { method: "PUT" }
+    });
+}]);
+
+app.factory("userProfilePut", ["$resource", function ($resource) {
+    return $resource("/api/User/", null,
+    {
+        'update': { method: "PUT" }
+    });
+}]);
+
+///For Put///
+
+///Full Api///
+
+app.factory("questionnairesCategoriesApi", ["$resource", function ($resource) {
+    return $resource("/api/QuestionnairesCategories/", null,
+    {
+        'add': { method: "POST" },
+        'update': { method: "PUT" },
+        'delete': { method: "DELETE" }
+    });
+}]);
+
+app.factory("questionnairesQuestionsApi", ["$resource", function ($resource) {
+    return $resource("/api/QuestionnairesQuestions/", null,
+    {
+        'add': { method: "POST" },
+        'update': { method: "PUT" },
+        'delete': { method: "DELETE" }
+    });
+}]);
+
+app.factory("questionnairesApi", ["$resource", function ($resource) {
+    return $resource("/api/Questionnaires/", null,
+    {
+        'update': { method: "POST" }
+    });
+}]);
+
+app.factory("adminApi", ["$resource", function ($resource) {
+    return $resource("/api/Admin", null,
+    {
+        'giveTest': {
+            method: "POST",
+            url: "/api/Admin/GiveTest"
+        }
+    });
+}]);
+
+///Full Api///
+
+///Factories///

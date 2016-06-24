@@ -1,0 +1,36 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        {{modalTitle}}
+        <button class="button-g" ng-click="cancel()">Отмена</button>
+    </div>
+    <div class="table-body">
+        <form name="newTest" class="form-valid" novalidate ng-submit="ok(test)">
+            <div>
+                <input type="text" placeholder="Название" class="input-g" required ng-model="test.NameOfTest" />
+            </div>
+            <br />
+            <div>
+                <input type="text" placeholder="Описание" class="input-g" required ng-model="test.Desc" />
+            </div>
+            <br />
+            <div class="modal-category">
+                <div class="modal-category-l">
+                    <span class="modal-label">Категория:</span>
+                </div>
+
+                <div class="modal-category-r">
+                    <select ng-model="test.TestCategoryId" class="input-g" required>
+                        <option value="">- Выберите категорию теста -</option>
+                        <option ng-repeat="option in categories" value="{{option.Id}}">{{option.NameOfCategory}}</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div>
+                <button type="submit" class="button-primary" ng-disabled="newTest.$invalid">{{buttonTitle}}</button>
+            </div>
+        </form>
+</div>
+    <div class="table-end"></div>
+</section>

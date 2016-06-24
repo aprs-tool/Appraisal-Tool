@@ -4,7 +4,6 @@ using APRST.DAL.Interfaces;
 using System.Collections.Generic;
 using APRST.DAL.Entities;
 using AutoMapper;
-using System;
 
 namespace APRST.BLL.Services
 {

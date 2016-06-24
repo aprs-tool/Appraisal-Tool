@@ -1,0 +1,78 @@
+﻿<div ng-controller="AdminCtrl">
+    <div class="informs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="informs-block">
+                        <div class="informs-block-l" id="block-users">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <div class="informs-block-r">
+                            <span class="block-counter" ng-bind="counters.usersCount"></span>
+                            <br>
+                            <span class="block-content">Пользователей в системе</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="informs-block">
+                        <div class="informs-block-l" id="block-questionnaire">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </div>
+                        <div class="informs-block-r">
+                            <span class="block-counter" ng-bind="counters.questionnairesCount"></span>
+                            <br>
+                            <span class="block-content">Анкет заполнено</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="informs-block last-inform-block">
+                        <div class="informs-block-l" id="block-test">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                        </div>
+                        <div class="informs-block-r">
+                            <span class="block-counter" ng-bind="counters.testsCount"></span>
+                            <br>
+                            <span class="block-content">Теста готовы к выдаче</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="usertable">
+        <div class="container">
+            <div class="table-top">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                Список действий в системе
+            </div>
+            <table>
+                <tr id="tr-head">
+                    <td>
+                        Дата
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    </td>
+                    <td>
+                        Пользователь
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </td>
+                    <td>
+                        Действие
+                        <i class="fa fa-history" aria-hidden="true"></i>
+                    </td>
+                </tr>
+
+                <tr ng-repeat="item in log.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:'Date':true">
+                    <td ng-cloak>{{item.Date | date:'medium'}}</td>
+                    <td ng-cloak>{{item.Username}}</td>
+                    <td ng-cloak>{{item.Message}}</td>
+                </tr>
+
+            </table>
+            <div class="table-end"></div>
+            <uib-pagination total-items="TotalItems" ng-model="currentPage" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="Предыдущая" next-text="Следующая"></uib-pagination>
+        </div>
+    </div>
+</div>

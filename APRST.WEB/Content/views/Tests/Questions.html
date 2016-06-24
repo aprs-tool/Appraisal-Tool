@@ -1,0 +1,33 @@
+﻿<div class="col-md-5" ng-controller="QuestionsCtrl">
+    <div class="search-wrapper">
+        <input type="text" placeholder="Поиск вопроса..." class="input-g" ng-model="search" />
+    </div>
+
+    <div class="table-top">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        Вопросы теста: {{questions.NameOfTest}}
+        <button class="button-g" ng-click="CreateQuestion('', questions.Id)">Добавить вопрос</button>
+    </div>
+    <table>
+        <tr id="tr-head">
+            <td>
+                Вопрос
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in questions.QuestionsDTO.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter : search" class="b-vs-true">
+            <td ng-cloak>{{item.Question}}</td>
+            <td style="text-align: right;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="ShowAnswers('lg', item)">Ответы</button>
+                    <button class="button-edit" ng-click="EditQuestion('', item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="DeleteQuestion('sm', item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+    <uib-pagination total-items="TotalItems" ng-model="currentPage" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="Предыдущая" next-text="Следующая"></uib-pagination>
+</div>

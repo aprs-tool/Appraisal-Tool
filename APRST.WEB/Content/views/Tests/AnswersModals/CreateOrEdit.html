@@ -1,0 +1,23 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        {{modalTitle}}
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="table-body">
+        <form name="newAnswer" class="form-valid" novalidate ng-submit="ok(answer)">
+            <div>
+                <input type="text" placeholder="Текст ответа" class="input-g" required ng-model="answer.Answer" />
+            </div>
+            <br />
+            <div>
+                <input type="number" placeholder="Бал за ответ" class="input-g" required ng-model="answer.Point" />
+            </div>
+            <br />
+            <div>
+                <button type="submit" class="button-primary" ng-disabled="newAnswer.$invalid">{{buttonTitle}}</button>
+            </div>
+        </form>
+    </div>
+    <div class="table-end"></div>
+</section>

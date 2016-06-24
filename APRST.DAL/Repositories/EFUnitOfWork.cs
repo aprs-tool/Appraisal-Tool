@@ -1,155 +1,72 @@
 ﻿using APRST.DAL.EF;
 using APRST.DAL.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APRST.DAL.Repositories
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private AprstContext db;
-        private ITestRepository testRepository;
-        private ITestCategoryRepository testCategoryRepository;
-        private ITestQuestionRepository testQuestionRepository;
-        private ITestAnswerRepository testAnswerRepository;
+        private readonly AprstContext _db;
+        private ITestRepository _testRepository;
+        private ITestCategoryRepository _testCategoryRepository;
+        private ITestQuestionRepository _testQuestionRepository;
+        private ITestAnswerRepository _testAnswerRepository;
         private ITestResultRepository _testResultRepository;
-        private IUserProfileRepository userProfileRepository;
-        private IRoleRepository roleRepository;
-        private IQuestionnaireCategoryRepository questionnaireCategoryRepository;
-        private IQuestionnaireQuestionRepository questionnaireQuestionRepository;
-        private IQuestionnaireRepository questionnaireRepository;
-        private IQuestionnaireTypeRepository questionnaireTypeRepository;
+        private IUserProfileRepository _userProfileRepository;
+        private IRoleRepository _roleRepository;
+        private IQuestionnaireCategoryRepository _questionnaireCategoryRepository;
+        private IQuestionnaireQuestionRepository _questionnaireQuestionRepository;
+        private IQuestionnaireRepository _questionnaireRepository;
+        private IQuestionnaireTypeRepository _questionnaireTypeRepository;
         private IQuestionnaireResultRepository _questionnaireResultRepository;
         private ILogRepository _logRepository;
 
         public EFUnitOfWork(string connectionString)
         {
-            db = new AprstContext(connectionString);
+            _db = new AprstContext(connectionString);
         }
-        public ITestRepository TestRepository
-        {
-            get
-            {
-                if (testRepository == null)
-                    testRepository = new TestRepository(db);
-                return testRepository;
-            }
-        }
-        public ITestCategoryRepository TestCategoryRepository
-        {
-            get
-            {
-                if (testCategoryRepository == null)
-                    testCategoryRepository = new TestCategoryRepository(db);
-                return testCategoryRepository;
-            }
-        }
+        public ITestRepository TestRepository => _testRepository ?? (_testRepository = new TestRepository(_db));
 
-        public ITestQuestionRepository TestQuestionRepository
-        {
-            get
-            {
-                if (testQuestionRepository == null)
-                    testQuestionRepository = new TestQuestionRepository(db);
-                return testQuestionRepository;
-            }
-        }
+        public ITestCategoryRepository TestCategoryRepository => _testCategoryRepository ?? (_testCategoryRepository = new TestCategoryRepository(_db));
 
-        public ITestAnswerRepository TestAnswerRepository
-        {
-            get
-            {
-                if (testAnswerRepository == null)
-                    testAnswerRepository = new TestAnswerRepository(db);
-                return testAnswerRepository;
-            }
-        }
+        public ITestQuestionRepository TestQuestionRepository => _testQuestionRepository ?? (_testQuestionRepository = new TestQuestionRepository(_db));
 
-        public ITestResultRepository TestResultRepository => _testResultRepository ?? (_testResultRepository = new TestResultRepository(db));
+        public ITestAnswerRepository TestAnswerRepository => _testAnswerRepository ?? (_testAnswerRepository = new TestAnswerRepository(_db));
 
-        public IUserProfileRepository UserProfileRepository
-        {
-            get
-            {
-                if (userProfileRepository == null)
-                    userProfileRepository = new UserProfileRepository(db);
-                return userProfileRepository;
-            }
-        }
+        public ITestResultRepository TestResultRepository => _testResultRepository ?? (_testResultRepository = new TestResultRepository(_db));
 
-        public IRoleRepository RoleRepository
-        {
-            get
-            {
-                if (roleRepository == null)
-                    roleRepository = new RoleRepository(db);
-                return roleRepository;
-            }
-        }
+        public IUserProfileRepository UserProfileRepository => _userProfileRepository ?? (_userProfileRepository = new UserProfileRepository(_db));
 
-        public IQuestionnaireCategoryRepository QuestionnaireCategoryRepository
-        {
-            get
-            {
-                if (questionnaireCategoryRepository == null)
-                    questionnaireCategoryRepository = new QuestionnaireCategoryRepository(db);
-                return questionnaireCategoryRepository;
-            }
-        }
+        public IRoleRepository RoleRepository => _roleRepository ?? (_roleRepository = new RoleRepository(_db));
 
-        public IQuestionnaireQuestionRepository QuestionnaireQuestionRepository
-        {
-            get
-            {
-                if (questionnaireQuestionRepository == null)
-                    questionnaireQuestionRepository = new QuestionnaireQuestionRepository(db);
-                return questionnaireQuestionRepository;
-            }
-        }
+        public IQuestionnaireCategoryRepository QuestionnaireCategoryRepository => _questionnaireCategoryRepository ?? (_questionnaireCategoryRepository = new QuestionnaireCategoryRepository(_db));
 
-        public IQuestionnaireRepository QuestionnaireRepository
-        {
-            get
-            {
-                if(questionnaireRepository == null)
-                    questionnaireRepository = new QuestionnaireRepository(db);
-                return questionnaireRepository;
-            }
-        }
+        public IQuestionnaireQuestionRepository QuestionnaireQuestionRepository => _questionnaireQuestionRepository ?? (_questionnaireQuestionRepository = new QuestionnaireQuestionRepository(_db));
 
-        public IQuestionnaireTypeRepository QuestionnaireTypeRepository
-        {
-            get
-            {
-                if (questionnaireTypeRepository == null)
-                    questionnaireTypeRepository = new QuestionnaireTypeRepository(db);
-                return questionnaireTypeRepository;
-            }
-        }
+        public IQuestionnaireRepository QuestionnaireRepository => _questionnaireRepository ?? (_questionnaireRepository = new QuestionnaireRepository(_db));
 
-        public IQuestionnaireResultRepository QuestionnaireResultRepository => _questionnaireResultRepository ?? (_questionnaireResultRepository = new QuestionnaireResultRepository(db));
+        public IQuestionnaireTypeRepository QuestionnaireTypeRepository => _questionnaireTypeRepository ?? (_questionnaireTypeRepository = new QuestionnaireTypeRepository(_db));
 
-        public ILogRepository LogRepository => _logRepository ?? (_logRepository = new LogRepository(db));
+        public IQuestionnaireResultRepository QuestionnaireResultRepository => _questionnaireResultRepository ?? (_questionnaireResultRepository = new QuestionnaireResultRepository(_db));
+
+        public ILogRepository LogRepository => _logRepository ?? (_logRepository = new LogRepository(_db));
 
         public void Save()
         {
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
-        private bool disposed = false;
+        private bool _disposed = false;
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this._disposed)
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _db.Dispose();
                 }
-                this.disposed = true;
+                this._disposed = true;
             }
         }
 

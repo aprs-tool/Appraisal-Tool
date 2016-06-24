@@ -18,11 +18,20 @@ a {
 	color: #fff;
 }
 
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+::-moz-scrollbars-none {
+    overflow: hidden;
+}
+
 .noavatar {
     background-color: #181B1F;
 	width: 25px;
 	height: 25px;
 	border: 1px solid #4773BE;
+    -ms-border-radius: 25px;
     border-radius: 25px;
     overflow: hidden;
 }
@@ -48,13 +57,13 @@ a {
 	background-color: #f5ba14;
 }
 
-#block-counter {
+.block-counter {
 	font-family: "RobotoLight", sans-serif;
 	font-size: 40px;
 	color: #676767;
 }
 
-#block-content {
+.block-content {
 	font-family: "RobotoLight", sans-serif;
 	text-transform: lowercase;
 	font-size: 16px;
@@ -275,7 +284,6 @@ a {
     border-radius: 4px;
 	border: 1px solid #e2e8e9;
 	overflow: hidden;
-	margin-bottom: 15px;
 }
 
 .informs-block-l {
@@ -338,12 +346,12 @@ a {
 }
 
 .usertable table tr:hover {
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
-	background: #fcfcfc;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+	background: #fafafa;
 }
 
 .usertable table tr:last-child {
@@ -352,6 +360,7 @@ a {
 
 .usertable table td {
 	padding: 8px 15px 8px 15px;
+    border-left: 1px dotted #f0eded;
 }
 
 .table-end {
@@ -365,8 +374,6 @@ a {
 
 .userprofile {
 	margin-top: 15px;
-	margin-bottom: 15px;
-	display: block;
 }
 
 .profile-table {
@@ -397,6 +404,7 @@ a {
 .profile-avatar img {
     max-width: 100%;
     min-height: 100%;
+    padding-bottom: 5px;
 }
 
 .profile-links-block {
@@ -447,6 +455,28 @@ a {
 	padding: 10px 20px 10px 20px;
 	color: #6a6a6a;
 	background: #fbfbfb;
+    min-height: 50px;
+}
+
+.profile-username > .profile-avatar {
+    max-height: 30px;
+    max-width: 30px;
+    float: left;
+    margin-right: 15px;
+}
+
+.profile-username > .button-g {
+    margin-top: 4px;
+    background: #f1f1f1;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+.profile-username > .button-g:hover {
+    background: #eaeaea;
 }
 
 .profile-info table {
@@ -475,6 +505,10 @@ a {
 
 .profile-info table td {
 	padding: 10px 20px 10px 20px;
+}
+
+.profile-info-i-td {
+    width: 50%;
 }
 
 .profile-info-block {
@@ -515,6 +549,11 @@ a {
 	font-size: 9px;
 }
 
+.profile-no-tests {
+	font-size: 14px;
+    margin-top: 25px;
+}
+
 .button-primary {
     background: #eaeaff;
 	padding: 5px;
@@ -529,6 +568,7 @@ a {
     border: none;
     width: 100%;
     outline: none;
+    overflow: hidden;
 }
 
 .button-primary:hover {
@@ -539,6 +579,11 @@ a {
 .button-primary:focus {
 	color: #6a6a6a;
     outline: none;
+}
+
+.button-primary:disabled {
+    background: #f5f5f5;
+    color: #ccc;
 }
 
 .button-g {
@@ -567,6 +612,10 @@ a {
 .button-g:focus {
 	color: #888;
 	text-decoration: none;
+}
+
+.button-g > i {
+    padding: 0;
 }
 
 .modal-content {
@@ -837,6 +886,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .accordion {
     border: 1px solid #e0e6e7;
+    -ms-border-radius: 4px;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -877,11 +927,19 @@ h1, h2, h3, h4, h5, h6 {
     padding: 8px 10px;
     display: block;
     height: 35px;
+    -webkit-transition: all 0.26s;
+    -moz-transition: all 0.26s;
+    -ms-transition: all 0.26s;
+    -o-transition: all 0.26s;
     transition: all 0.26s;
 }
 
 .accordion-b:hover {
     background: #fcfcfc;
+    -webkit-transition: all 0.26s;
+    -moz-transition: all 0.26s;
+    -ms-transition: all 0.26s;
+    -o-transition: all 0.26s;
     transition: all 0.26s;
 }
 
@@ -901,6 +959,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .star-o {
     color: #eaeaff;
+    -webkit-transition: all 0.52s;
+    -moz-transition: all 0.52s;
+    -ms-transition: all 0.52s;
+    -o-transition: all 0.52s;
     transition: all 0.52s;
     outline: none;
 }
@@ -915,6 +977,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .star {
     color: #8691A7;
+    -webkit-transition: all 0.26s;
+    -moz-transition: all 0.26s;
+    -ms-transition: all 0.26s;
+    -o-transition: all 0.26s;
     transition: all 0.26s;
 }
 
@@ -942,7 +1008,134 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
 }
 
-.reg-titles>i {
+.reg-titles > i {
     padding-right: 5px;
     color: #bcbcbc;
 }
+
+.modal-userprofile > .usertable {
+    margin: 0;
+}
+
+.modal-userprofile > .profile-table {
+    -ms-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.modal-userprofile > .usertable > .table-top {
+    border-top: none;
+    -ms-border-radius: 0;
+    border-radius: 0;
+}
+
+.form-valid .ng-invalid-required.ng-dirty {
+    border-color: #d52d46;
+    border-color: rgba(213, 45, 70, 0.3);
+}
+
+.form-valid .ng-valid.ng-dirty {
+    border-color: #2dd551;
+    border-color: rgba(45, 213, 81, 0.3);
+}
+
+.pagination {
+    margin: 15px 0;
+    font-family: "RobotoLight", sans-serif;
+    font-size: 10px;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #777;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e6e7;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    color: #888;
+    background-color: #f1f1f1;
+    border-color: #dfdfdf;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    color: #999;
+    background-color: #eee;
+    border-color: #dfdfdf;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+.pagination-sm>li>a, .pagination-sm>li>span {
+    font-size: 11px;
+}
+
+/*NG*/
+.active-section.ng-enter, .active-section.ng-leave {
+    -webkit-transition: all .60s ease;
+    -moz-transition: all .60s ease;
+    -ms-transition: all .60s ease;
+    -o-transition: all .60s ease;
+    transition: all .60s ease;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+.active-section.ng-enter {
+    left: 100%;
+    -ms-opacity: 0;
+    opacity: 0;
+}
+
+.active-section.ng-enter.ng-enter-active {
+    left: 0;
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+.active-section.ng-leave.ng-leave-active {
+    left: -200%;
+    -ms-opacity: 0;
+    opacity: 0;
+}
+/*NG*/
+
+/*NG*/
+.active-section-questions.ng-enter, .active-section-questions.ng-leave {
+    -webkit-transition: all .60s ease;
+    -moz-transition: all .60s ease;
+    -ms-transition: all .60s ease;
+    -o-transition: all .60s ease;
+    transition: all .60s ease;
+}
+
+.active-section-questions.ng-enter {
+    -ms-opacity: 0;
+    opacity: 0;
+}
+
+.active-section-questions.ng-enter.ng-enter-active {
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+.active-section-questions.ng-leave.ng-leave-active {
+    -ms-opacity: 0;
+    opacity: 0;
+}
+/*NG*/

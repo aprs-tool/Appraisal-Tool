@@ -1,0 +1,19 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        Удаление теста
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="table-body">
+        <div class="t-desc-wrapper">
+            <h4>{{test.NameOfTest}}</h4>
+        </div>
+        <div class="desc-wrapper">
+            {{test.Desc}}
+        </div>
+        <div>
+            <button class="button-primary" ng-click="delete()">Удалить</button>
+        </div>
+    </div>
+    <div class="table-end"></div>
+</section>

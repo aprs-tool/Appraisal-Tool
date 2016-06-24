@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.DAL.Entities;
@@ -12,9 +7,9 @@ using AutoMapper;
 
 namespace APRST.BLL.Services
 {
-    public class QuestionnaireService:IQuestionnaireService
+    public class QuestionnaireService : IQuestionnaireService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
 
         public QuestionnaireService(IUnitOfWork uow)
         {
@@ -57,7 +52,12 @@ namespace APRST.BLL.Services
 
         public IEnumerable<QuestionnairesDTO> GetAllIncludeUserAndType()
         {
-            return Mapper.Map< IEnumerable<Questionnaire>, IEnumerable<QuestionnairesDTO>>(_uow.QuestionnaireRepository.GetAllIncludeUserAndType());
+            return Mapper.Map<IEnumerable<Questionnaire>, IEnumerable<QuestionnairesDTO>>(_uow.QuestionnaireRepository.GetAllIncludeUserAndType());
+        }
+
+        public int GetCount()
+        {
+            return _uow.QuestionnaireRepository.GetCount();
         }
     }
 }

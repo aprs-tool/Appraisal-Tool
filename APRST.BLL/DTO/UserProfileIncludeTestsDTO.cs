@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace APRST.BLL.DTO
 {
@@ -13,10 +9,12 @@ namespace APRST.BLL.DTO
         public string UserPrincipalName { get; set; }
         public string SamAccoutName { get; set; }
         public string UserIdentityName { get; set; }
+        public int UserRoleId { get; set; }
         public string Role { get; set; }
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public List<TestInfoDTO> Tests { get; set; }
+        public List<TestResultInfoDTO> TestResults { get; set; }
     }
 }

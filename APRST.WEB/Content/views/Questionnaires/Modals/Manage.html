@@ -1,0 +1,85 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <span ng-show="trCategories">Управление анкетами</span>
+        <span ng-show="trQuestions">{{category.NameOfCategory}}</span>
+        <button class="button-g" ng-show="trCategories" ng-click="cancel()">Закрыть</button>
+        <button class="button-g" ng-show="trCategories" ng-click="ShowAddCategory()">Добавить категорию</button>
+        <button class="button-g" ng-show="trQuestions" ng-click="toCategories()">Назад</button>
+        <button class="button-g" ng-show="trQuestions" ng-click="ShowAddQuestion()">Добавить вопрос</button>
+    </div>
+    <table ng-show="trCategories" class="animate-show">
+
+        <tr ng-show="trEditCategory" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Название категории" ng-model="category.NameOfCategory" />
+            </td>
+            <td>
+                <input type="text" class="input-g" placeholder="Описание" ng-model="category.Desc" />
+            </td>
+            <td style="text-align: center;">
+                <button class="button-edit" style="width: 49%;" ng-click="AddCategory()" ng-show="btnAdd">Добавить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="EditCategory()" ng-show="btnEdit">Сохранить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="DeleteCategory()" ng-show="btnDelete">Удалить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="CancelCategory()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr id="tr-head">
+            <td width="35%">
+                Категория
+            </td>
+            <td width="35%">
+                Описание
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in questionnaire" class="b-vs-true">
+            <td ng-cloak><span uib-tooltip="{{item.NameOfCategory}}" tooltip-placement="bottom">{{item.NameOfCategory | limitTo: 20}}{{item.NameOfCategory.length > 30 ? '...' : ''}}</span></td>
+            <td ng-cloak><span uib-tooltip="{{item.Desc}}" tooltip-placement="bottom">{{item.Desc | limitTo: 25}}{{item.Desc.length > 25 ? '...' : ''}}</span></td>
+            <td style="text-align: center;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="ShowQuestionsForCategory(item)">Вопросы</button>
+                    <button class="button-edit" ng-click="ShowEditCategory(item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="ShowDeleteCategory(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+    <table ng-show="trQuestions" class="animate-show">
+
+        <tr ng-show="trEditQuestion" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Вопрос" ng-model="question.NameOfQuestion" />
+            </td>
+            <td style="text-align: center;">
+                <button class="button-edit" style="width: 49%;" ng-click="AddQuestion()" ng-show="btnAddQ">Добавить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="EditQuestion()" ng-show="btnEditQ">Сохранить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="DeleteQuestion()" ng-show="btnDeleteQ">Удалить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="CancelQuestion()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr id="tr-head">
+            <td width="70%">
+                Вопрос
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in category.QuestionnaireQuestionDtos" class="b-vs-true">
+            <td ng-cloak><span uib-tooltip="{{item.NameOfQuestion}}" tooltip-placement="bottom">{{item.NameOfQuestion | limitTo: 40}}{{item.NameOfQuestion.length > 40 ? '...' : ''}}</span></td>
+            <td style="text-align: center;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="ShowEditQuestion(item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="ShowDeleteQuestion(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+</section>

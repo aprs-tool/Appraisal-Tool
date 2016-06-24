@@ -62,6 +62,14 @@
     .profile-table {
         margin-bottom: 15px;
     }
+
+    .informs-block {
+        margin-bottom: 15px;
+    }
+
+    .last-inform-block {
+        margin-bottom: 0;
+    }
 }
 
 @media only screen and (max-width : 480px) {

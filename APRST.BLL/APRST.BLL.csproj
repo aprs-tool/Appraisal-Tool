@@ -80,6 +80,7 @@
     <Compile Include="DTO\UserProfileDTO.cs" />
     <Compile Include="DTO\UserProfileIncludeRoleDTO.cs" />
     <Compile Include="DTO\UserProfileIncludeTestsDTO.cs" />
+    <Compile Include="DTO\UserRoleDTO.cs" />
     <Compile Include="Infastructure\BuisnessLayerMapperProfile.cs" />
     <Compile Include="Infastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ILogService.cs" />

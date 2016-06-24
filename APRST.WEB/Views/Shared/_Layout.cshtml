@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Appraisal Tool</title>
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <title>Appraisal Tool</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/jquery")
-
 </head>
 <body>
 
@@ -16,15 +16,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="userbar-logo">
-                        <a href="/user/index">
+                        <a href="#/User">
                             <img src="~/content/images/logo.png" alt="Appraisal Tool">
                         </a>
                     </div>
-                    <div class="userbar-block" ng-controller="AvatarCtrl">
-                        <a href="/User/Index" class="hidden-sm hidden-xs">{{user.Name}}</a>
-                        <a class="noavatar" href="/User/Index" ng-cloak>
-                            <img src="{{avatar}}">
-                        </a>
+                    <div class="userbar-block" ng-controller="UserProfileCtrl">
+                        <a href="#/User" class="hidden-sm hidden-xs">{{userProfile.Name}}</a>
+                        <a class="noavatar" href="#/User" ng-bind-html="avatar"></a>
                     </div>
                 </div>
             </div>
@@ -42,42 +40,43 @@
                                 @{
                                     if (User.IsInRole("Admin"))
                                     {
-                                        @Html.RouteLink("Главная", new { action = "Index", controller = "Admin" })
+                                        <a href="#/Admin">Главная</a>
                                     }
                                     else
                                     {
-                                        @Html.RouteLink("Главная", new { action = "Index", controller = "User" })
+                                        <a href="#/User">Главная</a>
                                     }
                                 }
                             </li>
-                            <li>@Html.RouteLink("Пользователи", new { action = "All", controller = "User" })</li>
+                            <li><a href="#/AllUsers">Пользователи</a></li>
                             <li>
-                                @{
-                                    if (User.IsInRole("Admin"))
-                                    {
-                                        <a href="/Questionnaire/Manage">
-                                            Анкеты
-                                            <div class="i-counter" ng-controller="QuestionnaireManageCtrl">
-                                                <span ng-bind="questionnaires.length"></span>
-                                            </div>
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <div ng-controller="QuestionnaireManageCtrl">
-                                            <a href="#" ng-click="GetQuestionnaire()">
-                                                Моя анкета
-                                            </a>
-                                        </div>
-                                    }
-                                }
+                                <div ng-controller="QuestionnairesCtrl">
+                                    <a href ng-click="GetQuestionnaire()">
+                                        Моя анкета
+                                    </a>
+                                </div>
                             </li>
 
                             @{
                                 if (User.IsInRole("Admin"))
                                 {
                                     <li>
-                                        <a href="/Test/Index">
+                                        <a href="#/Questionnaires">
+                                            Анкеты
+                                            <div class="i-counter" ng-controller="QuestionnairesCtrl">
+                                                <span ng-bind="questionnaires.length"></span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                }
+                            }
+
+
+                            @{
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <li>
+                                        <a href="#/Tests">
                                             Тесты
                                             <div class="i-counter" ng-controller="TestsCtrl">
                                                 <span ng-bind="tests.length"></span>
@@ -89,11 +88,11 @@
 
                         </ul>
                     </div>
-                    <div class="menubar-settings">
+                    <div class="menubar-settings" ng-controller="SettingsCtrl">
                         @{
                             if (User.IsInRole("Admin"))
                             {
-                                <a href="#">Настройки <i class="fa fa-cog" aria-hidden="true"></i></a>
+                                <a href ng-click="ShowSettings()">Настройки <i class="fa fa-cog" aria-hidden="true"></i></a>
                             }
                         }
                     </div>
@@ -103,10 +102,9 @@
     </nav>
 
     @RenderBody()
-
+    <ng-view class="active-section no-scrollbar"></ng-view>
     @Scripts.Render("~/bundles/customJS")
     @Scripts.Render("~/bundles/angular-ui")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APRST.BLL.DTO;
+﻿using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
@@ -13,7 +8,7 @@ namespace APRST.BLL.Services
 {
     public class QuestionnaireQuestionService : IQuestionnaireQuestionService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
         public QuestionnaireQuestionService(IUnitOfWork uow)
         {
             _uow = uow;

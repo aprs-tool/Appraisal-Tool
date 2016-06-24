@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
-using APRST.DAL.EF;
 
 namespace APRST.DAL.Repositories
 {
@@ -26,11 +21,6 @@ namespace APRST.DAL.Repositories
 
         public UserProfile GetProfileWithRole(string userIdentityName)
         {
-            //using (AprstContext db = new AprstContext())
-            //{
-            //    UserProfile user = db.UserProfiles.Include(a => a.UserRole).FirstOrDefault(u => u.UserIdentityName == userIdentityName);
-            //    return user;
-            //}
             return GetEntitiesNoTracking().Include(d => d.UserRole).FirstOrDefault(s => s.UserIdentityName == userIdentityName);
         }
 
@@ -40,6 +30,7 @@ namespace APRST.DAL.Repositories
                 .Where(s => s.Id == id)
                 .Include(r => r.Tests)
                 .Include(u=>u.UserRole)
+                .Include(r => r.TestResults)
                 .FirstOrDefault();
         }
 
@@ -48,7 +39,8 @@ namespace APRST.DAL.Repositories
             return GetEntities()
                 .Where(s => s.UserIdentityName == userIdentityName)
                 .Include(r => r.Tests)
-                .Include(u=>u.UserRole)
+                .Include(u => u.UserRole)
+                .Include(r => r.TestResults)
                 .FirstOrDefault();
         }
     }

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
 
@@ -21,7 +15,6 @@ namespace APRST.DAL.Repositories
         {
             throw new NotImplementedException();
         }
-
 
         public string[] GetUsersInRole(string roleName)
         {

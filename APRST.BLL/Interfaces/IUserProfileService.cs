@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using APRST.BLL.DTO;
-using APRST.DAL.Entities;
 
 namespace APRST.BLL.Interfaces
 {
@@ -18,5 +13,7 @@ namespace APRST.BLL.Interfaces
         void EditProfile(UserProfileDTO user);
         IEnumerable<UserProfileDTO> GetAll();
         void UpdateProfileImage(int userId, string pathToImageInDatabase);
+        int GetCount();
+        
     }
 }

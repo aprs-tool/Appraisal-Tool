@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using APRST.DAL.Entities;
@@ -14,7 +10,7 @@ namespace APRST.BLL.Services
 {
     public class QuestionnaireCategoryService : IQuestionnaireCategoryService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
 
         public QuestionnaireCategoryService(IUnitOfWork uow)
         {
@@ -34,7 +30,7 @@ namespace APRST.BLL.Services
 
         public IEnumerable<QuestionnaireCategoryIncludeQuestionsDTO> GetAllWithQuestions()
         {
-            return Mapper.Map<IEnumerable<QuestionnaireCategory>, List<QuestionnaireCategoryIncludeQuestionsDTO>>(_uow.QuestionnaireCategoryRepository.GetEntities().Include(S=>S.QuestionnaireQuestions));
+            return Mapper.Map<IEnumerable<QuestionnaireCategory>, List<QuestionnaireCategoryIncludeQuestionsDTO>>(_uow.QuestionnaireCategoryRepository.GetEntities().Include(s => s.QuestionnaireQuestions));
         }
 
         public QuestionnaireCategoryDTO GetById(int id)

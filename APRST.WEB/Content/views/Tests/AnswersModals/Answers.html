@@ -1,0 +1,46 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        Ответы к вопросу: {{QuestionName}}
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+        <button class="button-g" ng-click="CreateAnswer()">Добавить ответ к вопросу</button>
+        <span class="button-g">Сумма баллов: {{totalPoints}}</span>
+    </div>
+    <table>
+        <tr ng-show="trDelete" class="animate-show">
+            <td>
+                <input type="text" class="input-g" readonly ng-model="deleteItem.Answer" />
+            </td>
+            <td>
+                <input type="number" class="input-g" readonly ng-model="deleteItem.Point" />
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" style="width: 49%;" ng-click="DeleteAnswer(deleteItem)">Удалить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="CancelDeleting()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr id="tr-head">
+            <td>
+                Ответ
+            </td>
+            <td>
+                Балл
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in answers.AnswersDTO | filter : search" class="b-vs-true">
+            <td ng-cloak>{{item.Answer}}</td>
+            <td ng-cloak>{{item.Point}}</td>
+            <td style="text-align: right;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="EditAnswer('', item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="showDelete(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+</section>

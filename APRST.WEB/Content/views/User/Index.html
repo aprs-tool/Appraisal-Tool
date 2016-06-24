@@ -1,0 +1,97 @@
+﻿<div ng-controller="UserProfileCtrl" class="userprofile">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profile-table">
+                    <div class="profile-avatar-block">
+                        <div class="profile-avatar" ng-bind-html="avatar"></div>
+                    </div>
+                    <div class="profile-links-block">
+                        <ul>
+                            <li><a ng-click="changeAvatar()">Сменить аватар</a></li>
+                            <li><a ng-click="editProfile()">Редактировать профиль</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-table">
+                    <div class="profile-username">
+                        {{userProfile.Name}}
+                    </div>
+
+                    <div class="profile-info">
+                        <table>
+                            <tr>
+                                <td class="profile-info-i-td">Доменное имя:</td>
+                                <td>{{userProfile.UserPrincipalName}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="profile-info-i-td">Группа:</td>
+                                <td>{{userProfile.Role}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="profile-info-i-td">Email:</td>
+                                <td>{{userProfile.Email}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="profile-info-i-td">Номер телефона:</td>
+                                <td>{{userProfile.PhoneNumber}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="profile-info-block">
+                        <a href="#" ng-repeat="item in userProfile.TestResults | limitTo: -5 | orderBy:'Date':true">
+                            <div class="profile-counter" ng-cloak>{{item.Point}}</div>
+                            <div class="profile-c-label" ng-cloak>{{item.TestName}}</div>
+                            <div class="profile-d-label" ng-cloak>{{item.Date | date:'medium'}}</div>
+                        </a>
+                        <a href="#" ng-if="userNoTestsResults">
+                            <div class="profile-no-tests">Пользователь не участвовал в тестировании.</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="usertable">
+        <div class="container">
+            <div class="table-top">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                Доступные тесты
+                <button class="button-g" ng-click="giveTest('', userProfile.Id)" ng-if="isAdmin">Выдать тест</button>
+                </div>
+            <table>
+                <tr id="tr-head">
+                    <td>
+                        Название теста
+                    </td>
+                    <td>
+                        Описание
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr ng-if="userNoTests">
+                    <td colspan="3" style="text-align: center;">У пользователя нет доступных тестов.</td>
+                </tr>
+
+                <tr ng-repeat="item in userProfile.Tests.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+                    <td>{{item.NameOfTest}}</td>
+                    <td>{{item.Desc}}</td>
+                    <td>
+                        <a href="#/Testing" ng-click="sendTest(item)" class="button-primary">Пройти</a>
+                    </td>
+                </tr>
+
+            </table>
+            <div class="table-end"></div>
+            <uib-pagination total-items="TotalItems" ng-model="currentPage" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="Предыдущая" next-text="Следующая"></uib-pagination>
+        </div>
+    </div>
+</div>

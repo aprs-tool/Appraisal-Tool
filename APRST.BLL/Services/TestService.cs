@@ -1,9 +1,6 @@
 ﻿using APRST.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.BLL.DTO;
 using APRST.DAL.Interfaces;
 using APRST.DAL.Entities;
@@ -13,7 +10,7 @@ namespace APRST.BLL.Services
 {
     public class TestService : ITestService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
 
         public TestService(IUnitOfWork uow)
         {
@@ -59,6 +56,11 @@ namespace APRST.BLL.Services
         public TestIncludeQuestionsDTO GetQuestionsForTest(int id)
         {
             return Mapper.Map<Test, TestIncludeQuestionsDTO>(_uow.TestRepository.GetQuestionsForTest(id));
+        }
+
+        public int GetCount()
+        {
+            return _uow.TestRepository.GetCount();
         }
     }
 }

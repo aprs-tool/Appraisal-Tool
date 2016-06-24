@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using APRST.BLL.DTO;
 
 namespace APRST.BLL.Interfaces
@@ -16,5 +12,6 @@ namespace APRST.BLL.Interfaces
         QuestionnaireDTO QuestionnaireWithResultsByUserId(int id);
         IEnumerable<QuestionnaireTypeDTO> GetAllTypesOfQuestionnaire();
         IEnumerable<QuestionnairesDTO> GetAllIncludeUserAndType();
+        int GetCount();
     }
 }

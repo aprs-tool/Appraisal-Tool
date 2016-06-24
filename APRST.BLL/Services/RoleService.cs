@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.BLL.Interfaces;
 using APRST.DAL.Interfaces;
-using APRST.DAL.Repositories;
+using APRST.BLL.DTO;
+using APRST.DAL.Entities;
+using AutoMapper;
 
 namespace APRST.BLL.Services
 {
-   
+
     public class RoleService : IRoleService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
 
         public RoleService(IUnitOfWork uow)
         {
@@ -29,6 +28,11 @@ namespace APRST.BLL.Services
                 role.UserProfiles.AddRange(username.Select(item => users.FirstOrDefault(s => s.UserIdentityName == item)));
                 _uow.Save();
             }
+        }
+
+        public IEnumerable<UserRoleDTO> GetRoles()
+        {
+            return Mapper.Map<IEnumerable<UserRole>, List<UserRoleDTO>>(_uow.RoleRepository.GetEntities());
         }
 
         public void Dispose()

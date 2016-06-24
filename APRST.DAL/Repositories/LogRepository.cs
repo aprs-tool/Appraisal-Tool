@@ -1,7 +1,6 @@
 ﻿using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
 using System.Data.Entity;
-using System;
 using System.Collections.Generic;
 
 namespace APRST.DAL.Repositories

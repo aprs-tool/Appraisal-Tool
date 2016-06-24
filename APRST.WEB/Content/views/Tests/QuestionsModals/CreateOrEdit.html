@@ -1,0 +1,20 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-files-o" aria-hidden="true"></i>
+        {{modalTitle}}
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+
+    <div class="table-body">
+        <form name="newQuestion" class="form-valid" novalidate ng-submit="ok(question)">
+            <div>
+                <input type="text" class="input-g" placeholder="Название вопроса" required ng-model="question.Question" />
+            </div>
+            <br />
+            <div>
+                <button type="submit" class="button-primary" ng-disabled="newQuestion.$invalid">{{buttonTitle}}</button>
+            </div>
+        </form>
+    </div>
+    <div class="table-end"></div>
+</section>

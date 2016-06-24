@@ -1,9 +1,5 @@
 ﻿using APRST.BLL.DTO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APRST.BLL.Interfaces
 {
@@ -16,6 +12,7 @@ namespace APRST.BLL.Interfaces
         TestDTO GetById(int id);
         TestIncludeQuestionsDTO GetQuestionsForTest(int id);
         IEnumerable<TestDTO> GetTestsByCategoryId(int id);
+        int GetCount();
         void Dispose();
     }
 }

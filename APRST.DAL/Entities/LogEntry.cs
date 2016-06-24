@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APRST.DAL.Entities
 {
     public class LogEntry
     {
         public int Id { get; set; }
-        //:TODO DateTime2
+        [Column(TypeName = "datetime2")]
         public DateTime Date { get; set; }
         public string Message { get; set; }
         public string Username { get; set; }

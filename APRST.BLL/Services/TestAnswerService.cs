@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using APRST.BLL.Interfaces;
 using APRST.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using APRST.BLL.DTO;
 using APRST.DAL.Entities;
 
@@ -13,7 +8,7 @@ namespace APRST.BLL.Services
 {
     public class TestAnswerService : ITestAnswerService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
 
         public TestAnswerService(IUnitOfWork uow)
         {

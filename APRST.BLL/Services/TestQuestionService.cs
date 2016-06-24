@@ -3,17 +3,13 @@ using APRST.BLL.Interfaces;
 using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
 using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APRST.BLL.Services
 {
     public class TestQuestionService : ITestQuestionService
     {
-        IUnitOfWork _uow;
+        private readonly IUnitOfWork _uow;
         public TestQuestionService(IUnitOfWork uow)
         {
             _uow = uow;
@@ -41,7 +37,7 @@ namespace APRST.BLL.Services
             _uow.Save();
         }
 
-        public void RemoveTestById(int id)
+        public void RemoveQuestionById(int id)
         {
             _uow.TestQuestionRepository.DeleteById(id);
             _uow.Save();

@@ -1,710 +1,634 @@
-﻿app.controller("TestsCtrl", function ($scope, $uibModal, testService) {
+﻿/////Start Test Ctrls/////
+app.controller("TestsCtrl", function ($rootScope, $scope, $uibModal, testService, scopes, testsPut) {
 
     $scope.animationsEnabled = true;
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1;
+    $scope.selectedClass = "col-md-12";
+
     getAllTests();
 
+    $scope.ShowQuestions = function (item) {
+        $scope.selectedClass = "col-md-7";
+        $scope.questions = "/Content/Views/Tests/Questions.html";
+        scopes.store("currentTest", item);
+        $rootScope.$emit("getQuestionsForCurrentTest", {});
+    };
+
     function getAllTests() {
-        var getTestsData = testService.getTests();
-        getTestsData.then(function (test) {
-            $scope.tests = test.data;
-        }, function () {
-            alert("Ошибка получения списка тестов");
+        $scope.TestsResource = testService.getTests();
+        $scope.TestsResource.query()
+            .$promise
+            .then(fulfilled, rejected);
+    };
+
+    function fulfilled(result) {
+        $scope.tests = result;
+        $scope.TotalItems = $scope.tests.length;
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+    function createTest(item) {
+        new $scope.TestsResource(item).$save().then(function () {
+            getAllTests();
         });
-    }
+    };
+
+    function editTest(item) {
+        testsPut.update(item);
+    };
+
+    function deleteTest(item) {
+        item.$delete().then(function () {
+            $scope.tests.splice($scope.tests.indexOf(item), 1);
+        });
+    };
 
     $scope.CreateTest = function (size) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/Test/Create",
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/Tests/Modals/CreateOrEdit.html",
+            controller: "CreateOrEditTestCtrl",
+            resolve: {
+                items: function () {
+                    return null;
+                }
+            },
             size: size
+        });
+
+        modalInstance.result.then(function (test) {
+            createTest(test);
         });
     };
 
-    $scope.DeleteTest = function (size, id) {
+    $scope.EditTest = function (size, item) {
+        $scope.copy = angular.copy(item);
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/Test/Delete/" + id,
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/Tests/Modals/CreateOrEdit.html",
+            controller: "CreateOrEditTestCtrl",
+            resolve: {
+                items: function () {
+                    return $scope.copy;
+                }
+            },
             size: size
+        });
+
+        modalInstance.result.then(function (test) {
+            editTest(test);
+            var updatedTest = scopes.get("testForPush");
+            item.NameOfTest = updatedTest.NameOfTest;
+            item.Desc = updatedTest.Desc;
+            item.Category = updatedTest.Category;
         });
     };
 
-    $scope.EditTest = function (size, id) {
+    $scope.DeleteTest = function (size, item) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/Test/Edit/" + id,
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/Tests/Modals/Delete.html",
+            controller: "DeleteTestCtrl",
+            resolve: {
+                items: function () {
+                    return item;
+                }
+            },
             size: size
+        });
+
+        modalInstance.result.then(function (test) {
+            deleteTest(test);
         });
     };
 
     $scope.showCategories = function (size) {
-        var modalInstance = $uibModal.open({
+        $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/TestCategory/Index",
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/Tests/CategoriesModals/Categories.html",
+            controller: "TestsCategoriesCtrl",
             size: size
         });
     };
 
 });
 
-app.controller("TestsingCtrl", function ($scope, testService) {
-
-    $scope.divTestResult = false;
-    $scope.divTest = true;
-
-    var testId = document.getElementById("TestId").value;
-
-    getAllQnA(testId);
-
-    function getAllQnA(id) {
-        var getQnAData = testService.getQnA(id);
-        getQnAData.then(function (qna) {
-            $scope.QnAs = qna.data;
-        }, function () {
-            alert("Ошибка получения вопрсов и ответов");
-        });
-    }
-
-    $scope.finishTest = function () {
-        var testId = document.getElementById("TestId").value;
-        var testData = $("input[type=radio]").serializeArray();
-        testService.finishTest(testData, testId);
-        $scope.divTest = false;
-        $scope.divTestResult = true;
-    }
-});
-
-app.controller("UserCtrl", function ($scope, userService) {
+app.controller("QuestionsCtrl", function ($rootScope, $scope, $uibModal, testsQuestionsService, scopes, testsQuestionsPut) {
 
     $scope.animationsEnabled = true;
-    getAllUsers();
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1;
+    getAllQuestionsForTest(scopes.get("currentTest").Id);
 
-    function getAllUsers() {
-        var getUsersData = userService.getUsers();
-        getUsersData.then(function (user) {
-            $scope.users = user.data;
-        }, function () {
-            alert("Ошибка получения списка пользователей");
+    $rootScope.$on("getQuestionsForCurrentTest", function () {
+        getAllQuestionsForTest(scopes.get("currentTest").Id);
+    });
+
+    function getAllQuestionsForTest(id) {
+        $scope.QuestionsResource = testsQuestionsService.getQuestions();
+        $scope.QuestionsResource.get({ Id: id })
+        .$promise.then(fulfilled, rejected);
+    };
+
+    function fulfilled(result) {
+        $scope.questions = result;
+
+        $scope.TotalItems = $scope.questions.QuestionsDTO.length;
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+    function createQuestion(item) {
+        new $scope.QuestionsResource(item).$save().then(function () {
+            getAllQuestionsForTest(scopes.get("currentTest").Id);
         });
-    }
-});
+    };
 
-app.controller("UserProfileCtrl", function ($scope, $uibModal, userService) {
+    function editQuestion(item) {
+        testsQuestionsPut.update(item);
+    };
 
-    $scope.animationsEnabled = true;
+    function deleteQuestion(item) {
+        testsQuestionsPut.delete(item);
+        $scope.questions.QuestionsDTO.splice($scope.questions.QuestionsDTO.indexOf(item), 1);
+    };
 
-    $scope.GiveTest = function (size) {
-        var userId = document.getElementById("UserId").value;
+    $scope.CreateQuestion = function (size) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/User/GiveTest/" + userId,
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/Tests/QuestionsModals/CreateOrEdit.html",
+            controller: "CreateOrEditTestQuestionCtrl",
+            resolve: {
+                items: function () {
+                    return null;
+                }
+            },
+            size: size
+        });
+
+        modalInstance.result.then(function (question) {
+            createQuestion(question);
+        });
+    };
+
+    $scope.EditQuestion = function (size, item) {
+        $scope.copy = angular.copy(item);
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/Content/Views/Tests/QuestionsModals/CreateOrEdit.html",
+            controller: "CreateOrEditTestQuestionCtrl",
+            resolve: {
+                items: function () {
+                    return $scope.copy;
+                }
+            },
+            size: size
+        });
+
+        modalInstance.result.then(function (question) {
+            editQuestion(question);
+            item.Question = question.Question;
+        });
+    };
+
+    $scope.DeleteQuestion = function (size, item) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/Content/Views/Tests/QuestionsModals/Delete.html",
+            controller: "DeleteTestQuestionCtrl",
+            resolve: {
+                items: function () {
+                    return item;
+                }
+            },
+            size: size
+        });
+
+        modalInstance.result.then(function (question) {
+            deleteQuestion(question);
+        });
+    };
+
+    $scope.ShowAnswers = function (size, item) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/Content/Views/Tests/AnswersModals/Answers.html",
+            controller: "TestsAnswersCtrl",
+            resolve: {
+                items: function () {
+                    return item;
+                }
+            },
+            size: size
+        });
+
+        modalInstance.result.then(function (question) {
+            deleteQuestion(question);
+        });
+    };
+
+});
+/////End Test Ctrls/////
+
+/////Start Questionnaire Ctrls/////
+app.controller("QuestionnairesCtrl", function ($scope, $uibModal, questionnairesService) {
+
+    getAllQuestionnaires();
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1;
+
+    function getAllQuestionnaires() {
+        $scope.QuestionnairesResource = questionnairesService.get();
+        $scope.QuestionnairesResource.query()
+            .$promise
+            .then(fulfilled, rejected);
+    };
+
+    function fulfilled(result) {
+        $scope.questionnaires = result;
+        $scope.TotalItems = $scope.questionnaires.length;
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+    $scope.QuestionnairesManage = function (size) {
+        $uibModal.open({
+            animation: true,
+            templateUrl: "/Content/Views/Questionnaires/Modals/Manage.html",
+            controller: "QuestionnairesManageCtrl",
             size: size
         });
     };
 
     $scope.GetQuestionnaire = function (size) {
+        $uibModal.open({
+            animation: true,
+            templateUrl: "/Content/Views/Questionnaires/Modals/Questionnaire.html",
+            controller: "QuestionnaireCtrl",
+            resolve: {
+                items: function () {
+                    return null;
+                }
+            },
+            size: size
+        });
+    };
+
+    $scope.GetUserQuestionnaire = function (size, user) {
+        $uibModal.open({
+            animation: true,
+            templateUrl: "/Content/Views/Questionnaires/Modals/Questionnaire.html",
+            controller: "QuestionnaireCtrl",
+            resolve: {
+                items: function () {
+                    return user;
+                }
+            },
+            size: size
+        });
+    };
+
+});
+/////End Questionnaire Ctrls/////
+
+/////Start Users Ctrls/////
+app.controller("UsersCtrl", function ($scope, $uibModal, usersService) {
+
+    getAllUsers();
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1;
+
+    function getAllUsers() {
+        $scope.UsersResource = usersService.get();
+        $scope.UsersResource.query()
+            .$promise
+            .then(fulfilled, rejected);
+    };
+
+    function fulfilled(result) {
+        $scope.users = result;
+        $scope.TotalItems = $scope.users.length;
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+    $scope.more = function (size, userId) {
+        $uibModal.open({
+            animation: true,
+            templateUrl: "/Content/Views/User/Modals/UserProfileModal.html",
+            controller: "UserProfileInstanceCtrl",
+            resolve: {
+                items: function () {
+                    return userId;
+                }
+            },
+            size: size
+        });
+    };
+});
+
+app.controller("UserProfileCtrl", function ($rootScope, $scope, $uibModal, $window, userService, adminApi, userProfilePut, scopes) {
+
+    if (scopes.get("userData") == undefined) {
+        getUserProfile();
+    } else {
+        $scope.userProfile = scopes.get("userData");
+        $scope.avatar = scopes.get("userAvatar");
+    };
+
+    $rootScope.$on("updateProfile", function () {
+        reloadPage();
+    });
+
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1;
+
+    $scope.animationsEnabled = true;
+
+    function getUserProfile() {
+        $scope.UserResource = userService.get();
+        $scope.UserResource.get()
+            .$promise
+            .then(fulfilled, rejected);
+    };
+
+    function fulfilled(result) {
+        $scope.userProfile = result;
+        scopes.store("userData", result);
+        if (result.Avatar != null) {
+            $scope.avatar = '<img src="' + result.Avatar + '" alt="Ваш аватар">';
+            scopes.store("userAvatar", $scope.avatar);
+        } else {
+            $scope.avatar = '<img src="/content/images/no-avatar.png" alt="Загрузите аватар">';
+            scopes.store("userAvatar", $scope.avatar);
+        }
+
+        if (result.TestResults.length === 0) {
+            $scope.userNoTestsResults = true;
+        }
+        if (result.Tests.length === 0) {
+            $scope.userNoTests = true;
+        }
+        if (result.Role === "Admin") {
+            $scope.isAdmin = true;
+        }
+
+        $scope.TotalItems = $scope.userProfile.Tests.length;
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+    $scope.giveTest = function (size) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/Questionnaire/Index/",
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/User/Modals/GiveTest.html",
+            controller: "GiveTestInstanceCtrl",
             size: size
+        });
+
+        modalInstance.result.then(function (test) {
+            giveTest(test);
         });
     };
 
     $scope.changeAvatar = function (size) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/User/UpdateProfileImage/",
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/User/Modals/ChangeAvatar.html",
+            controller: "ChangeAvatarInstanceCtrl",
             size: size
+        });
+
+        modalInstance.result.then(function (file) {
+            userService.changeAvatar(file);
+            reloadPage();
         });
     };
 
     $scope.editProfile = function (size) {
+        $scope.copy = angular.copy($scope.userProfile);
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/User/EditProfile/",
-            controller: "ModalInstanceCtrl",
+            templateUrl: "/Content/Views/User/Modals/EditProfile.html",
+            controller: "EditProfileInstanceCtrl",
+            resolve: {
+                items: function () {
+                    return $scope.copy;
+                }
+            },
             size: size
+        });
+
+        modalInstance.result.then(function (userProfile) {
+            saveProfile(userProfile);
         });
     };
 
-    var userId = document.getElementById("UserId").value;
-
-    getUserTestsResults(userId);
-
-    function getUserTestsResults(userId) {
-        var getUserTestsResultsData = userService.getUserTestsResults(userId);
-        getUserTestsResultsData.then(function (userResult) {
-            $scope.userResults = userResult.data;
-        }, function () {
-            alert("Ошибка получения результатов тестирования");
-        });
-    }
-});
-
-app.controller("UserProfileEditCtrl", function ($scope, userService) {
-
-    getUserProfile();
-
-    function getUserProfile() {
-        var getProfileData = userService.getUserProfile();
-        getProfileData.then(function (profile) {
-            $scope.user = profile.data;
-        }, function () {
-            alert("Ошибка получения данных профиля");
-        });
-    }
-
-    $scope.SaveProfile = function() {
-        var getProfileData = userService.EditProfile($scope.user);
-        getProfileData.then(function () {
-        }, function () {
-            alert("Ошибка редактирования профиля");
-        });
-    }
-
-});
-
-app.controller("QuestionsCtrl", function ($scope, $uibModal, testService) {
-
-    var testId = document.getElementById("TestId").value;
-
-    getAllQuestionsForTest(testId);
-
-    function getAllQuestionsForTest(id) {
-        var getQuestionsData = testService.getQuestions(id);
-        getQuestionsData.then(function (question) {
-            $scope.questions = question.data;
-        }, function () {
-            alert("Ошибка получения списка вопросов");
-        });
-    }
-
-    $scope.animationsEnabled = true;
-
-    $scope.CreateQuestion = function (size, id) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Question/Create/" + id,
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
+    $scope.sendTest = function (test) {
+        scopes.store("currentTesting", test);
     };
 
-    $scope.DeleteQuestion = function (size, id) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Question/Delete/" + id,
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
-    };
+    function giveTest(test) {
 
-    $scope.EditQuestion = function (size, id) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Question/Edit/" + id,
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
-    };
-
-});
-
-app.controller("AnswersCtrl", function ($scope, $uibModal, testService) {
-
-    var questionId = document.getElementById("QuestionId").value;
-
-    getAllAnswersForQuestion(questionId);
-
-    function getAllAnswersForQuestion(id) {
-        var getAnswersData = testService.getAnswers(id);
-        getAnswersData.then(function (answer) {
-            $scope.answers = answer.data;
-        }, function () {
-            alert("Ошибка получения списка ответов");
-        });
-    }
-
-    $scope.animationsEnabled = true;
-
-    $scope.CreateAnswer = function (size, id) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Answer/Create/" + id,
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
-    };
-
-    $scope.DeleteAnswer = function (size, id) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Answer/Delete/" + id,
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
-    };
-
-    $scope.EditAnswer = function (size, id) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Answer/Edit/" + id,
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
-    };
-
-});
-
-app.controller("CategoryCtrl", function ($scope, $uibModal, categoryService) {
-
-    getTestCategories();
-
-    function getTestCategories() {
-        var getCategoriesData = categoryService.getCategories();
-        getCategoriesData.then(function (category) {
-            $scope.categories = category.data;
-        }, function () {
-            alert("Ошибка получения списка категорий");
-        });
-    }
-
-    function clearFields() {
-        $scope.NameOfCategory = "";
-        $scope.Desc = "";
-    }
-
-    $scope.CreateCategory = function () {
-        $scope.trEdit = false;
-        $scope.trDelete = false;
-        clearFields();
-        $scope.trAdd = true;
-    }
-
-    $scope.ShowEditCategory = function (item) {
-        $scope.trAdd = false;
-        $scope.trDelete = false;
-        $scope.categoryId = item.Id;
-        $scope.NameOfCategory = item.NameOfCategory;
-        $scope.Desc = item.Desc;
-        $scope.trEdit = true;
-    }
-
-    $scope.ShowDeleteCategory = function (item) {
-        $scope.trAdd = false;
-        $scope.trEdit = false;
-        $scope.categoryId = item.Id;
-        $scope.NameOfCategory = item.NameOfCategory;
-        $scope.Desc = item.Desc;
-        $scope.trDelete = true;
-    }
-
-    $scope.CancelCategory = function () {
-        $scope.trAdd = false;
-        $scope.trEdit = false;
-        $scope.trDelete = false;
-        clearFields();
-    }
-
-    $scope.AddCategory = function () {
-        var category = {
-            NameOfCategory: $scope.NameOfCategory,
-            Desc: $scope.Desc
-        };
-        var getCategoriesData = categoryService.AddCategory(category);
-        getCategoriesData.then(function () {
-            $scope.trAdd = false;
-            getTestCategories();
-            clearFields();
-        }, function () {
-            alert("Ошибка добавления категории");
-        });
-    }
-
-    $scope.DeleteCategory = function () {
-        var getCategoriesData = categoryService.DeleteCategory($scope.categoryId);
-        getCategoriesData.then(function () {
-            $scope.trDelete = false;
-            getTestCategories();
-        }, function () {
-            alert("Ошибка удаления выбранной категории");
-        });
-    }
-
-    $scope.EditCategory = function () {
-        var category = {
-            NameOfCategory: $scope.NameOfCategory,
-            Desc: $scope.Desc
+        var userTest = {
+            userid: $scope.userProfile.Id,
+            testid: test.Id
         };
 
-        category.Id = $scope.categoryId;
+        var consist = false;
 
-        var getCategoriesData = categoryService.EditCategory(category);
-        getCategoriesData.then(function () {
-            $scope.trEdit = false;
-            clearFields();
-            getTestCategories();
-        }, function () {
-            alert("Ошибка редактирования выбранной категории");
-        });
-    }
-
-});
-
-app.controller("QuestionnaireCtrl", function ($scope, questionnaireService) {
-
-    getQuestionnaire();
-    getQuestionnaireResult();
-
-    var results = [];
-    var questionnaireResult;
-    $scope.rate = [];
-    $scope.max = 4;
-    $scope.isReadonly = false;
-
-    function getQuestionnaire() {
-        var getQuestionnaireData = questionnaireService.getQuestionnaire();
-        getQuestionnaireData.then(function (questionnaire) {
-            $scope.Questionnaire = questionnaire.data;
-        }, function () {
-            alert("Ошибка получения анкеты для заполнения");
-        });
-    }
-
-    function getQuestionnaireResult() {
-        var getQuestionnaireResultData = questionnaireService.getQuestionnaireResult();
-        getQuestionnaireResultData.then(function (questionnaireResult) {
-            questionnaireResult = questionnaireResult.data;
-
-            for (var i = 0; i < questionnaireResult.QuestionnaireResults.length; i++) {
-                $scope.rate[questionnaireResult.QuestionnaireResults[i]
-                    .QuestionnaireQuestionId] = questionnaireResult.QuestionnaireResults[i].Answer;
-                results[i] = questionnaireResult.QuestionnaireResults[i];
+        for (var i = 0; i < $scope.userProfile.Tests.length; i++) {
+            if ($scope.userProfile.Tests[i].Id === test.Id) {
+                consist = true;
             }
-
-        }, function () {
-            alert("Ошибка получения результатов анкеты");
-        });
-    }
-
-    function checkArray(array, keyText) {
-        for (var i = 0; i < array.length; i++) {
-            if (array[i].QuestionnaireQuestionId === keyText) {
-                array[i].Answer = null;
-            }
-        }
-    }
-
-    function clearArray() {
-        for (var i = 0; i < results.length; i++) {
-            if (results[i].Answer === null) {
-                delete results[i];
-            }
-        }
-    }
-
-    $scope.AnswerPush = function (id) {
-        checkArray(results, id);
-        var ratingObject = {
-            QuestionnaireQuestionId: id,
-            Answer: $scope.rate[id]
-        }
-        results.push(ratingObject);
+        };
+        if (consist === false) {
+            adminApi.giveTest(userTest);
+            $scope.userNoTests = false;
+            $scope.userProfile.Tests.push(test);
+        };
     };
 
-    $scope.finishQuestionnaire = function () {
-        clearArray();
-        questionnaireService.addQuestionnaire(results);
+    function saveProfile(userProfile) {
+        userProfilePut.update(userProfile);
+        $scope.userProfile = userProfile;
     };
 
+    function reloadPage() { window.location.reload(); };
 });
+/////End Users Ctrls/////
 
-app.controller("QuestionnaireManageCtrl", function ($scope, $uibModal, questionnaireService) {
-
-    $scope.animationsEnabled = true;
-
-    getAllQuestionnaires();
-
-    function getAllQuestionnaires() {
-        var getQuestionnairesData = questionnaireService.getQuestionnaires();
-        getQuestionnairesData.then(function (questionnaire) {
-            $scope.questionnaires = questionnaire.data;
-        }, function () {
-            alert("Ошибка получения списка анкет");
-        });
-    }
-
-    $scope.QuestionnaireManage = function (size) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/QuestionnaireCategory/Index",
-            controller: "ModalInstanceCtrl",
-            size: size
+/////Start Settings Ctrl/////
+app.controller("SettingsCtrl", function ($scope, $uibModal) {
+    $scope.ShowSettings = function () {
+        $uibModal.open({
+            animation: true,
+            templateUrl: "/Content/Views/Admin/Modals/Settings.html",
+            controller: "SettingsInstanceCtrl",
+            size: "sm"
         });
     };
-
-    $scope.GetQuestionnaire = function (size) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: "/Questionnaire/Index/",
-            controller: "ModalInstanceCtrl",
-            size: size
-        });
-    };
-
 });
+/////End Settings Ctrl/////
 
-app.controller("QuestionnaireManageMCtrl", function ($scope, $uibModal, questionnaireService) {
-
-    $scope.trQuestions = false;
-    $scope.trCategories = true;
-    getQuestionnairesCategories();
-    var CategoryId = 0;
-
-    function getQuestionnairesCategories() {
-        var getCategoriesData = questionnaireService.getCategories();
-        getCategoriesData.then(function (category) {
-            $scope.categories = category.data;
-        }, function () {
-            alert("Ошибка получения списка категорий");
-        });
-    };
-
-    function getQuestionsForCategory(categoryId) {
-        var getQuestionsData = questionnaireService.getQuestions(categoryId);
-        getQuestionsData.then(function (question) {
-            $scope.questions = question.data;
-        }, function () {
-            alert("Ошибка получения списка вопросов");
-        });
-    };
-
-    function clearFields() {
-        $scope.NameOfCategory = "";
-        $scope.NameOfQuestion = "";
-        $scope.Desc = "";
-    };
-
-    $scope.ShowQuestionsForCategory = function (item) {
-        getQuestionsForCategory(item.Id);
-        CategoryId = item.Id;
-        $scope.CategoryName = item.NameOfCategory;
-        $scope.trCategories = false;
-        $scope.trQuestions = true;
-    };
-
-    $scope.toCategories = function () {
-        $scope.trQuestions = false;
-        $scope.trCategories = true;
-    };
-
-    $scope.ShowAddCategory = function () {
-        $scope.trEditCategory = false;
-        $scope.trDeleteCategory = false;
-        $scope.trAddCategory = true;
-    };
-
-    $scope.ShowDeleteCategory = function (item) {
-        $scope.trAddCategory = false;
-        $scope.trEditCategory = false;
-        $scope.categoryId = item.Id;
-        $scope.NameOfCategory = item.NameOfCategory;
-        $scope.Desc = item.Desc;
-        $scope.trDeleteCategory = true;
-    };
-
-    $scope.ShowEditCategory = function (item) {
-        $scope.trAddCategory = false;
-        $scope.trDeleteCategory = false;
-        $scope.categoryId = item.Id;
-        $scope.NameOfCategory = item.NameOfCategory;
-        $scope.Desc = item.Desc;
-        $scope.trEditCategory = true;
-    };
-
-    $scope.CancelCategory = function () {
-        $scope.trAddCategory = false;
-        $scope.trEditCategory = false;
-        $scope.trDeleteCategory = false;
-    };
-
-    $scope.AddCategory = function () {
-        $scope.trAddCategory = false;
-        var category = {
-            NameOfCategory: $scope.NameOfCategory,
-            Desc: $scope.Desc
-        };
-        var getCategoriesData = questionnaireService.AddCategory(category);
-        getCategoriesData.then(function () {
-            getQuestionnairesCategories();
-            clearFields();
-        },
-            function () {
-                alert("Ошибка добавления категории");
-            });
-    };
-
-    $scope.EditCategory = function () {
-        $scope.trEditCategory = false;
-        var category = {
-            NameOfCategory: $scope.NameOfCategory,
-            Desc: $scope.Desc
-        };
-
-        category.Id = $scope.categoryId;
-
-        var getCategoriesData = questionnaireService.EditCategory(category);
-        getCategoriesData.then(function () {
-            getQuestionnairesCategories();
-            clearFields();
-        },
-            function () {
-                alert("Ошибка редактирования выбранной категории");
-            });
-    };
-
-    $scope.DeleteCategory = function () {
-        $scope.trDeleteCategory = false;
-        var getCategoriesData = questionnaireService.DeleteCategory($scope.categoryId);
-        getCategoriesData.then(function () {
-            getQuestionnairesCategories();
-            clearFields();
-        },
-            function () {
-                alert("Ошибка удаления выбранной категории");
-            });
-    };
-
-    $scope.ShowAddQuestion = function () {
-        $scope.trEditQuestion = false;
-        $scope.trDeleteQuestion = false;
-        $scope.trAddQuestion = true;
-    };
-
-    $scope.ShowDeleteQuestion = function (item) {
-        $scope.trAddQuestion = false;
-        $scope.trEditQuestion = false;
-        $scope.questionId = item.Id;
-        $scope.NameOfQuestion = item.NameOfQuestion;
-        $scope.trDeleteQuestion = true;
-    };
-
-    $scope.ShowEditQuestion = function (item) {
-        $scope.trAddQuestion = false;
-        $scope.trDeleteQuestion = false;
-        $scope.questionId = item.Id;
-        $scope.NameOfQuestion = item.NameOfQuestion;
-        $scope.trEditQuestion = true;
-    };
-
-    $scope.CancelQuestion = function () {
-        $scope.trAddQuestion = false;
-        $scope.trEditQuestion = false;
-        $scope.trDeleteQuestion = false;
-    };
-
-    $scope.AddQuestion = function () {
-        $scope.trAddQuestion = false;
-        var question = {
-            NameOfQuestion: $scope.NameOfQuestion,
-            QuestionnaireCategoryId: CategoryId
-        };
-        var getQuestionsData = questionnaireService.AddQuestion(question);
-        getQuestionsData.then(function () {
-            getQuestionsForCategory(CategoryId);
-            clearFields();
-        },
-            function () {
-                alert("Ошибка добавления вопроса");
-            });
-    };
-
-    $scope.EditQuestion = function () {
-        $scope.trEditQuestion = false;
-        var question = {
-            NameOfQuestion: $scope.NameOfQuestion,
-            QuestionnaireCategoryId: CategoryId
-        };
-
-        question.Id = $scope.questionId;
-
-        var getQuestionsData = questionnaireService.EditQuestion(question);
-        getQuestionsData.then(function () {
-            getQuestionsForCategory(CategoryId);
-            clearFields();
-        },
-            function () {
-                alert("Ошибка редактирования выбранного вопроса");
-            });
-    };
-
-    $scope.DeleteQuestion = function () {
-        $scope.trDeleteQuestion = false;
-        var getQuestionsData = questionnaireService.DeleteQuestion($scope.questionId);
-        getQuestionsData.then(function () {
-            getQuestionsForCategory(CategoryId);
-            clearFields();
-        },
-            function () {
-                alert("Ошибка удаления выбранного вопроса");
-            });
-    };
-
-});
-
+/////Start Admin Ctrl/////
 app.controller("AdminCtrl", function ($scope, adminService) {
 
+    getCounters();
     getLog();
 
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 1;
+
     function getLog() {
-        var getLogData = adminService.getLog();
-        getLogData.then(function (log) {
-            $scope.log = log.data;
-        }, function () {
-            alert("Ошибка получения лога");
-        });
-    }
-
-});
-
-app.controller("AvatarCtrl", function ($scope, userService) {
-
-    getUserProfile();
-
-    function getUserProfile() {
-        var getProfileData = userService.getUserProfile();
-        getProfileData.then(function (profile) {
-            $scope.user = profile.data;
-            if (profile.data.Avatar != null) {
-                $scope.avatar = profile.data.Avatar;
-            } else {
-                $scope.avatar = "/content/images/no-avatar.png";
-            }
-        }, function () {
-            alert("Ошибка получения данных профиля");
-        });
-    }
-
-});
-
-app.controller("ModalInstanceCtrl", function ($scope, $uibModalInstance, $window) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss("cancel");
+        adminService.getLog().query()
+            .$promise
+            .then(fulfilledLog, rejected);
     };
 
-    $scope.reload = function () {
-        $window.location.href = "/User/Index";
+    function getCounters() {
+        adminService.getCounters().get()
+            .$promise
+            .then(fulfilledCounters, rejected);
+    };
+
+    function fulfilledLog(result) {
+        $scope.log = result;
+        $scope.TotalItems = $scope.log.length;
+    };
+
+    function fulfilledCounters(result) {
+        $scope.counters = result;
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+});
+/////End Admin Ctrl/////
+
+app.controller("TestsingCtrl", function ($rootScope, $scope, testingService, scopes) {
+
+    $scope.divTestResult = false;
+    $scope.divTest = true;
+
+    var currentTest = scopes.get("currentTesting");
+    $scope.nameoftest = currentTest.NameOfTest;
+
+    getAllQnA(currentTest.Id);
+
+    function getAllQnA(id) {
+        $scope.QuestionnaireAnswersResource = testingService.get();
+        $scope.QuestionnaireAnswersResource.query({ Id: id })
+        .$promise.then(fulfilled, rejected);
+    };
+
+    function fulfilled(result) {
+        $scope.QnAs = result;
+    };
+
+    $scope.updateProfile = function() {
+        $rootScope.$emit("updateProfile", {});
+    };
+
+    function rejected(error) {
+        if (error.status === 404) {
+            alert(error.data);
+        }
+        if (error.status === 500) {
+            alert("Ошибка сервера.");
+        }
+    };
+
+    $scope.finishTest = function () {
+        $scope.divTest = false;
+        $scope.divTestResult = true;
+        var testData = $("input[type=radio]").serializeArray();
+        testData.TestId = currentTest.Id;
+        testingService.finishTest(testData, currentTest.Id);
     };
 });
 
-app.filter("jsDate", function () {
-    return function (x) {
-        return new Date(parseInt(x.substr(6)));
+//----------------directives----------------//
+
+app.directive("fileModel", ["$parse", function ($parse) {
+    return {
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind("change", function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
     };
-});
+}]);
+
+app.directive("noScrollbar", ["$rootScope",
+      function ($rootScope) {
+
+          return {
+              restrict: "C",
+              link: function (scope, element, attrs) {
+                  if (!$rootScope.scrollbarWidth) {
+                      var scrollDiv = document.createElement("div");
+                      scrollDiv.className = "scrollbar-measurer";
+                      document.body.appendChild(scrollDiv);
+                      $rootScope.scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+                      document.body.removeChild(scrollDiv);
+                  }
+
+                  element.css("padding-right", parseInt(element.css("padding-right")) + $rootScope.scrollbarWidth);
+              }
+          };
+
+      }
+]);
+
+//----------------directives----------------//

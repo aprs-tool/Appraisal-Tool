@@ -1,0 +1,19 @@
+﻿<div class="table-top">
+    <i class="fa fa-files-o" aria-hidden="true"></i>
+    Обновление аватара пользователя
+    <button class="button-g" ng-click="cancel()">Закрыть</button>
+</div>
+<div class="table-info">
+    Загружаемое изображение должно быть в формате PNG или JPG.
+</div>
+<div class="table-body">
+    <div class="input-g">
+        <input type="file" name="file" file-model="fileAvatar"/>
+    </div>
+    <div ng-show="errorType" class="input-g input-g-delete animate-show" style="margin-top: 10px;">
+        Ошибка! Загружаемое изображение должно быть в формате PNG или JPG!
+    </div>
+    <br />
+    <input type="submit" value="Загрузить!" class="button-primary" ng-click="ok()"/>
+</div>
+<div class="table-end"></div>

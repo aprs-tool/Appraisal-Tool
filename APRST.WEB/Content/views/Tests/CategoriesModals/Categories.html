@@ -1,0 +1,48 @@
+﻿<section class="usertable">
+    <div class="table-top">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        Категории тестов
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+        <button class="button-g" ng-click="CreateCategory()">Добавить категорию</button>
+    </div>
+    <table>
+
+        <tr ng-show="trEdit" class="animate-show">
+            <td>
+                <input type="text" class="input-g" placeholder="Название категории" ng-model="category.NameOfCategory" ng-class="deleteClass"/>
+            </td>
+            <td>
+                <input type="text" class="input-g" placeholder="Описание" ng-model="category.Desc" ng-class="deleteClass"/>
+            </td>
+            <td style="text-align: right;">
+                <button class="button-edit" style="width: 49%;" ng-click="AddCategory()" ng-show="btnAdd">Добавить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="EditCategory()" ng-show="btnEdit">Сохранить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="DeleteCategory()" ng-show="btnDelete">Удалить</button>
+                <button class="button-edit" style="width: 49%;" ng-click="CancelCategory()">Отмена</button>
+            </td>
+        </tr>
+
+        <tr id="tr-head">
+            <td width="35%">
+                Название
+            </td>
+            <td width="35%">
+                Описание
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in categories" class="b-vs-true">
+            <td ng-cloak><span uib-tooltip="{{item.NameOfCategory}}" tooltip-placement="bottom">{{item.NameOfCategory | limitTo: 20}}{{item.NameOfCategory.length > 20 ? '...' : ''}}</span></td>
+            <td ng-cloak><span uib-tooltip="{{item.Desc}}" tooltip-placement="bottom">{{item.Desc | limitTo: 25}}{{item.Desc.length > 25 ? '...' : ''}}</span></td>
+            <td style="text-align: center;">
+                <div class="b-vs-false">
+                    <button class="button-edit" ng-click="ShowEditCategory(item)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button class="button-edit" ng-click="ShowDeleteCategory(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+</section>

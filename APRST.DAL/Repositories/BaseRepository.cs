@@ -1,11 +1,6 @@
-﻿using APRST.DAL.EF;
-using APRST.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using APRST.DAL.Interfaces;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APRST.DAL.Repositories
 {
@@ -14,7 +9,7 @@ namespace APRST.DAL.Repositories
         private readonly DbContext _context;
         protected DbSet<T> DbSet => _context.Set<T>();
 
-        public BaseRepository(DbContext context)
+        protected BaseRepository(DbContext context)
         {
             _context = context;
         }
@@ -55,6 +50,11 @@ namespace APRST.DAL.Repositories
         {
             var entityToDelete = DbSet.Find(id);
             if (entityToDelete!=null) DbSet.Remove(entityToDelete);
+        }
+
+        public int GetCount()
+        {
+            return DbSet.AsNoTracking().Count();
         }
     }
 }

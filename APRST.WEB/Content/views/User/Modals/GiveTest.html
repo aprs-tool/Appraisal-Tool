@@ -1,0 +1,52 @@
+﻿<section class="usertable" ng-controller="TestsCtrl">
+    <div class="table-top">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        Поиск по тестам
+        <button class="button-g" ng-click="cancel()">Закрыть</button>
+    </div>
+    <div class="modal-search">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" placeholder="Тест" ng-model="search.NameOfTest" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Описание" ng-model="search.Desc" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Категория" ng-model="search.Category" />
+            </div>
+        </div>
+    </div>
+    <div class="table-top modal-search-top">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        Выберите тест для пользователя
+    </div>
+    <table>
+        <tr id="tr-head">
+            <td>
+                Название
+            </td>
+            <td>
+                Описание
+            </td>
+            <td>
+                Категория
+            </td>
+            <td></td>
+        </tr>
+
+        <tr ng-repeat="item in tests.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | filter : search">
+            <td ng-cloak>{{item.NameOfTest}}</td>
+            <td ng-cloak>{{item.Desc}}</td>
+            <td ng-cloak>{{item.Category}}</td>
+            <td style="text-align: right;">
+                <button class="button-primary" ng-click="ok(item)">Выдать тест</button>
+            </td>
+        </tr>
+
+    </table>
+    <div class="table-end"></div>
+    <div style="text-align: center;">
+        <uib-pagination total-items="TotalItems" ng-model="currentPage" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="Предыдущая" next-text="Следующая"></uib-pagination>
+    </div>
+</section>

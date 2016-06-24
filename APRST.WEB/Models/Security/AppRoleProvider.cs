@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using APRST.BLL.Interfaces;
-using APRST.BLL.Services;
-using APRST.WEB.Controllers;
-using Ninject;
 
 namespace APRST.WEB.Models.Security
 {
@@ -53,9 +47,9 @@ namespace APRST.WEB.Models.Security
     
         public override string[] GetRolesForUser(string username)
         {
-            using (IRoleService _role = DependencyResolver.Current.GetService<IRoleService>())
+            using (var role = DependencyResolver.Current.GetService<IRoleService>())
             {
-                return new string[] { _role.GetRoleForUser(username) };
+                return new[] { role.GetRoleForUser(username) };
             }
             
         }
@@ -67,9 +61,9 @@ namespace APRST.WEB.Models.Security
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            using (IRoleService _role = DependencyResolver.Current.GetService<IRoleService>())
+            using (IRoleService role = DependencyResolver.Current.GetService<IRoleService>())
             {
-                return _role.IsUserInRole(username, roleName);
+                return role.IsUserInRole(username, roleName);
             }
         }
 

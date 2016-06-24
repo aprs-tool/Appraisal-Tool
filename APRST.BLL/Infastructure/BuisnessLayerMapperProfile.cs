@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APRST.BLL.DTO;
+﻿using APRST.BLL.DTO;
 using APRST.DAL.Entities;
 using AutoMapper;
 
@@ -39,14 +34,17 @@ namespace APRST.BLL.Infastructure
             //TestResultService
             CreateMap<TestResult, TestResultDTO>().ReverseMap();
             CreateMap<TestResult, TestResultInfoDTO>()
-                .ForMember("TestName", opt => opt.MapFrom(src => src.Test.NameOfTest));
+                .ForMember(s => s.TestName, opt => opt.MapFrom(src => src.Test.NameOfTest));
 
             //UserProfileService
-            CreateMap<UserProfile, UserProfileIncludeTestsDTO>().ForMember(s=>s.Role,opt=>opt.MapFrom(src=>src.UserRole.RoleName));
+            CreateMap<UserProfile, UserProfileIncludeTestsDTO>()
+                .ForMember(s => s.Role, opt => opt.MapFrom(src => src.UserRole.RoleName))
+                .ForMember(s => s.TestResults, opt => opt.MapFrom(src => src.TestResults));
             CreateMap<UserProfile, UserProfileIncludeRoleDTO>()
                 .ForMember(s => s.Role, opt => opt.MapFrom(src => src.UserRole.RoleName))
                 .ForMember(s => s.UserRoleId, opt => opt.MapFrom(src => src.UserRole.Id));
             CreateMap<UserProfileDTO, UserProfile>().ReverseMap();
+            CreateMap<UserRole, UserRoleDTO>().ReverseMap();
 
             //QuestionnaireQuestionService
             CreateMap<QuestionnaireQuestionDTO, QuestionnaireQuestion>().ReverseMap();
