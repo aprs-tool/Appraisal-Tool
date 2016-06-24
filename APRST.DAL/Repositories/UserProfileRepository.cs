@@ -11,12 +11,12 @@ namespace APRST.DAL.Repositories
         {
         }
 
-        public UserProfile GetProfileByIdentityName(string identityName)
+        public async Task<UserProfile> GetProfileByIdentityNameAsync(string identityName)
         {
-            return GetEntities()
+            return await GetEntities()
                 .Where(s => s.UserIdentityName == identityName)
                 .Include(u => u.UserRole)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
         public UserProfile GetProfileWithRole(string userIdentityName)
@@ -24,9 +24,14 @@ namespace APRST.DAL.Repositories
             return GetEntitiesNoTracking().Include(d => d.UserRole).FirstOrDefault(s => s.UserIdentityName == userIdentityName);
         }
 
-        public UserProfile GetProfileWithTestsById(int id)
+        public async Task<UserProfile> GetProfileWithRoleAsync(string userIdentityName)
         {
-            return GetEntities()
+            return await GetEntitiesNoTracking().Include(d => d.UserRole).FirstOrDefaultAsync(s => s.UserIdentityName == userIdentityName);
+        }
+
+        public async Task<UserProfile> GetProfileWithTestsByIdAsync(int id)
+        {
+            return await GetEntities()
                 .Where(s => s.Id == id)
                 .Include(r => r.Tests)
                 .Include(u=>u.UserRole)
@@ -37,11 +42,20 @@ namespace APRST.DAL.Repositories
         public UserProfile GetProfileWithTestsByUserIdentityName(string userIdentityName)
         {
             return GetEntities()
+               .Where(s => s.UserIdentityName == userIdentityName)
+               .Include(r => r.Tests)
+               .Include(u => u.UserRole)
+               .FirstOrDefault();
+        }
+
+        public async Task<UserProfile> GetProfileWithTestsByUserIdentityNameAsync(string userIdentityName)
+        {
+            return await GetEntities()
                 .Where(s => s.UserIdentityName == userIdentityName)
                 .Include(r => r.Tests)
                 .Include(u => u.UserRole)
                 .Include(r => r.TestResults)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
     }
 }

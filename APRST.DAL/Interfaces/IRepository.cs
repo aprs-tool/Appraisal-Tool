@@ -9,7 +9,10 @@ namespace APRST.DAL.Interfaces
         void Update(T entity);
         int GetCount();
         T GetEntityById(int id);
+        Task<T> GetEntityByIdAsync(int id);
         void DeleteById(int id);
+        Task DeleteByIdAsync(int id);
+        Task<IEnumerable<T>> GetAllAsync();
         IQueryable<T> GetEntities();
         IQueryable<T> GetEntitiesNoTracking();
     }

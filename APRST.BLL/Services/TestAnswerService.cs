@@ -15,27 +15,27 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void Add(TestAnswerDTO answerDTO)
+        public async Task AddAsync(TestAnswerDTO answerDTO)
         {
             _uow.TestAnswerRepository.Add(Mapper.Map<TestAnswerDTO, TestAnswer>(answerDTO));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void UpdateAnswer(TestAnswerDTO answerDTO)
+        public async Task UpdateAnswerAsync(TestAnswerDTO answerDTO)
         {
             _uow.TestAnswerRepository.Update(Mapper.Map<TestAnswerDTO, TestAnswer>(answerDTO));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void RemoveAnswerById(int id)
+        public async Task RemoveAnswerByIdAsync(int id)
         {
-            _uow.TestAnswerRepository.DeleteById(id);
-            _uow.Save();
+            await _uow.TestAnswerRepository.DeleteByIdAsync(id);
+            await _uow.SaveAsync();
         }
 
-        public TestAnswerDTO GetById(int id)
+        public async Task<TestAnswerDTO> GetByIdAsync(int id)
         { 
-            return Mapper.Map<TestAnswer, TestAnswerDTO>(_uow.TestAnswerRepository.GetEntityById(id));
+            return Mapper.Map<TestAnswer, TestAnswerDTO>(await _uow.TestAnswerRepository.GetEntityByIdAsync(id));
         }
     }
 }

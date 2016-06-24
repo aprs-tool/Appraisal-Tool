@@ -4,6 +4,6 @@ namespace APRST.DAL.Interfaces
 {
     public interface ITestCategoryRepository:IRepository<TestCategory>
     {
-        TestCategory TestCategoryWithTests(int id);
+        Task<TestCategory> TestCategoryWithTestsAsync(int id);
     }
 }

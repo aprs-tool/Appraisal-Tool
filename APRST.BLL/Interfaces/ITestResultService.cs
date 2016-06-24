@@ -1,13 +1,14 @@
 ﻿using APRST.BLL.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APRST.BLL.Interfaces
 {
     public interface ITestResultService
     {
-        void Add(TestResultDTO testResult, string userIdentitylName);
-        void RemoveById(int id);
-        TestResultDTO GetById(int id);
-        List<TestResultInfoDTO> GetUserTestsResults(int id);
+        Task AddAsync(TestResultDTO testResult, string userIdentitylName);
+        Task RemoveByIdAsync(int id);
+        Task<TestResultDTO> GetByIdAsync(int id);
+        Task<List<TestResultInfoDTO>> GetUserTestsResultsAsync(int id);
     }
 }

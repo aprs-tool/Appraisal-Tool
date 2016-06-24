@@ -4,6 +4,7 @@ using APRST.DAL.Interfaces;
 using AutoMapper;
 using APRST.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APRST.BLL.Services
 {
@@ -16,27 +17,25 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void Add(TestResultDTO testResult, string userIdentityName)
+        public async Task AddAsync(TestResultDTO testResult, string userIdentityName)
         {
             _uow.UserProfileRepository.GetProfileWithTestsByUserIdentityName(userIdentityName).TestResults.Add(Mapper.Map<TestResultDTO, TestResult>(testResult));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public TestResultDTO GetById(int id)
+        public async Task<TestResultDTO> GetByIdAsync(int id)
         {
-            return Mapper.Map<TestResult, TestResultDTO>(_uow.TestResultRepository.GetEntityById(id));
+            return Mapper.Map<TestResult, TestResultDTO>(await _uow.TestResultRepository.GetEntityByIdAsync(id));
         }
 
-        public List<TestResultInfoDTO> GetUserTestsResults(int id)
+        public async Task<List<TestResultInfoDTO>> GetUserTestsResultsAsync(int id)
         {
-            return
-                Mapper.Map<List<TestResult>, List<TestResultInfoDTO>>(
-                    _uow.TestResultRepository.GetUserTestsResults(id));
+            return Mapper.Map<List<TestResult>, List<TestResultInfoDTO>>(await _uow.TestResultRepository.GetUserTestsResultsAsync(id));
         }
 
-        public void RemoveById(int id)
+        public async Task RemoveByIdAsync(int id)
         {
-            _uow.TestResultRepository.DeleteById(id);
+            await _uow.TestResultRepository.DeleteByIdAsync(id);
             _uow.Save();
         }
     }

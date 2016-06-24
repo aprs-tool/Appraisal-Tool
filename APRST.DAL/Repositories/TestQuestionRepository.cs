@@ -12,14 +12,14 @@ namespace APRST.DAL.Repositories
         {
         }
 
-        public TestQuestion GetAnswersForQuestion(int id)
+        public async Task<TestQuestion> GetAnswersForQuestionAsync(int id)
         {
-            return GetEntities().Where(s => s.Id == id).Include(pr => pr.Answers).FirstOrDefault();
+            return await GetEntities().Where(s => s.Id == id).Include(pr => pr.Answers).FirstOrDefaultAsync();
         }
 
-        public IEnumerable<TestQuestion> GetQA(int testId)
+        public async Task<IEnumerable<TestQuestion>> GetQAAsync(int testId)
         {
-            return GetEntities().Where(s => s.TestId == testId).Include(pr => pr.Answers);
+            return await GetEntities().Where(s => s.TestId == testId).Include(pr => pr.Answers).ToListAsync();
         }
     }
 }

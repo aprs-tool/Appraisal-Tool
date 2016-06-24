@@ -5,15 +5,14 @@ namespace APRST.BLL.Interfaces
 {
     public interface IUserProfileService
     {
-        void AddTestToProfile(int testId, int userId);
-        UserProfileIncludeTestsDTO GetProfileWithTestsById(int id);
-        UserProfileIncludeRoleDTO GetProfileByIdentityName(string identityName);
-        UserProfileIncludeTestsDTO GetProfileWithTestsByUserIdentityName(string userIdentityName);
-        void CreateProfile(UserProfileDTO user);
-        void EditProfile(UserProfileDTO user);
-        IEnumerable<UserProfileDTO> GetAll();
-        void UpdateProfileImage(int userId, string pathToImageInDatabase);
+        Task AddTestToProfileAsync(int testId, int userId);
+        Task<UserProfileIncludeTestsDTO> GetProfileWithTestsByIdAsync(int id);
+        Task<UserProfileIncludeRoleDTO> GetProfileByIdentityNameAsync(string userIdentityName);
+        Task<UserProfileIncludeTestsDTO> GetProfileWithTestsByUserIdentityNameAsync(string userIdentityName);
+        Task CreateProfileAsync(UserProfileDTO user);
+        Task EditProfileAsync(UserProfileDTO user);
+        Task<IEnumerable<UserProfileDTO>> GetAllAsync();
+        Task UpdateProfileImageAsync(int userId, string pathToImageInDatabase);
         int GetCount();
-        
     }
 }

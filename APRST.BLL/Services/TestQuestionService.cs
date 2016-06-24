@@ -15,42 +15,42 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void Add(TestQuestionDTO questionDTO)
+        public async Task AddAsync(TestQuestionDTO questionDTO)
         {
             _uow.TestQuestionRepository.Add(Mapper.Map<TestQuestionDTO, TestQuestion>(questionDTO));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public IEnumerable<TestQuestionInfoDTO> GetAll()
+        public async Task<IEnumerable<TestQuestionInfoDTO>> GetAllAsync()
         {
-            return Mapper.Map<IEnumerable<TestQuestion>, List<TestQuestionInfoDTO>>(_uow.TestQuestionRepository.GetEntities());
+            return Mapper.Map<IEnumerable<TestQuestion>, List<TestQuestionInfoDTO>>(await _uow.TestQuestionRepository.GetAllAsync());
         }
 
-        public TestQuestionDTO GetById(int id)
+        public async Task<TestQuestionDTO> GetByIdAsync(int id)
         {
-            return Mapper.Map<TestQuestion, TestQuestionDTO>(_uow.TestQuestionRepository.GetEntityById(id));
+            return Mapper.Map<TestQuestion, TestQuestionDTO>(await _uow.TestQuestionRepository.GetEntityByIdAsync(id));
         }
 
-        public void UpdateTest(TestQuestionDTO qst)
+        public async Task UpdateTestAsync(TestQuestionDTO qst)
         {
             _uow.TestQuestionRepository.Update(Mapper.Map<TestQuestionDTO, TestQuestion>(qst));
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void RemoveQuestionById(int id)
+        public async Task RemoveTestByIdAsync(int id)
         {
             _uow.TestQuestionRepository.DeleteById(id);
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public TestQuestionIncludeAnswersDTO GetAnswersForQuestion(int id)
+        public async Task<TestQuestionIncludeAnswersDTO> GetAnswersForQuestionAsync(int id)
         { 
-            return Mapper.Map<TestQuestion, TestQuestionIncludeAnswersDTO>(_uow.TestQuestionRepository.GetAnswersForQuestion(id));
+            return Mapper.Map<TestQuestion, TestQuestionIncludeAnswersDTO>(await _uow.TestQuestionRepository.GetAnswersForQuestionAsync(id));
         }
 
-        public IEnumerable<TestQuestionIncludeAnswersDTO> GetQA(int testId)
+        public async Task<IEnumerable<TestQuestionIncludeAnswersDTO>> GetQAAsync(int testId)
         {
-            return Mapper.Map<IEnumerable<TestQuestion>, IEnumerable<TestQuestionIncludeAnswersDTO>>(_uow.TestQuestionRepository.GetQA(testId));
+            return Mapper.Map<IEnumerable<TestQuestion>, IEnumerable<TestQuestionIncludeAnswersDTO>>(await _uow.TestQuestionRepository.GetQAAsync(testId));
         }
     }
 }

@@ -4,6 +4,8 @@ using APRST.DAL.Interfaces;
 using System.Collections.Generic;
 using APRST.DAL.Entities;
 using AutoMapper;
+using System;
+using System.Threading.Tasks;
 
 namespace APRST.BLL.Services
 {
@@ -16,22 +18,23 @@ namespace APRST.BLL.Services
             _uow = uow;
         }
 
-        public void AddResult(List<QuestionnaireResultDTO> resultDto, int userId)
+        public async Task AddResultAsync(List<QuestionnaireResultDTO> resultDto, int userId)
         {
+            var questionnaire = _uow.QuestionnaireRepository.GetQuestionnaireByUserId(userId);
             foreach (var item in resultDto)
             {
-                _uow.QuestionnaireRepository.GetQuestionnaireByUserId(userId).QuestionnaireResults.Add(Mapper.Map<QuestionnaireResultDTO, QuestionnaireResult>(item));
+                questionnaire.QuestionnaireResults.Add(Mapper.Map<QuestionnaireResultDTO, QuestionnaireResult>(item));
             }
-            _uow.Save();
+            await _uow.SaveAsync();
         }
 
-        public void UpdateResult(List<QuestionnaireResultDTO> resultDto)
+        public async Task UpdateResultAsync(List<QuestionnaireResultDTO> resultDto)
         {
             foreach (var item in resultDto)
             {
                 _uow.QuestionnaireResultRepository.Update(Mapper.Map<QuestionnaireResultDTO, QuestionnaireResult>(item));
             }
-            _uow.Save();
+            await _uow.SaveAsync();
         }
     }
 }

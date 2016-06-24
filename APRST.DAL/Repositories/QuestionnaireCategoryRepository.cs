@@ -10,9 +10,9 @@ namespace APRST.DAL.Repositories
         public QuestionnaireCategoryRepository(DbContext context) : base(context)
         {
         }
-        public QuestionnaireCategory QuestionnaireCategoryWithQuestions(int id)
+        public async Task<QuestionnaireCategory> QuestionnaireCategoryWithQuestionsAsync(int id)
         {
-            return GetEntities().Where(s => s.Id == id).Include(model=>model.QuestionnaireQuestions).FirstOrDefault();
+            return await GetEntities().Where(s => s.Id == id).Include(model=>model.QuestionnaireQuestions).FirstOrDefaultAsync();
         }
     }
 }

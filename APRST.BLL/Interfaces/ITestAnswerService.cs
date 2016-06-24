@@ -4,9 +4,9 @@ namespace APRST.BLL.Interfaces
 {
     public interface ITestAnswerService
     {
-        void Add(TestAnswerDTO answerDTO);
-        void UpdateAnswer(TestAnswerDTO answerDTO);
-        void RemoveAnswerById(int id);
-        TestAnswerDTO GetById(int id);
+        Task AddAsync(TestAnswerDTO answerDTO);
+        Task UpdateAnswerAsync(TestAnswerDTO answerDTO);
+        Task RemoveAnswerByIdAsync(int id);
+        Task<TestAnswerDTO> GetByIdAsync(int id);
     }
 }

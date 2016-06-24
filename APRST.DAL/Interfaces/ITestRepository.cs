@@ -5,10 +5,9 @@ namespace APRST.DAL.Interfaces
 {
     public interface ITestRepository:IRepository<Test>
     {
-        IEnumerable<Test> TestWithCategory();
-        IEnumerable<Test> GetByIdWithCategory(int id);
-        IEnumerable<Test> GetTestByCategoryId(int id);
-
-        Test GetQuestionsForTest(int id);
+        Task<IEnumerable<Test>> TestWithCategoryAsync();
+        Task<IEnumerable<Test>> GetByIdWithCategoryAsync(int id);
+        Task<IEnumerable<Test>> GetTestByCategoryIdAsync(int id);
+        Task<Test> GetQuestionsForTestAsync(int id);
     }
 }
