@@ -2,6 +2,7 @@
 using APRST.BLL.Interfaces;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace APRST.WEB.Controllers.WebApi.Users
@@ -16,16 +17,16 @@ namespace APRST.WEB.Controllers.WebApi.Users
         }
 
         [HttpGet]
-        public HttpResponseMessage Get()
+        public async Task<HttpResponseMessage> Get()
         {
-            var users = _userProfileService.GetAll();
+            var users = await _userProfileService.GetAllAsync();
             return users != null ? Request.CreateResponse(HttpStatusCode.OK, users) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения списка пользователей.");
         }
 
         [HttpGet]
-        public HttpResponseMessage Get(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
-            var user = _userProfileService.GetProfileWithTestsById(id);
+            var user = await _userProfileService.GetProfileWithTestsByIdAsync(id);
             return user != null ? Request.CreateResponse(HttpStatusCode.OK, user) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения данных пользователя.");
         }
     }

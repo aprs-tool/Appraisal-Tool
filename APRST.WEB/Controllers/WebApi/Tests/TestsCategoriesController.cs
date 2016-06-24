@@ -2,6 +2,7 @@
 using APRST.BLL.Interfaces;
 using System.Web.Http;
 using System.Net;
+using System.Threading.Tasks;
 using APRST.BLL.DTO;
 using NLog;
 
@@ -19,36 +20,36 @@ namespace APRST.WEB.Controllers.WebApi.Tests
         }
 
         [HttpGet]
-        public HttpResponseMessage Get()
+        public async Task<HttpResponseMessage> Get()
         {
-            var categories = _testCategoryService.GetAll();
+            var categories = await _testCategoryService.GetAllAsync();
             return categories != null ? Request.CreateResponse(HttpStatusCode.OK, categories) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения категорий тестов.");
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(TestCategoryDTO newCategory)
+        public async Task<HttpResponseMessage> Post(TestCategoryDTO newCategory)
         {
             //TODO: Обработать возможные исключения
             if (newCategory == null) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            _testCategoryService.AddCategory(newCategory);
+            await _testCategoryService.AddCategoryAsync(newCategory);
             _logger.Info($"Добавлена категория {newCategory.NameOfCategory}");
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(TestCategoryDTO updatedCategory)
+        public async Task<HttpResponseMessage> Put(TestCategoryDTO updatedCategory)
         {
             //TODO: Обработать возможные исключения
             if (updatedCategory == null) return Request.CreateResponse(HttpStatusCode.NotFound);
-            _testCategoryService.UpdateCategory(updatedCategory);
+            await _testCategoryService.UpdateCategoryAsync(updatedCategory);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             //TODO: Обработать возможные исключения
-            _testCategoryService.RemoveCategoryById(id);
+            await _testCategoryService.RemoveCategoryByIdAsync(id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

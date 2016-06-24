@@ -1,6 +1,7 @@
 ﻿using APRST.DAL.EF;
 using APRST.DAL.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace APRST.DAL.Repositories
 {
@@ -75,10 +76,10 @@ namespace APRST.DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        
         public Task SaveAsync()
         {
-            return db.SaveChangesAsync();
+            return _db.SaveChangesAsync();
         }
     }
 }

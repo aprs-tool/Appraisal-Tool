@@ -1,5 +1,6 @@
 ﻿using APRST.BLL.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APRST.BLL.Interfaces
 {
@@ -7,7 +8,7 @@ namespace APRST.BLL.Interfaces
     {
         Task AddAsync(TestQuestionDTO questionDTO);
         Task UpdateTestAsync(TestQuestionDTO questionDTO);
-        Task RemoveTestByIdAsync(int id);
+        Task RemoveQuestionByIdAsync(int id);
         Task<IEnumerable<TestQuestionIncludeAnswersDTO>> GetQAAsync(int testId);
         Task<IEnumerable<TestQuestionInfoDTO>> GetAllAsync();
         Task<TestQuestionDTO> GetByIdAsync(int id);

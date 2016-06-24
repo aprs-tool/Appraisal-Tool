@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using NLog;
 
 namespace APRST.WEB.Controllers.WebApi.Questionnaires
 {
@@ -15,38 +17,40 @@ namespace APRST.WEB.Controllers.WebApi.Questionnaires
         private readonly IQuestionnaireService _questionnaireService;
         private readonly IQuestionnaireResultService _questionnaireResultService;
         private readonly IUserProfileService _userProfileService;
+        private readonly Logger _logger;
 
         public QuestionnairesController(IQuestionnaireService questionnaireService, IQuestionnaireResultService questionnaireResultService, IUserProfileService userProfileService)
         {
             _questionnaireService = questionnaireService;
             _questionnaireResultService = questionnaireResultService;
             _userProfileService = userProfileService;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         [HttpGet]
-        public HttpResponseMessage Get()
+        public async Task<HttpResponseMessage> Get()
         {
-            var questionnaires = _questionnaireService.GetAllIncludeUserAndType();
+            var questionnaires = await _questionnaireService.GetAllIncludeUserAndTypeAsync();
             return questionnaires != null ? Request.CreateResponse(HttpStatusCode.OK, questionnaires) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения списка анкет.");
         }
 
         [HttpGet]
-        public HttpResponseMessage Get(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
-            var questionnaireResult = _questionnaireService.QuestionnaireWithResultsByUserId(id);
+            var questionnaireResult = await _questionnaireService.QuestionnaireWithResultsByUserIdAsync(id);
             return questionnaireResult != null ? Request.CreateResponse(HttpStatusCode.OK, questionnaireResult) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения анкеты пользователя.");
         }
 
         [HttpPost]
-        public void AddOrUpdate(List<QuestionnaireResultViewModel> results)
+        public async Task AddOrUpdate(List<QuestionnaireResultViewModel> results)
         {
             //:TODO Написано ногой, с закрытыми глазами. Написать адекватный сервис, вынести логику.
             results.RemoveAll(item => item == null);
 
-            var user = _userProfileService.GetProfileByIdentityName(User.Identity.Name);
+            var user = await _userProfileService.GetProfileByIdentityNameAsync(User.Identity.Name);
             var questionnaireType = user.Role == "User" ? 1 : 2;
 
-            var questionaire = _questionnaireService.QuestionnaireWithResultsByUserId(user.Id);
+            var questionaire = await _questionnaireService.QuestionnaireWithResultsByUserIdAsync(user.Id);
 
             if (questionaire == null)
             {
@@ -57,7 +61,8 @@ namespace APRST.WEB.Controllers.WebApi.Questionnaires
                     UserProfileId = user.Id
                 };
 
-                _questionnaireService.Add(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
+                await _questionnaireService.AddAsync(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
+                _logger.Info($"Заполнена анкета");
             }
             else
             {
@@ -81,7 +86,7 @@ namespace APRST.WEB.Controllers.WebApi.Questionnaires
 
                 if (questionaire.UserProfileId == user.Id)
                 {
-                    _questionnaireResultService.AddResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsAdd), user.Id);
+                    await _questionnaireResultService.AddResultAsync(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsAdd), user.Id);
                 }
                 else
                 {
@@ -92,10 +97,11 @@ namespace APRST.WEB.Controllers.WebApi.Questionnaires
                         UserProfileId = user.Id
                     };
 
-                    _questionnaireService.Add(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
+                    await _questionnaireService.AddAsync(Mapper.Map<QuestionnaireViewModel, QuestionnaireDTO>(newQuestionaire));
                 }
 
-                _questionnaireResultService.UpdateResult(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsUpdate));
+                await _questionnaireResultService.UpdateResultAsync(Mapper.Map<List<QuestionnaireResultViewModel>, List<QuestionnaireResultDTO>>(resultsUpdate));
+                _logger.Info($"Осуществлено редактирование анкеты");
             }
         }
     }

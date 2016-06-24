@@ -2,6 +2,7 @@
 using APRST.WEB.Models;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace APRST.WEB.Controllers.WebApi.Admin
@@ -53,10 +54,10 @@ namespace APRST.WEB.Controllers.WebApi.Admin
         }
 
         [HttpPost]
-        public HttpResponseMessage GiveTest(UserTestViewModel userTest)
+        public async Task<HttpResponseMessage> GiveTest(UserTestViewModel userTest)
         {
             if (userTest == null) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            _userService.AddTestToProfile(userTest.testid, userTest.userid);
+            await _userService.AddTestToProfileAsync(userTest.testid, userTest.userid);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
     }

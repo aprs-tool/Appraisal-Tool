@@ -1,22 +1,26 @@
 ﻿using APRST.BLL.DTO;
 using APRST.BLL.Interfaces;
 using System.DirectoryServices.AccountManagement;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using NLog;
 
 namespace APRST.WEB.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IUserProfileService _userProfileService;
+        private readonly Logger _logger;
 
         public HomeController(IUserProfileService userProfileService)
         {
             _userProfileService = userProfileService;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var profile = _userProfileService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
+            var profile = await _userProfileService.GetProfileWithTestsByUserIdentityNameAsync(User.Identity.Name);
             if (profile == null)
             {
                 return RedirectToAction("Registration");
@@ -40,9 +44,10 @@ namespace APRST.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registration(UserProfileDTO profileForCreate)
+        public async Task<ActionResult> Registration(UserProfileDTO profileForCreate)
         {
-            _userProfileService.CreateProfile(profileForCreate);
+            await _userProfileService.CreateProfileAsync(profileForCreate);
+            _logger.Info($"Зарегистрирован профиль");
             return RedirectToAction("Index");
         }
     }

@@ -1,4 +1,5 @@
-﻿using APRST.DAL.Entities;
+﻿using System.Collections.Generic;
+using APRST.DAL.Entities;
 using System.Data.Entity;
 
 namespace APRST.DAL.EF

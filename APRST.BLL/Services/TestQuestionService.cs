@@ -4,6 +4,7 @@ using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
 using AutoMapper;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APRST.BLL.Services
 {
@@ -37,7 +38,7 @@ namespace APRST.BLL.Services
             await _uow.SaveAsync();
         }
 
-        public async Task RemoveTestByIdAsync(int id)
+        public async Task RemoveQuestionByIdAsync(int id)
         {
             _uow.TestQuestionRepository.DeleteById(id);
             await _uow.SaveAsync();

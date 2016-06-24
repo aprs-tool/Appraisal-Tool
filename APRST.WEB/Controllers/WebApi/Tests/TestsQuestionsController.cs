@@ -2,6 +2,7 @@
 using APRST.BLL.Interfaces;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace APRST.WEB.Controllers.WebApi.Tests
@@ -18,35 +19,35 @@ namespace APRST.WEB.Controllers.WebApi.Tests
         }
 
         [HttpGet]
-        public HttpResponseMessage Get(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
-            var questions = _testService.GetQuestionsForTest(id);
+            var questions = await _testService.GetQuestionsForTestAsync(id);
             return questions != null ? Request.CreateResponse(HttpStatusCode.OK, questions) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения вопросов к тесту.");
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(TestQuestionDTO newQuestion)
+        public async Task<HttpResponseMessage> Post(TestQuestionDTO newQuestion)
         {
             //TODO: Обработать возможные исключения
             if (newQuestion == null) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            _testQuestionService.Add(newQuestion);
+            await _testQuestionService.AddAsync(newQuestion);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(TestQuestionDTO updatedQuestion)
+        public async Task<HttpResponseMessage> Put(TestQuestionDTO updatedQuestion)
         {
             //TODO: Обработать возможные исключения
             if (updatedQuestion == null) return Request.CreateResponse(HttpStatusCode.NotFound);
-            _testQuestionService.UpdateTest(updatedQuestion);
+            await _testQuestionService.UpdateTestAsync(updatedQuestion);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             //TODO: Обработать возможные исключения
-            _testQuestionService.RemoveQuestionById(id);
+            await _testQuestionService.RemoveQuestionByIdAsync(id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

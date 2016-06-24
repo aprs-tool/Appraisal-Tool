@@ -2,6 +2,7 @@
 using APRST.BLL.Interfaces;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace APRST.WEB.Controllers.WebApi.Questionnaires
@@ -16,28 +17,28 @@ namespace APRST.WEB.Controllers.WebApi.Questionnaires
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(QuestionnaireCategoryDTO newCategory)
+        public async Task<HttpResponseMessage> Post(QuestionnaireCategoryDTO newCategory)
         {
             //TODO: Обработать возможные исключения
             if (newCategory == null) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            _questionnaireCategoryService.AddCategory(newCategory);
+            await _questionnaireCategoryService.AddCategoryAsync(newCategory);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(QuestionnaireCategoryDTO updatedCategory)
+        public async Task<HttpResponseMessage> Put(QuestionnaireCategoryDTO updatedCategory)
         {
             //TODO: Обработать возможные исключения
             if (updatedCategory == null) return Request.CreateResponse(HttpStatusCode.NotFound);
-            _questionnaireCategoryService.UpdateCategory(updatedCategory);
+            await _questionnaireCategoryService.UpdateCategoryAsync(updatedCategory);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             //TODO: Обработать возможные исключения
-            _questionnaireCategoryService.RemoveCategoryById(id);
+            await _questionnaireCategoryService.RemoveCategoryByIdAsync(id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

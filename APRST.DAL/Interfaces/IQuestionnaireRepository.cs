@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using APRST.DAL.Entities;
 
 namespace APRST.DAL.Interfaces

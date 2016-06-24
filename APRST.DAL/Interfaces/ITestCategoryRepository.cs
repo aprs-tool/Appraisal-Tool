@@ -1,4 +1,5 @@
-﻿using APRST.DAL.Entities;
+﻿using System.Threading.Tasks;
+using APRST.DAL.Entities;
 
 namespace APRST.DAL.Interfaces
 {

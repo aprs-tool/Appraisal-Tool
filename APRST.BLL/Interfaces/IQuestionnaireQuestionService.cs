@@ -1,4 +1,5 @@
-﻿using APRST.BLL.DTO;
+﻿using System.Threading.Tasks;
+using APRST.BLL.DTO;
 
 namespace APRST.BLL.Interfaces
 {

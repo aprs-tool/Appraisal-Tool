@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using APRST.DAL.Entities;
 using APRST.DAL.Interfaces;
 
@@ -36,7 +37,7 @@ namespace APRST.DAL.Repositories
                 .Include(r => r.Tests)
                 .Include(u=>u.UserRole)
                 .Include(r => r.TestResults)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
         public UserProfile GetProfileWithTestsByUserIdentityName(string userIdentityName)

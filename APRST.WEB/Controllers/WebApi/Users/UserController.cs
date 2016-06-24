@@ -19,9 +19,9 @@ namespace APRST.WEB.Controllers.WebApi.Users
         }
 
         [HttpGet]
-        public HttpResponseMessage Get()
+        public async Task<HttpResponseMessage> Get()
         {
-            var user = _userProfileService.GetProfileWithTestsByUserIdentityName(User.Identity.Name);
+            var user = await _userProfileService.GetProfileWithTestsByUserIdentityNameAsync(User.Identity.Name);
             return user != null ? Request.CreateResponse(HttpStatusCode.OK, user) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения данных профиля.");
         }
 
@@ -31,7 +31,7 @@ namespace APRST.WEB.Controllers.WebApi.Users
             if (!Request.Content.IsMimeMultipartContent())
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
 
-            var user = _userProfileService.GetProfileByIdentityName(User.Identity.Name);
+            var user = await _userProfileService.GetProfileByIdentityNameAsync(User.Identity.Name);
 
             var di = new DirectoryInfo(System.Web.HttpContext.Current.Server.MapPath("~/Users_Data/"));
             di.CreateSubdirectory(user.Id.ToString());
@@ -47,7 +47,7 @@ namespace APRST.WEB.Controllers.WebApi.Users
                 {
                     var fi = new FileInfo(file.LocalFileName);
                     pathInDatabase = $"/Users_Data/{user.Id}/{fi.Name}";
-                    _userProfileService.UpdateProfileImage(user.Id, pathInDatabase);
+                    await _userProfileService.UpdateProfileImageAsync(user.Id, pathInDatabase);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, pathInDatabase);
             }
@@ -58,11 +58,11 @@ namespace APRST.WEB.Controllers.WebApi.Users
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(UserProfileDTO updatedProfile)
+        public async Task<HttpResponseMessage> Put(UserProfileDTO updatedProfile)
         {
             //TODO: Обработать возможные исключения
             if (updatedProfile == null) return Request.CreateResponse(HttpStatusCode.NotFound);
-            _userProfileService.EditProfile(updatedProfile);
+            await _userProfileService.EditProfileAsync(updatedProfile);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

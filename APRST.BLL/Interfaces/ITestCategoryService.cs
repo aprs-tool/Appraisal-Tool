@@ -1,5 +1,6 @@
 ﻿using APRST.BLL.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APRST.BLL.Interfaces
 {

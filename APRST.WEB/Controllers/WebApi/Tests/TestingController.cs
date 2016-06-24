@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using NLog;
 
 namespace APRST.WEB.Controllers.WebApi.Tests
 {
@@ -14,27 +16,28 @@ namespace APRST.WEB.Controllers.WebApi.Tests
     {
         private readonly ITestQuestionService _testQuestionService;
         private readonly ITestResultService _testResultService;
+        private readonly Logger _logger;
 
         public TestingController(ITestQuestionService testQuestionService, ITestResultService testResultService)
         {
             _testQuestionService = testQuestionService;
             _testResultService = testResultService;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         [HttpGet]
-        public HttpResponseMessage Get(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
-            var qna = _testQuestionService.GetQA(id);
+            var qna = await _testQuestionService.GetQAAsync(id);
             return qna != null ? Request.CreateResponse(HttpStatusCode.OK, qna) : Request.CreateResponse(HttpStatusCode.NotFound, "Ошибка получения списка вопросов.");
         }
 
         [HttpPost]
         [Route("api/Testing/Post/{id:int}")]
-        public HttpResponseMessage Post([FromUri()] int? id, [FromBody]List<TestData> testResult)
+        public async Task<HttpResponseMessage> Post([FromUri()] int? id, [FromBody]List<TestData> testResult)
         {
             if (id == null) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            var qna = _testQuestionService.GetQA((int)id);
-
+            var qna = await _testQuestionService.GetQAAsync((int)id);
             var points = testResult.AsParallel().Sum(
                 t => int.Parse(
                     qna.FirstOrDefault(qId => qId.Id == int.Parse(t.name))
@@ -50,7 +53,8 @@ namespace APRST.WEB.Controllers.WebApi.Tests
                 Date = DateTime.Now
             };
 
-            _testResultService.Add(result, User.Identity.Name);
+            await _testResultService.AddAsync(result, User.Identity.Name);
+            _logger.Info($"Пройден тест №{id}");
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
